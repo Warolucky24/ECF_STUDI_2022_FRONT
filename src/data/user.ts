@@ -13,11 +13,35 @@ export const tableUser =  [
 
 export const tablePartner = [
     {
-        name : "Crossfit Lyon",
-        active : true
+        partner_id: 1,
+        user_id : 1,
+        partner_name: "Crossfit Lyon",
+        partner_active: 1,
+        partner_logo_url : "",
+        gestion_id : 1
     },
     {
-        name: "Crossfit Paris",
-        active: true
+        partner_id: 1,
+        user_id : 1,
+        partner_name: "gygagim Lyon",
+        partner_active: 1,
+        partner_logo_url : "",
+        gestion_id : 1
+    },
+    {
+        partner_id: 1,
+        user_id : 1,
+        partner_name: "Crossfit Paris",
+        partner_active: 0,
+        partner_logo_url : "",
+        gestion_id : 1
+    },
+    {
+        partner_id: 1,
+        user_id : 1,
+        partner_name: "Crossfit Bordeaux",
+        partner_active: 0,
+        partner_logo_url : "",
+        gestion_id : 1
     }
 ] as PartnerInterface[]

@@ -1,4 +1,5 @@
 import type {RouteRecordRaw} from "vue-router";
+import {initialFetchPartner} from "@/stores/partnerStore";
 
 export const PARTNER_ROUTE: RouteRecordRaw[] = [
     {
@@ -7,6 +8,7 @@ export const PARTNER_ROUTE: RouteRecordRaw[] = [
     },
     {
         path: "list",
+        beforeEnter: [initialFetchPartner],
         component: () => import("@/features/app/partner/views/PartnerList.vue")
     },
     {

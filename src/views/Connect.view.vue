@@ -3,7 +3,7 @@ import z from 'zod';
 import {useField, useForm} from "vee-validate";
 import {toFormValidator} from "@vee-validate/zod";
 import {useUserStore} from "@/stores/userStore";
-import type {UserInterface} from "@/shared/interfaces/UserInterface";
+import type {UserConnectInterface} from "@/shared/interfaces/UserInterface";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
@@ -11,21 +11,21 @@ const router = useRouter()
 const required_error = {required_error : "Veuillez renseigner ce champ"}
 const validationSchema = toFormValidator(
     z.object({
-      email_user : z.string(required_error).email({message: "Email non valide"}),
-      password_user : z.string(required_error)
+      email : z.string(required_error).email({message: "Email non valide"}),
+      password : z.string(required_error)
     })
 )
 const {handleSubmit} = useForm({
   validationSchema
 })
 
-const {value : value_email, errorMessage : error_email} = useField("email_user")
-const {value : value_password, errorMessage : error_password} = useField("password_user")
+const {value : value_email, errorMessage : error_email} = useField("email")
+const {value : value_password, errorMessage : error_password} = useField("password")
 
 
 const tryConnect = handleSubmit( (formValues) => {
   const userStore = useUserStore()
-  userStore.goConnect(formValues as UserInterface)
+  userStore.goConnect(formValues as UserConnectInterface)
   router.push("/app")
 })
 

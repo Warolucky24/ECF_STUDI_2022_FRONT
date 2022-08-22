@@ -8,9 +8,24 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="d_flex justify_content_center align_items_center">
-    <div>{{props.data.name}}</div>
-    <div>{{props.data.active}}</div>
+  <div id="partner">
+    <div>{{props.data.partner_name}}</div>
+    <div>{{ props.data.partner_active ? "Actif" : "Non-Actif"}}</div>
     <button>Modifer</button>
   </div>
 </template>
+
+<style scoped lang="sass">
+#partner
+  padding: 5px
+  margin: 5px
+  display: flex
+  justify-content: space-around
+  border: 1px solid gray
+  border-radius: 5px
+  align-items: center
+  button
+    padding: 5px
+    background: orange
+
+</style>

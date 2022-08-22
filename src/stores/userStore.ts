@@ -1,23 +1,20 @@
 import {defineStore} from "pinia";
-import type {UserInterface} from "@/shared/interfaces/UserInterface";
-import {tableUser} from "@/data/user";
+import type {UserConnectInterface} from "@/shared/interfaces/UserInterface";
 
 interface UserStoreInterface{
-    isConnected : boolean,
-    msg_error_auth : string | null
+    isConnected : boolean
 }
 
 
 export const useUserStore = defineStore("userStore", {
     state: (): UserStoreInterface => ({
-        isConnected: false,
-        msg_error_auth : null
+        isConnected: false
     }),
     getters: {
 
     },
     actions: {
-        goConnect(formConnect: UserInterface){
+        goConnect(formConnect: UserConnectInterface){
             //requete post
             this.isConnected = true
             console.log(formConnect)

@@ -1,17 +1,30 @@
 <script setup lang="ts">
-import PartnerFilters from "@/features/app/partner/components/PartnerFilters.vue"
 import Partner from "@/features/app/partner/components/Partner.vue";
-import {tablePartner} from "@/data/user";
+import {usePartner} from "@/stores/partnerStore";
+import PartnerFilters from "@/features/app/partner/components/PartnerFilters.vue";
+import type {FilterUpdate} from "@/shared/interfaces/filters";
 
+
+const partnerStore = usePartner()
+
+function updateFilter(filterUpdate: FilterUpdate){
+  partnerStore.updateFilter(filterUpdate)
+}
 
 
 </script>
 
-
-
 <template>
   <h1>Liste des partenaires</h1>
-  <router-link to="/app/partner/add">Ajoutez</router-link>
-  <PartnerFilters />
-  <Partner v-for="partner in tablePartner" :data="partner" :key="partner.name"/>
+  <div class="d_flex flex_column">
+    <PartnerFilters
+      :filters="partnerStore.filters"
+      @update-filter="updateFilter"
+    />
+    <Partner
+        v-for="partner in partnerStore.filteredPartner"
+        :data="partner" :key="partner.partner_name"
+    />
+  </div>
+
 </template>
