@@ -1,0 +1,36 @@
+.btn
+  padding: 4px 10px
+  border-radius: 5px
+  background: none
+  font-size: 1.2em
+
+.btn_effect
+  width: 150px
+  height: 50px
+  position: relative
+  cursor: pointer
+  .text
+    position: absolute
+    background: transparent
+    z-index: 9
+    display: flex
+    width: 100%
+    height: 100%
+    justify-content: flex-start
+    align-items: center
+    color: $orange
+    span
+      background: transparent
+      margin-left: 10px
+      transition: all .2s ease-in
+  .font
+    position: absolute
+    width: 50px
+    height: 50px
+    background: $bleu_tres_fonce
+    border-radius: 25px
+    z-index: 5
+    transition: width .3s ease-out
+    border: none
+  &:hover .font
+    width: 100%
