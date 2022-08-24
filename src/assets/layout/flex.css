@@ -1,0 +1,39 @@
+.d_flex {
+  display: flex;
+}
+
+.flex_row {
+  flex-direction: row;
+}
+
+.flex_wrap {
+  flex-wrap: wrap;
+}
+
+.flex_nowrap {
+  flex-wrap: nowrap;
+}
+
+.justify_content_between {
+  justify-content: space-between;
+}
+
+.justify_content_arround {
+  justify-content: space-around;
+}
+
+.justify_content_center {
+  justify-content: center;
+}
+
+.align_items_center {
+  align-items: center;
+}
+
+.flex_fill {
+  flex: 0 0 auto;
+}
+
+.flex_column {
+  flex-direction: column;
+}/*# sourceMappingURL=flex.css.map */

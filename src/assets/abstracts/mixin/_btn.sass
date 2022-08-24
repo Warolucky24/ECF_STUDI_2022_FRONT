@@ -1,0 +1,12 @@
+@mixin base_btn($borderColor, $background, $backgroundHover, $color)
+    padding: 8px 15px
+    border: 1px solid $borderColor
+    background-color: $background
+    border-radius: 5px
+    cursor: pointer
+    transition: all .3s ease
+    color: $color
+    width: 100px
+    &:hover
+        background-color: $backgroundHover
+        width: 120px

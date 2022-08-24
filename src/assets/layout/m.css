@@ -1,0 +1,59 @@
+.m_5 {
+  margin: 5px;
+}
+
+.m_10 {
+  margin: 10px;
+}
+
+.m_15 {
+  margin: 15px;
+}
+
+.m_20 {
+  margin: 20px;
+}
+
+.mx_5 {
+  margin: 0 5px;
+}
+
+.mx_10 {
+  margin: 0 10px;
+}
+
+.mx_20 {
+  margin: 0 20px;
+}
+
+.me_5 {
+  margin-right: 5px;
+}
+
+.me_10 {
+  margin-right: 10px;
+}
+
+.ms_5 {
+  margin-left: 5px;
+}
+
+.ms_10 {
+  margin-left: 10px;
+}
+
+.mt_10 {
+  margin-top: 10px;
+}
+
+.mt_20 {
+  margin-top: 20px;
+}
+
+.mb_20 {
+  margin-bottom: 20px;
+}
+
+.mb_10 {
+  margin-bottom: 10px;
+}/*# sourceMappingURL=m.css.map */

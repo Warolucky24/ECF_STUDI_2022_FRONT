@@ -1,0 +1,15 @@
+// base_btn ($borderColor, $backgroundColor, $backgroundHover, color)
+
+.btn_primary
+    $params : ($primary, $primary, $primary_hover_btn, black)
+    +base_btn($params...)
+
+.btn_danger
+    $params: ($primary, $danger_2, $danger_1, black)
+    +base_btn($params...)
+
+.btn_warning
+    +base_btn($primary,  $warning_2, $warning_1, black)
+
+.btn_success
+    +base_btn($primary, $success_2, $success_1, black)

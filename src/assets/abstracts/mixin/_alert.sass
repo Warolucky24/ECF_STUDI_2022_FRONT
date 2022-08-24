@@ -1,0 +1,10 @@
+@mixin base_alert($borderColor, $color: black)
+    background-color: gray
+    padding: 5px
+    border-radius: 5px
+    border: 1px solid $borderColor
+    color: $color
+    &>p
+        text-align: justify
+    &>h1
+        text-decoration: underline
