@@ -15,23 +15,23 @@ function updateFilter(filterUpdate: FilterUpdate){
 </script>
 
 <template>
-  <h1>Liste des partenaires</h1>
   <div class="d_flex flex_column">
     <PartnerFilters
       :filters="partnerStore.filters"
       @update-filter="updateFilter"
     />
     <div class="separator_secondary"></div>
-    <table class="table">
-      <tr
-          v-for="partner in partnerStore.filteredPartner"
-      >
-        <Partner
-            :data="partner" :key="partner.partner_name"
-        />
-      </tr>
-    </table>
-
+    <div class="container">
+      <table class="table">
+        <tr
+            v-for="partner in partnerStore.filteredPartner"
+        >
+          <Partner
+              :data="partner" :key="partner.partner_name"
+          />
+        </tr>
+      </table>
+    </div>
   </div>
 
 </template>

@@ -8,15 +8,24 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     },
     {
         path: "profil",
-        component: () => import('@/features/app/views/profilView.vue')
+        component: () => import('@/features/app/views/profilView.vue'),
+        meta:{
+            page: "profil"
+        }
     },
     {
         path: "partner",
         component: () => import('@/features/app/partner/partnerView.vue'),
-        children: PARTNER_ROUTE
+        children: PARTNER_ROUTE,
+        meta: {
+            page: "partner"
+        }
     },
     {
         path: "struct",
-        component: () => import('@/features/app/struct/structView.vue')
+        component: () => import('@/features/app/struct/structView.vue'),
+        meta: {
+            page: "struct"
+        }
     }
 ]

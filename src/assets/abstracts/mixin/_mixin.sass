@@ -1,19 +1,23 @@
 @mixin xs
     @media (max-width: 575px)
-    @content
+        @content
 
 @mixin sm
     @media (max-width: 576px)
-    @content
+        @content
 
 @mixin md
     @media (min-width: 768px)
-    @content
+        @content
 
-@mixin lg
+@mixin lg_max
+    @media (max-width: 992px)
+        @content
+
+@mixin lg_min
     @media (min-width: 992px)
-    @content
+        @content
 
 @mixin xl
     @media (min-width: 1200px)
-    @content
+        @content

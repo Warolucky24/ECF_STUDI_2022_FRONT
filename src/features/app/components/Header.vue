@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useUserStore} from "@/stores/userStore";
-import {reactive} from "vue";
 
 const router = useRouter()
+const route = useRoute()
 
 const unconnect = () => {
   const userStore = useUserStore()
@@ -11,21 +11,16 @@ const unconnect = () => {
   router.push("/")
 }
 
-const state = reactive<{
-  open: boolean
-}>({
-  open : false
-})
 
 </script>
 
 
 <template>
-  <nav>
-    <router-link class="nav_link" to="/app/profil">Profils</router-link>
-    <router-link class="nav_link" to="/app/partner">Partenaires</router-link>
-    <router-link class="nav_link" to="/app/struct">Structures</router-link>
-    <div class="nav_link" @click="unconnect">Déconnexion</div>
+  <nav class="mb_20" id="nav_desktop">
+    <router-link class="nav_link" :class="{underline_left_to_right : route.meta.page !== 'profil'}" to="/app/profil">Profil</router-link>
+    <router-link class="nav_link"  :class="{underline_left_to_right : route.meta.page !== 'partner'}" to="/app/partner">Partenaires</router-link>
+    <router-link class="nav_link"  :class="{underline_left_to_right : route.meta.page !== 'struct'}" to="/app/struct">Structures</router-link>
+    <div class="nav_link underline_left_to_right" @click="unconnect">Déconnexion</div>
   </nav>
 </template>
 
@@ -40,11 +35,15 @@ nav
   align-items: center
 .nav_link
   text-decoration: none
+  text-align: center
   color: $gray
   cursor: pointer
   background: none
-  padding: 10px
+  margin: 0 10px
   transition: all .4s
   &:hover
     color: white
+.router-link-active
+  color: white
+
 </style>

@@ -23,3 +23,9 @@ const emit = defineEmits<{
     />
   </div>
 </template>
+
+<style scoped lang="sass">
+input
+  margin-left: 5vw
+
+</style>
