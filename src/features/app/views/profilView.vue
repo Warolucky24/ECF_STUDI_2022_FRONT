@@ -1,3 +1,5 @@
 <template>
-    <h1>Page de profils</h1>
+  <div>
+    Bienvenue { { user_name } }
+  </div>
 </template>

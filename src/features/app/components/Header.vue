@@ -22,18 +22,29 @@ const state = reactive<{
 
 <template>
   <nav>
-    <router-link to="/app/profil">Profils</router-link>
-    <router-link to="/app/partner">Partenaires</router-link>
-    <router-link to="/app/struct">Structures</router-link>
-    <div @click="unconnect">Déconnexion</div>
+    <router-link class="nav_link" to="/app/profil">Profils</router-link>
+    <router-link class="nav_link" to="/app/partner">Partenaires</router-link>
+    <router-link class="nav_link" to="/app/struct">Structures</router-link>
+    <div class="nav_link" @click="unconnect">Déconnexion</div>
   </nav>
 </template>
 
 <style scoped lang="sass">
+@import "@/assets/main.sass"
+
 nav
+  height: 80px
+  width: 100vw
+  background: #556C96
   display: flex
-  justify-content: space-around
-
-  min-height: 40px
-
+  align-items: center
+.nav_link
+  text-decoration: none
+  color: $gray
+  cursor: pointer
+  background: none
+  padding: 10px
+  transition: all .4s
+  &:hover
+    color: white
 </style>

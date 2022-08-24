@@ -15,13 +15,12 @@ export const usePartner = defineStore("partner", {
         filters : {...DEFAULT_FILTER}
     }),
     getters: {
-        filteredPartner(state){
-            return state.partner.filter((partner) => partner.partner_name.toLocaleLowerCase().startsWith(state.filters.search.toLocaleLowerCase()))
-        }
+        filteredPartner(state){ return state.partner}
 
     },
     actions: {
         updateFilter(filterUpdate: FilterUpdate){
+            console.log(filterUpdate)
             if(filterUpdate.search !== undefined){
                 this.filters.search = filterUpdate.search
             }else if(filterUpdate.etat){

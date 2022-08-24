@@ -8,24 +8,11 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div id="partner">
-    <div>{{props.data.partner_name}}</div>
-    <div>{{ props.data.partner_active ? "Actif" : "Non-Actif"}}</div>
-    <button>Modifer</button>
-  </div>
+    <td>{{props.data.partner_name}}</td>
+    <td>{{ props.data.partner_active ? "Actif" : "Non-Actif"}}</td>
+    <td><div class="btn_warning">Modifer</div></td>
 </template>
 
 <style scoped lang="sass">
-#partner
-  padding: 5px
-  margin: 5px
-  display: flex
-  justify-content: space-around
-  border: 1px solid gray
-  border-radius: 5px
-  align-items: center
-  button
-    padding: 5px
-    background: orange
 
 </style>

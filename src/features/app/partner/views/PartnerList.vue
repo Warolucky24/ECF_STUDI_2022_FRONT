@@ -21,10 +21,17 @@ function updateFilter(filterUpdate: FilterUpdate){
       :filters="partnerStore.filters"
       @update-filter="updateFilter"
     />
-    <Partner
-        v-for="partner in partnerStore.filteredPartner"
-        :data="partner" :key="partner.partner_name"
-    />
+    <div class="separator_secondary"></div>
+    <table class="table">
+      <tr
+          v-for="partner in partnerStore.filteredPartner"
+      >
+        <Partner
+            :data="partner" :key="partner.partner_name"
+        />
+      </tr>
+    </table>
+
   </div>
 
 </template>
