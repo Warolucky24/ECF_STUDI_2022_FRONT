@@ -11,6 +11,6 @@ export interface FilterUpdate{
 }
 
 export const DEFAULT_FILTER: FilterInterface = {
-    search:"",
+    search:'',
     etat: "all"
 }

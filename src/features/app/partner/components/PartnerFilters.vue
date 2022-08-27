@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type {FilterInterface, FilterUpdate} from "@/shared/interfaces/filters";
-
+import type {FilterInterface, FilterUpdate} from "@/shared/interfaces";
 
 defineProps<{
   filters : FilterInterface
@@ -17,7 +16,7 @@ const emit = defineEmits<{
     <input
         type="text"
         :value="filters.search"
-        @input="emit('updateFilter', ($event.target as HTMLInputElement).value)"
+        @input="emit('updateFilter', {search: ($event.target as HTMLInputElement).value})"
         placeholder="rechercher"
         class="input_search"
     />

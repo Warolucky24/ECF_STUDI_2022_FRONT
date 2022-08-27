@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import type {PartnerInterface} from "@/shared/interfaces/PartnerInterface";
 import {tablePartner} from "@/data/user";
-import {DEFAULT_FILTER, type FilterInterface, type FilterUpdate} from "@/shared/interfaces/filters";
+import {DEFAULT_FILTER, type FilterInterface, type FilterUpdate} from "@/shared/interfaces";
 
 interface PartnerStoreInterface{
     partner: PartnerInterface[],
@@ -15,14 +15,19 @@ export const usePartner = defineStore("partner", {
         filters : {...DEFAULT_FILTER}
     }),
     getters: {
-        filteredPartner(state){ return state.partner}
+        filteredPartner(state){
+            return state.partner.filter((partner) => {
+                partner.partner_name.toLocaleLowerCase().startsWith(state.filters.search.toLocaleLowerCase())
+            })
+        }
 
     },
     actions: {
         updateFilter(filterUpdate: FilterUpdate){
-            console.log(filterUpdate)
+
             if(filterUpdate.search !== undefined){
                 this.filters.search = filterUpdate.search
+                console.log(this.filters.search)
             }else if(filterUpdate.etat){
                 this.filters.etat = filterUpdate.etat
             }else{

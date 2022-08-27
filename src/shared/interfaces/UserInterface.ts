@@ -1,10 +1,9 @@
-export  interface UserInterface{
-    id: number,
+export interface User{
     email: string,
-    password: string,
+    first_connect: boolean,
+    is_admin: boolean,
     user_active: boolean,
-    user_name: string,
-    user_grade: number
+    user_name: string
 }
 
 export interface UserConnectInterface{

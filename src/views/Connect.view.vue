@@ -5,29 +5,36 @@ import {toFormValidator} from "@vee-validate/zod";
 import {useUserStore} from "@/stores/userStore";
 import type {UserConnectInterface} from "@/shared/interfaces/UserInterface";
 import {useRouter} from "vue-router";
+import MsgCard from "@/components/MsgCard.vue";
 
 const router = useRouter()
+const userStore = useUserStore()
+
 
 const required_error = {required_error : "Veuillez renseigner ce champ"}
 const validationSchema = toFormValidator(
     z.object({
-      email : z.string(required_error).email({message: "Email non valide"}),
-      password : z.string(required_error)
+      user_email : z.string(required_error).email({message: "Email non valide"}),
+      user_password : z.string(required_error)
     })
 )
 const {handleSubmit} = useForm({
   validationSchema
 })
 
-const {value : value_email, errorMessage : error_email} = useField("email")
-const {value : value_password, errorMessage : error_password} = useField("password")
+const {value : value_email, errorMessage : error_email} = useField("user_email")
+const {value : value_password, errorMessage : error_password} = useField("user_password")
 
 
-const tryConnect = handleSubmit( (formValues) => {
-  const userStore = useUserStore()
-  userStore.goConnect(formValues as UserConnectInterface)
-  router.push("/app")
+const tryConnect = handleSubmit( async (formValues) => {
+  try {
+    await userStore.goConnect(formValues as UserConnectInterface);
+    await router.push("/app");
+  }catch (e){
+    console.log(e)
+  }
 })
+
 
 </script>
 
@@ -66,6 +73,13 @@ const tryConnect = handleSubmit( (formValues) => {
     </button>
   </form>
   <div id="bg"></div>
+  <div v-if="userStore.error">
+    <MsgCard :mode="'danger'">
+      <template v-slot:msg>
+        <h2>{{userStore.error.error}}</h2>
+      </template>
+    </MsgCard>
+  </div>
 </template>
 
 <style lang="sass" scoped>

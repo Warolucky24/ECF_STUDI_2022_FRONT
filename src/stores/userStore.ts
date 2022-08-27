@@ -1,23 +1,37 @@
 import {defineStore} from "pinia";
-import type {UserConnectInterface} from "@/shared/interfaces/UserInterface";
+import type {UserConnectInterface, User} from "@/shared/interfaces";
+import {connectUser} from "@/shared/services";
+
+
 
 interface UserStoreInterface{
-    isConnected : boolean
+    isConnected : boolean,
+    currentUser: User | null,
+    error: any
 }
-
 
 export const useUserStore = defineStore("userStore", {
     state: (): UserStoreInterface => ({
-        isConnected: false
+        isConnected: false,
+        currentUser: null,
+        error: null
     }),
     getters: {
 
     },
     actions: {
-        goConnect(formConnect: UserConnectInterface){
-            //requete post
-            this.isConnected = true
-            console.log(formConnect)
+        async goConnect(formConnect: UserConnectInterface){
+            try {
+                this.currentUser = await connectUser(formConnect);
+                this.error= null;
+                this.isConnected = true
+            }catch (e){
+                this.isConnected = false
+                this.error = e;
+                setTimeout(()=> {
+                    this.error = null
+                },3000)
+            }
         }
     }
 
