@@ -1,4 +1,5 @@
 export interface User{
+    id: number,
     email: string,
     first_connect: boolean,
     is_admin: boolean,

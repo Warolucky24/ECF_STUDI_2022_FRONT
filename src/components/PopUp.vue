@@ -1,33 +1,33 @@
 <script setup lang="ts">
+
 defineProps<{
-  mode: string
+  msg: string
+  style: string
 }>()
-
-
 
 </script>
 
+
 <template>
+
   <Teleport to="body">
-    <div id="card" :class="mode">
-      <slot name="msg"></slot>
+    <div id="popup" :class="style">
+      <h3>{{msg}}</h3>
     </div>
   </Teleport>
+
 </template>
 
-
-
-<style lang="sass" scoped>
+<style scoped lang="sass">
 @import "@/assets/main.sass"
-#card
+#popup
   color: $gray
   font-size: 0.9em
-  border-radius: 7px
-  border: 2px solid $secondary
+  border-radius: 3px 5px
   padding: 5px 20px
   z-index: 1000
   position: absolute
-  top: 40px
+  top: 70px
   right: 10px
   animation: enterEffect .4s ease
 .danger
@@ -39,6 +39,6 @@ defineProps<{
     top: 0px
     opacity: 0
   to
-    top: 40px
+    top: 70px
     opacity: 1
 </style>

@@ -15,13 +15,11 @@ const router = createRouter({
     },
     {
       path: '/connect',
-      name: 'home_page',
       beforeEnter: [isNoConnectGuard],
       component: ConnectView
     },
     {
       path: "/app/",
-      name: "appV1",
       beforeEnter: [isConnectGuard],
       component: () => import("@/features/app/HomeApp.vue"),
       children: APP_ROUTES
@@ -29,7 +27,6 @@ const router = createRouter({
     },
     {
       path: '/:wild(.*)',
-      name: 'not_found',
       component: () => import("@/components/NotFound.vue")
     }
   ]

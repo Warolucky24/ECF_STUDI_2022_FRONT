@@ -5,7 +5,6 @@ import {toFormValidator} from "@vee-validate/zod";
 import {useUserStore} from "@/stores/userStore";
 import type {UserConnectInterface} from "@/shared/interfaces/UserInterface";
 import {useRouter} from "vue-router";
-import MsgCard from "@/components/MsgCard.vue";
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -73,13 +72,6 @@ const tryConnect = handleSubmit( async (formValues) => {
     </button>
   </form>
   <div id="bg"></div>
-  <div v-if="userStore.error">
-    <MsgCard :mode="'danger'">
-      <template v-slot:msg>
-        <h2>{{userStore.error.error}}</h2>
-      </template>
-    </MsgCard>
-  </div>
 </template>
 
 <style lang="sass" scoped>
@@ -92,7 +84,7 @@ h1
   left: 0px
   width: 100vw
   height: 100vh
-  background-image: url("./src/assets/img/bg_connect.jpg")
+  background-image: url("@/../public/img/bg_connect.jpg")
   background-repeat: no-repeat
   background-size: cover
   z-index: 1

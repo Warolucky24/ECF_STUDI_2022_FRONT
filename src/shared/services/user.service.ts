@@ -1,7 +1,6 @@
 import type {UserConnectInterface, User} from "@/shared/interfaces";
 
-
-const BASE_URL = "http://api-ecf-studi.math-frigoriste.fr/V1/";
+export const BASE_URL = "http://api-ecf-studi.math-frigoriste.fr/V1";
 
 
 export async function connectUser(User : UserConnectInterface): Promise<User> {
