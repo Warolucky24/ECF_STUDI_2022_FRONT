@@ -8,7 +8,7 @@ const route = useRoute()
 const unconnect = () => {
   const userStore = useUserStore();
   userStore.isConnected = false;
-  userStore.sendMsg("Vous êtes deconnecte");
+  userStore.sendMsg("Vous êtes deconnecte", "danger");
   router.push("/");
 }
 

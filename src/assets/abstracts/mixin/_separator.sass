@@ -1,7 +1,10 @@
 =separator($bgcolor, $width)
-  width: $width
   background: $bgcolor
   height: 3px
   border-radius: 2px
   display: block
   margin: 2px auto
+  +lg_max
+    width: 100vw
+  +lg_min
+    width: $width

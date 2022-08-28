@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import {useUserStore} from "@/stores/userStore";
+
 
 defineProps<{
   msg: string
   style: string
 }>()
 
+
+const close = ()=> {
+  const userStore = useUserStore()
+  userStore.error = ""
+}
 </script>
 
 
@@ -13,6 +20,7 @@ defineProps<{
   <Teleport to="body">
     <div id="popup" :class="style">
       <h3>{{msg}}</h3>
+      <div @click="close" id="btn_close_popup">x</div>
     </div>
   </Teleport>
 
@@ -22,23 +30,36 @@ defineProps<{
 @import "@/assets/main.sass"
 #popup
   color: $gray
+  width: 50vw
+  text-align: center
   font-size: 0.9em
-  border-radius: 3px 5px
-  padding: 5px 20px
+  border-radius: 4px
+  padding: 15px 10px
   z-index: 1000
   position: absolute
-  top: 70px
-  right: 10px
+  left: 25vw
+  bottom: 40px
   animation: enterEffect .4s ease
 .danger
   background: $danger_1
-  &:hover
-    background: $danger_2
+.success
+  background: $success_1
+.warning
+  background: $warning_1
+
+#btn_close_popup
+  position: absolute
+  top: 4px
+  right: 8px
+  cursor: pointer
+  font-weight: bold
+  font-size: 1.2em
+
 @keyframes enterEffect
   from
-    top: 0px
+    bottom: 0
     opacity: 0
   to
-    top: 70px
+    bottom: 40px
     opacity: 1
 </style>

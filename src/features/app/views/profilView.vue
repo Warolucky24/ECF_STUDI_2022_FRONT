@@ -31,7 +31,7 @@ const {value : pass2_value, errorMessage : pass2_error} = useField("password2")
 const tryChangePass = handleSubmit((password)=> {
   console.log(password);
   state.open = false;
-  userStore.sendMsg("Mot de passe changé !")
+  userStore.sendMsg("Mot de passe changé !", "success")
 })
 </script>
 

@@ -8,6 +8,8 @@ import {useUserStore} from "@/stores/userStore";
 
 const router = useRouter();
 const partnerStore = usePartnerStore();
+const useStore = useUserStore()
+
 
 const initialValues = {
   partner_name: "",
@@ -35,40 +37,47 @@ const {value : user_email, errorMessage : user_email_error } = useField("user_em
 const tryCreatePartner = handleSubmit(async (formValues) => {
   try {
       await partnerStore.addPartner(formValues);
+      await useStore.sendMsg("Nouveau partenaire crée !", "success");
       await router.push("/app/partner");
   }catch (e){
-    const useStore = useUserStore()
-    useStore.sendMsg("Email non disponnible")
+    useStore.sendMsg("Email non disponnible", "warning")
 
   }
 })
 </script>
 
 <template>
-  <form @submit="tryCreatePartner">
-    <table>
-      <tr>
-        <td>Nom du partenaire :</td>
-        <td><input type="text" v-model="partner_name" :class="{error_input : partner_error}"></td>
-      </tr>
-      <tr>
-        <td>
-          <select v-model="partner_active">
-            <option value="0">Non-Actif</option>
-            <option value="1">Actif</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Email du compte partenaire :</td>
-        <td><input type="email" v-model="user_email" :class="{error_input : user_email_error}"></td>
-      </tr>
-    </table>
-    <button class="btn_effect mt_20" type="submit">
-      <div class="font"></div>
-      <div class="text"><span>Crée !</span></div>
-    </button>
-  </form>
+  <div class="container">
+    <div>
+      <router-link to="/app/partner">Retour</router-link>
+    </div>
+    <div class="separator_secondary"></div>
+    <form @submit="tryCreatePartner">
+      <table>
+        <tr>
+          <td>Nom du partenaire :</td>
+          <td><input type="text" v-model="partner_name" :class="{error_input : partner_error}"></td>
+        </tr>
+        <tr>
+          <td>
+            <select v-model="partner_active">
+              <option value="0">Non-Actif</option>
+              <option value="1">Actif</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Email du compte partenaire :</td>
+          <td><input type="email" v-model="user_email" :class="{error_input : user_email_error}"></td>
+        </tr>
+      </table>
+      <button class="btn_effect mt_20" type="submit">
+        <div class="font"></div>
+        <div class="text"><span>Crée !</span></div>
+      </button>
+    </form>
+  </div>
+
 </template>
 
 <style scoped lang="sass">

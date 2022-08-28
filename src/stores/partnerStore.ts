@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import type {PartnerAddInterface, PartnerDetailInterface, PartnerInterface} from "@/shared/interfaces/PartnerInterface";
 import {DEFAULT_FILTER, type FilterInterface, type FilterUpdate} from "@/shared/interfaces";
-import {addPartner, dataPartnerById, fetchAllPartner} from "@/shared/services";
+import {addPartner, changeActivePartner, fetchAllPartner} from "@/shared/services";
 
 interface PartnerStoreInterface{
     partner: PartnerInterface[],
@@ -48,6 +48,9 @@ export const usePartnerStore = defineStore("partner", {
         async addPartner(formValues: PartnerAddInterface){
             await addPartner(formValues)
             this.needRefresh = true
+        },
+        async changeActive(partner_id : number, active: number){
+            await changeActivePartner(partner_id, active)
         }
     }
 })

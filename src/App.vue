@@ -10,7 +10,7 @@ const userStore = useUserStore();
   <pop-up
       v-if="userStore.error"
       :msg="userStore.error"
-      :style="'danger'"
+      :style="userStore.style"
   />
 </template>
 

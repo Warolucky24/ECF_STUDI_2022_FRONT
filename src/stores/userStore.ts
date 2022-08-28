@@ -2,12 +2,13 @@ import {defineStore} from "pinia";
 import type {UserConnectInterface, User} from "@/shared/interfaces";
 import {connectUser} from "@/shared/services";
 
-
+export type Style = "danger" | "success" | "warning"
 
 interface UserStoreInterface{
     isConnected : boolean,
     currentUser: User,
-    error: any
+    error: any,
+    style: Style
 }
 
 export const useUserStore = defineStore("userStore", {
@@ -19,19 +20,21 @@ export const useUserStore = defineStore("userStore", {
             first_connect: false,
             is_admin: true,
             user_active: true,
-            user_name: "none"
+            user_name: "none",
         },
-        error: null
+        error: null,
+        style: "danger"
     }),
     getters: {
 
     },
     actions: {
-        sendMsg(msg: string){
+        sendMsg(msg: string, style : Style){
             this.error = msg
+            this.style = style
             setTimeout(()=> {
                 this.error = null
-            },3000)
+            },4000)
         },
         goConnect: async function (formConnect: UserConnectInterface) {
             try {
@@ -39,10 +42,11 @@ export const useUserStore = defineStore("userStore", {
                 this.currentUser = await connectUser(formConnect);
                 this.error = null;
                 this.isConnected = true
+                this.sendMsg("Vous êtes connecté", "success")
             } catch (e) {
                 this.isConnected = false
                 // @ts-ignore
-                this.sendMsg(e.error)
+                this.sendMsg(e.error, "danger")
 
             }
         }

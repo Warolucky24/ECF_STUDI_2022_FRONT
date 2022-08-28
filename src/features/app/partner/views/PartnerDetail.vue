@@ -16,11 +16,12 @@ const partner = ref<PartnerDetailInterface | null>(null)
 
 </script>
 <template>
-  <div>
+  <div class="container">
     <div>
       <router-link to="/app/partner">Retour</router-link>
     </div>
-    Partner : {{route.params.partner_id}} demandé x)
+    <div class="separator_secondary"></div>
+    Partner : {{route.params.partner_id}} demandé
   </div>
 
 </template>
