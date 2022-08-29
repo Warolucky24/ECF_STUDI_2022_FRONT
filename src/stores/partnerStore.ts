@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import type {PartnerAddInterface, PartnerDetailInterface, PartnerInterface} from "@/shared/interfaces/PartnerInterface";
-import {DEFAULT_FILTER, type FilterInterface, type FilterUpdate} from "@/shared/interfaces";
+import type {PartnerAddInterface, PartnerInterface} from "@/shared/interfaces/PartnerInterface";
+import {DEFAULT_FILTER, type FilterInterface} from "@/shared/interfaces";
 import {addPartner, changeActivePartner, fetchAllPartner} from "@/shared/services";
 
 interface PartnerStoreInterface{
@@ -27,17 +27,6 @@ export const usePartnerStore = defineStore("partner", {
 
     },
     actions: {
-        updateFilter(filterUpdate: FilterUpdate){
-
-            if(filterUpdate.search !== undefined){
-                this.filters.search = filterUpdate.search
-                console.log(this.filters.search)
-            }else if(filterUpdate.etat){
-                this.filters.etat = filterUpdate.etat
-            }else{
-                this.filters = {...DEFAULT_FILTER}
-            }
-        },
         async fetchPartner(){
             this.isLoading = true
             this.partner = await fetchAllPartner();

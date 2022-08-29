@@ -1,4 +1,4 @@
-import {BASE_URL} from "@/shared/services/user.service";
+import {BASE_URL} from "@/shared/services/index";
 import type {PartnerAddInterface, PartnerDetailInterface, PartnerInterface} from "@/shared/interfaces";
 
 

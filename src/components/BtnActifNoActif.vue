@@ -78,6 +78,7 @@ $largeur_btn: calc($largeur/1.8)
     opacity: 1
 
 .body-button
+  cursor: pointer
   position : relative
   background : $gray
   width : $largeur

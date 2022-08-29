@@ -6,7 +6,8 @@ export  interface PartnerInterface{
     partner_active: number,
     partner_name: string,
     email: string,
-    user_name: string
+    user_name: string,
+    user_id: number
 }
 
 

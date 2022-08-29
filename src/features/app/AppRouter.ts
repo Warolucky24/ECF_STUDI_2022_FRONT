@@ -1,5 +1,6 @@
 import type {RouteRecordRaw} from "vue-router";
 import {PARTNER_ROUTE} from "@/features/app/partner/partner.route";
+import {STRUCT_ROUTE} from "@/features/app/struct/struct.route";
 
 export const APP_ROUTES: RouteRecordRaw[] = [
     {
@@ -24,6 +25,7 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     {
         path: "struct",
         component: () => import('@/features/app/struct/structView.vue'),
+        children: STRUCT_ROUTE,
         meta: {
             page: "struct"
         }

@@ -1,8 +1,5 @@
 import {useUserStore} from "@/stores/userStore";
 
-
-
-
 export function isConnectGuard(){
     const userStore = useUserStore()
     if(!userStore.isConnected){
@@ -17,11 +14,16 @@ export function isNoConnectGuard(){
     }
 }
 
-export function notAdminGuard(){
+export function notAdminGuardPartner(){
     const userStore = useUserStore()
     if (!userStore.currentUser.is_admin){
-        return "/app/struct"
+        return "/app/profil"
     }
+}
 
-
+export function notAdminGuardStruct(){
+    const userStore = useUserStore()
+    if (!userStore.currentUser.is_admin){
+        return "/app/profil"
+    }
 }

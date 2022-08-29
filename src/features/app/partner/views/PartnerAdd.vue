@@ -59,8 +59,8 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
           <td><input type="text" v-model="partner_name" :class="{error_input : partner_error}"></td>
         </tr>
         <tr>
-          <td>
-            <select v-model="partner_active">
+          <td colspan="2">
+            <select v-model="partner_active"  class="w_100 text_center">
               <option value="0">Non-Actif</option>
               <option value="1">Actif</option>
             </select>

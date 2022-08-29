@@ -1,3 +1,3 @@
 <template>
-  <h1>Page des Structures</h1>
+  <router-view></router-view>
 </template>

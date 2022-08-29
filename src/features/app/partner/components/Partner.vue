@@ -21,7 +21,8 @@ function goChangeActive(active_state: number){
 </script>
 
 <template>
-    <td> <router-link :to="'/app/partner/detail/'+props.data.id">{{props.data.partner_name}}</router-link></td>
+  <td><img id="imgLogo" class="m_5" :src="props.data.logo_url" alt=""></td>
+    <td><router-link :to="'/app/partner/detail/'+props.data.id">{{props.data.partner_name}}</router-link></td>
     <td v-if="userStore.currentUser.is_admin">
       <BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" />
     </td>
@@ -52,4 +53,10 @@ function goChangeActive(active_state: number){
   transition: all .4s
   &:hover
     color: #b00202
+#imgLogo
+  max-width: 40px
+  max-height: 40px
+  border: 1px solid black
+  border-radius: 6px
+  overflow: hidden
 </style>

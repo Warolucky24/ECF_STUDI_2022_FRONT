@@ -5,8 +5,10 @@ import Header from "@/features/app/components/Header.vue";
 <template>
   <Header/>
   <router-view v-slot="{ Component, route }">
-    <Transition name="page" mode="out-in">
-      <component :is="Component" :key="route.path"/>
+    <Transition name="page" mode="out-in" appear>
+      <div  :key="route.path">
+        <component :is="Component"/>
+      </div>
     </Transition>
   </router-view>
 </template>
@@ -19,7 +21,7 @@ import Header from "@/features/app/components/Header.vue";
 .page-leave-active
   transition: all 0.3s
 .page-enter-from
-  transform: translateX(-40px)
+  transform: translateX(0px)
   opacity: 0
 .page-leave-to
   transform: translateX(40px)

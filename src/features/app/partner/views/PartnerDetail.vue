@@ -22,6 +22,7 @@ const state = reactive<{
 watchEffect(async ()=>{
   try {
     state.partner = await dataPartnerById(parseInt(route.params.partner_id as string));
+    console.log(state.partner)
   }catch (e){
     // @ts-ignore
     userStore.sendMsg(e.error, "danger");
@@ -55,12 +56,15 @@ async function goChangeActivePartner(active_state: number){
     </div>
     <div class="separator_secondary"></div>
     <div class=" d_flex flex_column justify_content_center align_items_center">
+      <div>
+        <img :src="state.partner.logo_url" alt="LogoPartner" id="LogoPartnerBig">
+      </div>
       <h3 class="m_10">{{state.partner.partner_name}}</h3>
       <div class="d_flex justify_content_center align_items_center">
         <div v-if="userStore.currentUser.is_admin">
           <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" />
         </div>
-        <div class="ms_10">
+        <div class="ms_10" :class="{color_green : state.partner.partner_active===1 , color_red : state.partner.partner_active!==1}">
           {{state.partner.partner_active===1 ? "Actif" : "Non-Actif"}}
         </div>
       </div>
@@ -119,3 +123,15 @@ async function goChangeActivePartner(active_state: number){
   </div>
 
 </template>
+
+<style scoped lang="sass">
+#LogoPartnerBig
+  max-width: 100px
+  max-height: 100px
+  border-radius: 5px
+
+.color_green
+  color: green
+.color_red
+  color: red
+</style>
