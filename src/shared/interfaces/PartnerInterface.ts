@@ -1,9 +1,12 @@
+import type {StructPartnerDetailInterface} from "@/shared/interfaces/StructureInterface";
+
 export  interface PartnerInterface{
     id: number,
     logo_url: string,
     partner_active: number,
     partner_name: string,
-    gestion_id: number
+    email: string,
+    user_name: string
 }
 
 
@@ -14,17 +17,20 @@ export interface PartnerAddInterface{
 }
 
 export  interface PartnerDetailInterface{
-    user_id : string,
+    user_id : number,
+    partner_id: number,
     user_name : string,
     user_email: string,
     partner_name: string,
-    partner_active: boolean,
-    partner_id: number,
+    partner_active: number,
+    logo_url: string,
     gestion: {
-        c_crosstrainning:boolean,
-        c_particulier: boolean,
-        c_pilate: boolean,
-        v_boisson: boolean,
-        v_vetement: boolean
-    }
+        c_crosstrainning:number,
+        c_particulier: number,
+        c_pilate: number,
+        v_boisson: number,
+        v_vetement: number
+    },
+    struct : StructPartnerDetailInterface[] | any
 }
+

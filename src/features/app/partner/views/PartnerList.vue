@@ -19,16 +19,18 @@ function updateFilter(filterUpdate: FilterUpdate){
   }
 }
 
-async function changeActivePartner(partner_id: number, active:number){
+async function changeActivePartner(partner_id: number, active_state: number){
   try {
-    await partnerStore.changeActive(partner_id, active)
+    await partnerStore.changeActive(partner_id, active_state);
+    const partnerIndex = partnerStore.partner.findIndex((e) => e.id === partner_id);
+    const name_partner = partnerStore.partner[partnerIndex].partner_name
+    const etat = active_state === 1 ? "Actif" : "Non-Actif";
+    userStore.sendMsg(`${name_partner} est maintenant ${etat}`, "success");
   }catch (e){
-    userStore.sendMsg("Erreur lors de la modification", "danger")
+    //@ts-ignore
+    userStore.sendMsg(e.error, "danger");
   }
-
-
 }
-
 
 </script>
 
@@ -43,6 +45,14 @@ async function changeActivePartner(partner_id: number, active:number){
     </div>
     <div class="separator_secondary"></div>
     <table>
+      <thead>
+        <th>Nom</th>
+        <th>Activé ?</th>
+        <th>Nom gérant</th>
+        <th>mail gérant</th>
+        <th></th>
+        <th></th>
+      </thead>
         <tr
             v-for="partner in partnerStore.filteredPartner"
             class="card m_10"
@@ -50,7 +60,6 @@ async function changeActivePartner(partner_id: number, active:number){
         >
           <Partner
               v-if="userStore.currentUser.is_admin || userStore.currentUser.id === partner.id"
-              :admin="userStore.currentUser.is_admin"
               :data="partner" :key="partner.partner_name"
               @go-change-active-partner="changeActivePartner"
           />

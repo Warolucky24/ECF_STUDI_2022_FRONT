@@ -8,8 +8,7 @@ interface PartnerStoreInterface{
     filters : FilterInterface,
     isLoading: boolean,
     loaded: boolean,
-    needRefresh: boolean,
-    partnerDetail : PartnerDetailInterface | null
+    needRefresh: boolean
 
 }
 
@@ -19,8 +18,7 @@ export const usePartnerStore = defineStore("partner", {
         filters : {...DEFAULT_FILTER},
         isLoading: false,
         loaded : false,
-        needRefresh : false,
-        partnerDetail : null
+        needRefresh : false
     }),
     getters: {
         filteredPartner(state){
@@ -50,7 +48,12 @@ export const usePartnerStore = defineStore("partner", {
             this.needRefresh = true
         },
         async changeActive(partner_id : number, active: number){
-            await changeActivePartner(partner_id, active)
+            const editPartner = await changeActivePartner(partner_id, active)
+            if(editPartner){
+                this.needRefresh = true
+                const partnerIndex = this.partner.findIndex(p => p.id === partner_id)
+                this.partner[partnerIndex].partner_active = active
+            }
         }
     }
 })

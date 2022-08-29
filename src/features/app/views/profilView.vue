@@ -68,7 +68,7 @@ const tryChangePass = handleSubmit((password)=> {
           </table>
         </form>
       </div>
-      <div class="needNewPass" v-if="!userStore!.currentUser.first_connect">
+      <div class="needNewPass" v-if="userStore!.currentUser.first_connect">
         Password actuel générer automatiquement. veuillez le changer !
       </div>
     </div>

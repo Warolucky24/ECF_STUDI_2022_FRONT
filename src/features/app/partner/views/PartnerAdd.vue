@@ -40,8 +40,8 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
       await useStore.sendMsg("Nouveau partenaire crée !", "success");
       await router.push("/app/partner");
   }catch (e){
-    useStore.sendMsg("Email non disponnible", "warning")
-
+    // @ts-ignore
+    useStore.sendMsg(e.error, "warning")
   }
 })
 </script>
@@ -49,10 +49,10 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 <template>
   <div class="container">
     <div>
-      <router-link to="/app/partner">Retour</router-link>
+      <router-link to="/app/partner" class="btn_primary">Retour</router-link>
     </div>
     <div class="separator_secondary"></div>
-    <form @submit="tryCreatePartner">
+    <form @submit="tryCreatePartner" class="d_flex flex_column justify_content_center align_items_center">
       <table>
         <tr>
           <td>Nom du partenaire :</td>
@@ -73,7 +73,7 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
       </table>
       <button class="btn_effect mt_20" type="submit">
         <div class="font"></div>
-        <div class="text"><span>Crée !</span></div>
+        <div class="text"><span>Enregistrer</span></div>
       </button>
     </form>
   </div>
@@ -81,10 +81,14 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 </template>
 
 <style scoped lang="sass">
+@import "@/assets/main.sass"
+
 .error_input
   border: 1px solid red
 button
   background: none
   border: none
-
+.btn_effect
+  .font
+    background: $primary_2
 </style>

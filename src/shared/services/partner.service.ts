@@ -36,9 +36,7 @@ export async function  addPartner(formValues : PartnerAddInterface){
 }
 
 export async function changeActivePartner(partner_id : number, active: number){
-    console.log(partner_id,active)
-
-    const response = await (await fetch(`${BASE_URL}/partner/active/${partner_id}`,{
+    const response = await (await fetch(`${BASE_URL}/partner/active`,{
         method: "PUT",
         body :JSON.stringify({
             partner_id: partner_id,
