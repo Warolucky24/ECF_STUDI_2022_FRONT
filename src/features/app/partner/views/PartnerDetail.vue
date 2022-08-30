@@ -97,7 +97,7 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
         </table>
       </div>
       <div class="m_10">
-        <h5>Droit :</h5>
+        <h5 class="mb_10">Droit :</h5>
         <table>
           <tr>
             <td>Vente de boissons :</td>
@@ -146,7 +146,7 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
           </tr>
         </table>
         <div class="mt_20">
-          <h5>Structure associés :</h5>
+          <h5 class="mb_10">Structure associés :</h5>
           <div v-if="state.partner.struct" v-for="struct in state.partner.struct" :key="struct.id">
             <struct-in-detail-partner
                 :data="struct"

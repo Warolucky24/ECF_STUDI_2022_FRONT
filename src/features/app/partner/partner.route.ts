@@ -20,7 +20,7 @@ export const PARTNER_ROUTE: RouteRecordRaw[] = [
         component: () => import("@/features/app/partner/views/PartnerAdd.vue")
     },
     {
-        path: "update",
+        path: "update/:partner_id",
         name: "updatePartner",
         beforeEnter: [notAdminGuardPartner, initialFetchPartner],
         component: () => import("@/features/app/partner/views/PartnerUpdate.vue")
