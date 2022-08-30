@@ -28,6 +28,9 @@ export async function  addPartner(formValues : PartnerAddInterface){
             "Content-type": "application/json"
         }
     })).json()
+    console.log(response)
+
+
     if(!response.error){
         return response;
     }else{

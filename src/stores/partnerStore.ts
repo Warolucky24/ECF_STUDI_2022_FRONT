@@ -32,7 +32,12 @@ export const usePartnerStore = defineStore("partner", {
             this.isLoading = false
         },
         async addPartner(formValues: PartnerAddInterface){
-            await addPartner(formValues)
+            this.isLoading = true
+            const response = await addPartner(formValues)
+            if (response){
+                this.needRefresh = true
+            }
+            this.isLoading = false
             this.needRefresh = true
         },
         async changeActive(partner_id : number, active: number){
@@ -47,7 +52,6 @@ export const usePartnerStore = defineStore("partner", {
             const editDroitPartner = await changeActiveDroitPartner(partner_id, gestion_name, gestion_active);
             if (editDroitPartner){
                 this.needRefresh = true
-                console.log("need Refresh")
             }
         }
     }

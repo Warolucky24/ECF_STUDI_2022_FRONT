@@ -37,8 +37,8 @@ const {value : user_email, errorMessage : user_email_error } = useField("user_em
 const tryCreatePartner = handleSubmit(async (formValues) => {
   try {
       await partnerStore.addPartner(formValues);
-      await useStore.sendMsg("Nouveau partenaire crée !", "success");
-      await router.push("/app/partner");
+      useStore.sendMsg("Nouveau partenaire crée !", "success");
+      router.push("/app/partner");
   }catch (e){
     // @ts-ignore
     useStore.sendMsg(e.error, "warning")
