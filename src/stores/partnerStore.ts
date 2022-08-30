@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import type {PartnerAddInterface, PartnerInterface} from "@/shared/interfaces/PartnerInterface";
 import {DEFAULT_FILTER, type FilterInterface} from "@/shared/interfaces";
-import {addPartner, changeActivePartner, fetchAllPartner} from "@/shared/services";
+import {addPartner, changeActiveDroitPartner, changeActivePartner, fetchAllPartner} from "@/shared/services";
 
 interface PartnerStoreInterface{
     partner: PartnerInterface[],
@@ -24,7 +24,6 @@ export const usePartnerStore = defineStore("partner", {
         filteredPartner(state){
             return state.partner;
         }
-
     },
     actions: {
         async fetchPartner(){
@@ -43,9 +42,17 @@ export const usePartnerStore = defineStore("partner", {
                 const partnerIndex = this.partner.findIndex(p => p.id === partner_id)
                 this.partner[partnerIndex].partner_active = active
             }
+        },
+        async changeActiveDroit(partner_id :number, gestion_name:string, gestion_active:number){
+            const editDroitPartner = await changeActiveDroitPartner(partner_id, gestion_name, gestion_active);
+            if (editDroitPartner){
+                this.needRefresh = true
+                console.log("need Refresh")
+            }
         }
     }
 })
+
 
 
 export function initialFetchPartner(){

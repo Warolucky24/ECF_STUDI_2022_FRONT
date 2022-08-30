@@ -17,13 +17,13 @@ export const STRUCT_ROUTE: RouteRecordRaw[] = [
     {
         path:"add",
         name: "addStruct",
-        beforeEnter: [notAdminGuardStruct],
+        beforeEnter: [notAdminGuardStruct, initialFetchStruct],
         component: () => import("@/features/app/struct/views/StructAdd.vue")
     },
     {
         path: "update",
         name: "updateStruct",
-        beforeEnter: [notAdminGuardStruct],
+        beforeEnter: [notAdminGuardStruct, initialFetchStruct],
         component: () => import("@/features/app/struct/views/StructUpdate.vue")
     },
     {

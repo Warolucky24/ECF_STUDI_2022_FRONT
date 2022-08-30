@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import type {UserConnectInterface, User} from "@/shared/interfaces";
-import {connectUser} from "@/shared/services";
+import {changePassword, connectUser} from "@/shared/services";
 
 export type Style = "danger" | "success" | "warning"
 
@@ -49,6 +49,9 @@ export const useUserStore = defineStore("userStore", {
                 this.sendMsg(e.error, "danger")
 
             }
+        },
+        async changePassword(password: string){
+            const response = await changePassword(this.currentUser.email,password)
         }
     }
 

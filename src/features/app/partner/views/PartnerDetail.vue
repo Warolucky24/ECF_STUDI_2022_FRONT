@@ -22,7 +22,6 @@ const state = reactive<{
 watchEffect(async ()=>{
   try {
     state.partner = await dataPartnerById(parseInt(route.params.partner_id as string));
-    console.log(state.partner)
   }catch (e){
     // @ts-ignore
     userStore.sendMsg(e.error, "danger");
@@ -48,6 +47,22 @@ async function goChangeActivePartner(active_state: number){
   }
 }
 
+
+async function goChangeActiveDroitPartner(gestion_active: number, gestion_name : string){
+  try {
+    //@ts-ignore
+    const partnerId = state.partner.partner_id
+    const partnerStore = usePartnerStore()
+    await partnerStore.changeActiveDroit(partnerId, gestion_name, gestion_active)
+    //@ts-ignore
+    state.partner.gestion[gestion_name] = gestion_active
+  }catch (e){
+    //@ts-ignore
+    userStore.sendMsg(e.error, "danger")
+  }
+}
+
+
 </script>
 <template>
   <div class="container" v-if="state.partner">
@@ -62,7 +77,7 @@ async function goChangeActivePartner(active_state: number){
       <h3 class="m_10">{{state.partner.partner_name}}</h3>
       <div class="d_flex justify_content_center align_items_center">
         <div v-if="userStore.currentUser.is_admin">
-          <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" />
+          <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" :name="state.partner.partner_name"/>
         </div>
         <div class="ms_10" :class="{color_green : state.partner.partner_active===1 , color_red : state.partner.partner_active!==1}">
           {{state.partner.partner_active===1 ? "Actif" : "Non-Actif"}}
@@ -86,37 +101,57 @@ async function goChangeActivePartner(active_state: number){
         <table>
           <tr>
             <td>Vente de boissons :</td>
-            <td>
-              <btn-actif-no-actif :state="state.partner.gestion.v_boisson" />
+            <td v-if="userStore.currentUser.is_admin">
+              <btn-actif-no-actif :state="state.partner.gestion.v_boisson" @changeactive="goChangeActiveDroitPartner" :name="'v_boisson'"/>
+            </td>
+            <td v-else>
+              {{state.partner.gestion.v_boisson === 1 ? "Actif" : "Non-Actif"}}
             </td>
           </tr>
           <tr>
             <td>Vente de vêtements :</td>
-            <td>
-              <btn-actif-no-actif :state="state.partner.gestion.v_vetement" />
+            <td v-if="userStore.currentUser.is_admin">
+              <btn-actif-no-actif :state="state.partner.gestion.v_vetement" @changeactive="goChangeActiveDroitPartner"  :name="'v_vetement'"/>
+            </td>
+            <td v-else>
+              {{state.partner.gestion.v_vetement === 1 ? "Actif" : "Non-Actif"}}
             </td>
           </tr>
           <tr>
             <td>Cours particulier :</td>
-            <td>
-              <btn-actif-no-actif :state="state.partner.gestion.c_particulier" />
+            <td v-if="userStore.currentUser.is_admin">
+              <btn-actif-no-actif :state="state.partner.gestion.c_particulier" @changeactive="goChangeActiveDroitPartner"  :name="'c_particulier'"/>
+            </td>
+            <td v-else>
+              {{state.partner.gestion.c_particulier === 1 ? "Actif" : "Non-Actif"}}
             </td>
           </tr>
           <tr>
             <td>Cours de pilate :</td>
-            <td>
-              <btn-actif-no-actif :state="state.partner.gestion.c_pilate" />
+            <td v-if="userStore.currentUser.is_admin">
+              <btn-actif-no-actif :state="state.partner.gestion.c_pilate" @changeactive="goChangeActiveDroitPartner"  :name="'c_pilate'"/>
+            </td>
+            <td v-else>
+              {{state.partner.gestion.c_pilate === 1 ? "Actif" : "Non-Actif"}}
             </td>
           </tr>
           <tr>
             <td>Cours de crosstrainning :</td>
-            <td>
-              <btn-actif-no-actif :state="state.partner.gestion.c_crosstrainning" />
+            <td v-if="userStore.currentUser.is_admin">
+              <btn-actif-no-actif :state="state.partner.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitPartner" :name="'c_crosstrainning'"/>
+            </td>
+            <td v-else>
+              {{state.partner.gestion.c_crosstrainning === 1 ? "Actif" : "Non-Actif"}}
             </td>
           </tr>
         </table>
-        <div v-if="state.partner.struct" v-for="struct in state.partner.struct" :key="struct.id">
-          <struct-in-detail-partner :data="struct"/>
+        <div class="mt_20">
+          <h5>Structure associés :</h5>
+          <div v-if="state.partner.struct" v-for="struct in state.partner.struct" :key="struct.id">
+            <struct-in-detail-partner
+                :data="struct"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ function goChangeActive(active_state:number){
     <span>{{props.data.partner_name}}</span>
   </router-link></td>
   <td v-if="userStore.currentUser.is_admin">
-    <BtnActifNoActif :state="props.data.struct_active" @changeactive="goChangeActive" />
+    <BtnActifNoActif :state="props.data.struct_active" @changeactive="goChangeActive" :name="props.data.struct_name"/>
   </td>
 </template>
 

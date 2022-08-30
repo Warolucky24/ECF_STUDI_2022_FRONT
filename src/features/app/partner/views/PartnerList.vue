@@ -32,7 +32,7 @@ async function changeActivePartner(partner_id: number, active_state: number){
       <PartnerFilters
           :filters="partnerStore.filters"
       />
-      <router-link to="/app/partner/add" id="addPartner" class="btn_primary">Ajouter</router-link>
+      <router-link v-if="userStore.currentUser.is_admin" to="/app/partner/add" id="addPartner" class="btn_primary">Ajouter</router-link>
     </div>
     <div class="separator_secondary"></div>
     <table>

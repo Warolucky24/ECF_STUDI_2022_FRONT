@@ -1,41 +1,46 @@
 <script setup lang="ts">
-
 import type {StructPartnerDetailInterface} from "@/shared/interfaces";
+import {useUserStore} from "@/stores/userStore";
 import {ref} from "vue";
+const userStore = useUserStore()
 
-defineProps<{
+
+const props = defineProps<{
   data : StructPartnerDetailInterface
 }>()
-const active = ref<boolean>(false)
+
+const open = ref<boolean>(false)
 
 </script>
 
 <template>
-  <div>
-    <h1 @click="active = !active">{{data.struct_name}}  | {{data.struct_active ? "Actif" : "Non-Actif"}}</h1>
+  <div @click="open = !open">
+    <h1 class="d_flex mt_20">
+      <router-link :to="'/app/struct/detail/'+data.id">{{data.struct_name}}</router-link>  | {{props.data.struct_active ? "Actif" : "Non-Actif"}}
+    </h1>
   </div>
-  <div v-if="active">
+  <div v-if="open">
     <table>
       <table>
         <tr>
           <td>Vente de boissons :</td>
-          <td>{{data.v_boisson}}</td>
+          <td>{{props.data.v_boisson === 1 ? "Actif" : "Non-Actif"}}</td>
         </tr>
         <tr>
           <td>vente de vêtements :</td>
-          <td>{{data.v_vetement}}</td>
+          <td>{{props.data.v_vetement === 1 ? "Actif" : "Non-Actif"}}</td>
         </tr>
         <tr>
           <td>Cours particulier :</td>
-          <td>{{data.c_particulier}}</td>
+          <td>{{props.data.c_particulier === 1 ? "Actif" : "Non-Actif"}}</td>
         </tr>
         <tr>
           <td>Cours de pilate :</td>
-          <td>{{data.c_pilate}}</td>
+          <td>{{props.data.c_pilate === 1 ? "Actif" : "Non-Actif"}}</td>
         </tr>
         <tr>
           <td>Cours de crosstrainning :</td>
-          <td>{{data.c_crosstrainning}}</td>
+          <td>{{props.data.c_crosstrainning === 1 ? "Actif" : "Non-Actif"}}</td>
         </tr>
       </table>
     </table>

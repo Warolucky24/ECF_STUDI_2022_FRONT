@@ -1,5 +1,6 @@
-import type {StructInterface} from "@/shared/interfaces";
+import type {StructAddInterface, StructInterface} from "@/shared/interfaces";
 import {BASE_URL} from "@/shared/services/index";
+import {number} from "zod";
 
 
 export async function fetchAllStruct(): Promise<StructInterface[]>{
@@ -20,6 +21,30 @@ export async function changeActiveStruct(struct_id : number, active: number){
         })
     })).json()
     if (!response.error){
+        return response;
+    }else{
+        throw response;
+    }
+}
+
+export async function addStruct(formValues : StructAddInterface){
+    const response = await (await fetch(`${BASE_URL}/struct`, {
+        method: "POST",
+        body: JSON.stringify(formValues),
+        headers: {
+            "Content-type": "application/json"
+        }
+    })).json()
+    if(!response.error){
+        return response;
+    }else{
+        throw response;
+    }
+}
+
+export async function dataStructById(struct_id : number){
+    const response = await (await fetch(`${BASE_URL}/struct/${struct_id}`)).json()
+    if(!response.error){
         return response;
     }else{
         throw response;

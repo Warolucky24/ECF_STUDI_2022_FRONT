@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import type {StructInterface} from "@/shared/interfaces";
-import {changeActiveStruct, fetchAllStruct} from "@/shared/services";
+import type {StructAddInterface, StructInterface} from "@/shared/interfaces";
+import {addStruct, changeActiveStruct, fetchAllStruct} from "@/shared/services";
 
 
 interface StructStoreInterface{
@@ -9,7 +9,6 @@ interface StructStoreInterface{
     loaded: boolean,
     needRefresh: boolean
 }
-
 
 export const useStructStore = defineStore("structStore",{
     state: ():StructStoreInterface =>({
@@ -36,6 +35,10 @@ export const useStructStore = defineStore("structStore",{
                 const structIndex = this.struct.findIndex(p => p.id === struct_id)
                 this.struct[structIndex].struct_active = active
             }
+        },
+        async addStruct(formValues : StructAddInterface){
+            await addStruct(formValues);
+            this.needRefresh = true
         }
     }
 })

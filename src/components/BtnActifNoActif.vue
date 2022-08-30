@@ -3,19 +3,20 @@
 import {reactive} from "vue";
 
 const props = defineProps<{
-  state : number
+  state : number,
+  name : string
 }>()
 
 const state = reactive<{open: boolean}>({open:false})
 
 const emit = defineEmits<{
-  (e: "changeactive", active_state: number) : number
+  (e: "changeactive", active_state: number, name: string) : number
 }>()
 
 function goActif(){
   state.open = !state.open;
   const active_state: number = props.state === 1 ? 0 : 1
-  emit("changeactive", active_state );
+  emit("changeactive", active_state , props.name);
 }
 </script>
 
@@ -39,8 +40,8 @@ function goActif(){
 <style scoped lang="sass">
 @import "../assets/main"
 
-$largeur: 70px
-$hauteur: 30px
+$largeur: 60px
+$hauteur: 25px
 $largeur_btn: calc($largeur/1.8)
 
 .popupConfirm

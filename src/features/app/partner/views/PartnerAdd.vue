@@ -31,7 +31,7 @@ const {handleSubmit} = useForm({
 })
 
 const {value : partner_name , errorMessage : partner_error } = useField("partner_name");
-const {value : partner_active} = useField('partner_active')
+const {value : partner_active, errorMessage : partner_active_error} = useField('partner_active')
 const {value : user_email, errorMessage : user_email_error } = useField("user_email")
 
 const tryCreatePartner = handleSubmit(async (formValues) => {
@@ -60,7 +60,7 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
         </tr>
         <tr>
           <td colspan="2">
-            <select v-model="partner_active"  class="w_100 text_center">
+            <select v-model="partner_active"  class="w_100 text_center" :class="{error_input : partner_active_error}">
               <option value="0">Non-Actif</option>
               <option value="1">Actif</option>
             </select>
@@ -88,6 +88,7 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 button
   background: none
   border: none
+  outline: none
 .btn_effect
   .font
     background: $primary_2

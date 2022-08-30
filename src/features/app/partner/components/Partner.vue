@@ -14,8 +14,9 @@ const emit = defineEmits<{
   (e: "goChangeActivePartner", partner_id: number, active_state :number ):void
 }>()
 
-function goChangeActive(active_state: number){
+function goChangeActive(active_state: number, name : string){
   emit('goChangeActivePartner', props.data.id, active_state)
+  console.log(name)
 }
 
 </script>
@@ -24,7 +25,7 @@ function goChangeActive(active_state: number){
   <td><img id="imgLogo" class="m_5" :src="props.data.logo_url" alt=""></td>
     <td><router-link :to="'/app/partner/detail/'+props.data.id">{{props.data.partner_name}}</router-link></td>
     <td v-if="userStore.currentUser.is_admin">
-      <BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" />
+      <BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/>
     </td>
     <td v-else>
       <div>{{props.data.partner_active? "Actif" : "Non-Actif"}}</div>

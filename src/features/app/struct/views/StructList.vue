@@ -11,9 +11,9 @@ async function changeActiveStruct(struct_id: number, active_state: number){
   try {
     await structStore.changeActive(struct_id, active_state);
     const structIndex = structStore.struct.findIndex(e => e.id === struct_id);
-    const name_struc = structStore.struct[structIndex].struct_name;
+    const name_struct = structStore.struct[structIndex].struct_name;
     const etat = active_state === 1 ? "Actif" : "Non-Actif";
-    userStore.sendMsg(`${name_struc} est maintenant ${etat}`, "success");
+    userStore.sendMsg(`${name_struct} est maintenant ${etat}`, "success");
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");
@@ -25,7 +25,7 @@ async function changeActiveStruct(struct_id: number, active_state: number){
   <div class="container">
     <div class="d_flex justify_content_between align_items_center flex_row">
       <div>Barre de trie</div>
-      <router-link to="/app/struct/add" class="btn_primary">Ajouter</router-link>
+      <router-link v-if="userStore.currentUser.is_admin" to="/app/struct/add" class="btn_primary">Ajouter</router-link>
     </div>
     <div class="separator_secondary"></div>
     <table>

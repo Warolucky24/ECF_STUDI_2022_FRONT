@@ -16,13 +16,13 @@ export const PARTNER_ROUTE: RouteRecordRaw[] = [
     {
         path: "add",
         name: "addPartner",
-        beforeEnter: [notAdminGuardPartner],
+        beforeEnter: [notAdminGuardPartner, initialFetchPartner],
         component: () => import("@/features/app/partner/views/PartnerAdd.vue")
     },
     {
         path: "update",
         name: "updatePartner",
-        beforeEnter: [notAdminGuardPartner],
+        beforeEnter: [notAdminGuardPartner, initialFetchPartner],
         component: () => import("@/features/app/partner/views/PartnerUpdate.vue")
     },
     {
