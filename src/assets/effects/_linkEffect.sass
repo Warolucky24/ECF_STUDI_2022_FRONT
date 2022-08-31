@@ -1,0 +1,19 @@
+.link_effect
+  color: black
+  text-decoration: none
+  position: relative
+  z-index: 2
+  padding: 0 10px
+  &:hover:before
+    width: 100%
+
+  &:before
+    z-index: 1
+    content: ""
+    position: absolute
+    width: 0%
+    height: 100%
+    background: $primary_50
+    top: 0px
+    left: 0px
+    transition: all .4s

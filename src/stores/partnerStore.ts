@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import type {PartnerAddInterface, PartnerInterface} from "@/shared/interfaces/PartnerInterface";
-import {DEFAULT_FILTER, type FilterInterface} from "@/shared/interfaces";
+import {DEFAULT_FILTER, type FilterInterface, type FilterUpdate} from "@/shared/interfaces";
 import {addPartner, changeActiveDroitPartner, changeActivePartner, fetchAllPartner} from "@/shared/services";
 
 interface PartnerStoreInterface{
@@ -22,7 +22,11 @@ export const usePartnerStore = defineStore("partner", {
     }),
     getters: {
         filteredPartner(state){
-            return state.partner;
+            return state.partner.filter(p => {
+                const etat_partner = p.partner_active === 1 ? "Actif" : "Non-actif";
+                return p.partner_name.toLocaleLowerCase().startsWith(state.filters.search.toLocaleLowerCase()) &&
+                    (state.filters.etat === "all" || state.filters.etat === etat_partner)
+            })
         }
     },
     actions: {
@@ -52,6 +56,15 @@ export const usePartnerStore = defineStore("partner", {
             const editDroitPartner = await changeActiveDroitPartner(partner_id, gestion_name, gestion_active);
             if (editDroitPartner){
                 this.needRefresh = true
+            }
+        },
+        updateFilter(filterUpdate : FilterUpdate){
+            if (filterUpdate.search !== undefined){
+                this.filters.search = filterUpdate.search
+            }else if(filterUpdate.etat){
+                this.filters.etat = filterUpdate.etat
+            }else{
+                this.filters = {... DEFAULT_FILTER}
             }
         }
     }
