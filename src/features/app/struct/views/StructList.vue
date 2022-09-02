@@ -5,10 +5,13 @@ import {useUserStore} from "@/stores/userStore";
 import Struct from "@/features/app/struct/components/Struct.vue";
 import Filters from "@/features/app/components/Filters.vue";
 import type { FilterUpdate} from "@/shared/interfaces";
+import StructAdd from "@/features/app/struct/components/StructAdd.vue";
+import {ref} from "vue";
 
 
 const structStore = useStructStore()
 const userStore = useUserStore()
+const addStructModal = ref<boolean>(false)
 
 async function changeActiveStruct(struct_id: number, active_state: number){
   try {
@@ -37,16 +40,10 @@ function UpdateFilter(updateFilter : FilterUpdate){
           :filters="structStore.filters"
           @update-filter="UpdateFilter"
       />
-      <router-link v-if="userStore.currentUser.is_admin" to="/app/struct/add" id="addPartner" class="btn_primary">Ajouter</router-link>
+      <div class="btn_primary" @click="addStructModal = true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
-    <table class="table">
-      <tr>
-        <th>Nom de la Structure</th>
-        <th>Partenaire lié</th>
-        <th>Actif ?</th>
-      </tr>
-      <tr
+      <div
           v-for="struct in structStore.filteredStruct"
           class="m_10"
           :key="struct.id"
@@ -56,9 +53,13 @@ function UpdateFilter(updateFilter : FilterUpdate){
             :data="struct" :key="struct.struct_name"
             @go-change-active-struct="changeActiveStruct"
         />
-      </tr>
-    </table>
+      </div>
+    <div class="modal" v-if="addStructModal">
+      <div class="modal_content"><StructAdd @close-modal="addStructModal = false"/></div>
+      <div class="modal_back" @click="addStructModal = false"></div>
+    </div>
   </div>
+
 </template>
 
 <style scoped lang="sass">

@@ -18,7 +18,7 @@ export const STRUCT_ROUTE: RouteRecordRaw[] = [
         path:"add",
         name: "addStruct",
         beforeEnter: [notAdminGuardStruct, initialFetchStruct],
-        component: () => import("@/features/app/struct/views/StructAdd.vue")
+        component: () => import("@/features/app/struct/components/StructAdd.vue")
     },
     {
         path: "update/:struct_id",

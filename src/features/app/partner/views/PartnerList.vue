@@ -5,12 +5,13 @@ import {useUserStore} from "@/stores/userStore";
 import {useRouter} from "vue-router";
 import type {FilterUpdate} from "@/shared/interfaces";
 import Filters from "@/features/app/components/Filters.vue";
-
+import PartnerAdd from "@/features/app/partner/components/PartnerAdd.vue";
+import {ref} from "vue";
 
 const partnerStore = usePartnerStore();
 const userStore = useUserStore();
 const router = useRouter()
-
+const addPartner = ref<boolean>(false)
 
 async function changeActivePartner(partner_id: number, active_state: number){
   try {
@@ -38,18 +39,10 @@ function UpdateFilter(updateFilter : FilterUpdate){
           :filters="partnerStore.filters"
           @update-filter="UpdateFilter"
       />
-      <router-link v-if="userStore.currentUser.is_admin" to="/app/partner/add" id="addPartner" class="btn_primary">Ajouter</router-link>
+      <div class="btn_primary" @click="addPartner= true">Ajoutez</div>
     </div>
     <div class="separator_secondary"></div>
-    <table class="table">
-      <tr>
-        <th>Logo</th>
-        <th>Nom</th>
-        <th>Activé ?</th>
-        <th>Nom gérant</th>
-        <th>mail gérant</th>
-      </tr>
-        <tr
+        <div
             v-for="partner in partnerStore.filteredPartner"
             class="m_10"
             :key="partner.id"
@@ -59,8 +52,11 @@ function UpdateFilter(updateFilter : FilterUpdate){
               :data="partner" :key="partner.partner_name"
               @go-change-active-partner="changeActivePartner"
           />
-        </tr>
-    </table>
+        </div>
+    <div class="modal" v-if="addPartner">
+      <div class="modal_content"><PartnerAdd  @close-modal="addPartner = false"/></div>
+      <div class="modal_back" @click="addPartner = false"></div>
+    </div>
   </div>
 
 </template>

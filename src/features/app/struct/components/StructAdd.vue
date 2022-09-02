@@ -19,6 +19,9 @@ const initialValues= {
   struct_active: "1",
   partner_id : ""
 }
+const emit = defineEmits<{
+  (e: "closeModal"):void
+}>()
 
 const required_error = {required_error : "Veuillez renseigner ce champ"}
 const validationSchema = toFormValidator(
@@ -46,7 +49,7 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
     //@ts-ignore
   await structStore.addStruct(formValues);
   await userStore.sendMsg("Nouvelle structure crée ! ", "success");
-  await router.push("/app/struct");
+  emit('closeModal');
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger")
@@ -55,7 +58,7 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
 </script>
 
 <template>
-  <form @submit="tryCreateStruct" class="d_flex flex_column justify_content_center align_items_center">
+  <form @submit="tryCreateStruct" class="d_flex flex_column justify_content_center align_items_center" id="form">
     <table>
       <tr>
         <td colspan="2">
@@ -96,7 +99,8 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
 
 <style scoped lang="sass">
 @import "@/assets/main.sass"
-
+#form
+  min-height: 400px
 .error_input
   border: 1px solid red
 button

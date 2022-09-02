@@ -25,12 +25,14 @@ function goActif(){
     <div class="button" :class="{buttonValid : props.state === 1}"></div>
   </div>
   <Teleport to="body">
-    <div id="calc" v-if="state.open" @click="state.open = false"></div>
-    <div v-if="state.open" class="popupConfirm">
-      <div class="title">Veuillez confirmer l'opération :</div>
-      <div class=" mt_10 d_flex justify_content_arround align_items_center">
-        <div class="btn_success" @click="goActif">Oui</div>
-        <div class="btn_warning" @click="state.open = false">Non</div>
+    <div v-if="state.open" class="modal">
+      <div class="modal_back" @click="state.open = false"></div>
+      <div class=" mt_10 d_flex flex_column justify_content_center align_items_center modal_content">
+        <div class="title">Veuillez confirmer l'opération :</div>
+        <div class="d_flex justify_content_arround align_items_center">
+          <div class="btn_success m_5" @click="goActif">Oui</div>
+          <div class="btn_warning m_5" @click="state.open = false">Non</div>
+        </div>
       </div>
     </div>
   </Teleport>
@@ -44,21 +46,6 @@ $largeur: 60px
 $hauteur: 25px
 $largeur_btn: calc($largeur/1.8)
 
-.popupConfirm
-  color: $gray
-  width: 50vw
-  text-align: center
-  border-radius: 4px
-  padding: 15px 10px
-  z-index: 1000
-  position: absolute
-  left: 25vw
-  top: 50px
-  border: 2px solid $secondary
-  animation: enterEffect .4s ease
-  background: $primary
-  .title
-    font-size: 1.3em
 #calc
   position: absolute
   z-index: 20

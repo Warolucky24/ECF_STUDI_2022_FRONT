@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import {useField, useForm} from "vee-validate";
-import {useRouter} from "vue-router";
 import {usePartnerStore} from "@/stores/partnerStore";
 import {toFormValidator} from "@vee-validate/zod";
 import z from "zod";
 import {useUserStore} from "@/stores/userStore";
 
-const router = useRouter();
 const partnerStore = usePartnerStore();
 const useStore = useUserStore()
-
 
 const initialValues = {
   partner_name: "",
   partner_active: "1",
   user_email: ""
 }
+
+const emit = defineEmits<{
+  (e: "closeModal"):void
+}>()
 
 const required_error = {required_error: "Veuillez renseigner ce champ"}
 const validationSchema = toFormValidator(
@@ -38,7 +39,7 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
   try {
       await partnerStore.addPartner(formValues);
       useStore.sendMsg("Nouveau partenaire crée !", "success");
-      router.push("/app/partner");
+      emit("closeModal");
   }catch (e){
     // @ts-ignore
     useStore.sendMsg(e.error, "warning")
@@ -47,11 +48,7 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 </script>
 
 <template>
-  <div class="container">
-    <div>
-      <router-link to="/app/partner" class="btn_primary">Retour</router-link>
-    </div>
-    <div class="separator_secondary"></div>
+  <div class="d_flex justify_content_center align_items_center" id="form">
     <form @submit="tryCreatePartner" class="d_flex flex_column justify_content_center align_items_center">
       <table>
         <tr>
@@ -83,6 +80,8 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 <style scoped lang="sass">
 @import "@/assets/main.sass"
 
+#form
+  min-height: 400px
 .error_input
   border: 1px solid red
 button
