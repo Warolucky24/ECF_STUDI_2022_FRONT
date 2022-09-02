@@ -50,3 +50,19 @@ export async function dataStructById(struct_id : number){
         throw response;
     }
 }
+
+export async function changeActiveDroitStruct(struct_id:number, gestion_name:string, gestion_active:number){
+    const response = await (await fetch(`${BASE_URL}/struct/droit`,{
+        method: "PUT",
+        body :JSON.stringify({
+            struct_id: struct_id,
+            gestion_name: gestion_name,
+            gestion_active:gestion_active
+        })
+    })).json()
+    if (!response.error){
+        return response;
+    }else{
+        throw  response;
+    }
+}

@@ -54,7 +54,6 @@ export async function changeActivePartner(partner_id : number, active: number){
 }
 
 export async function changeActiveDroitPartner(partner_id:number, gestion_name:string, gestion_active:number){
-    console.log(partner_id, gestion_name, gestion_active)
     const response = await (await fetch(`${BASE_URL}/partner/droit`,{
         method: "PUT",
         body :JSON.stringify({

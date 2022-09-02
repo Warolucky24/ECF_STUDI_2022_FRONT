@@ -33,8 +33,8 @@ async function goChangeActiveStruct(gestion_active: number, gestion_name : strin
     await structStore.changeActive(struct_id, gestion_active);
     //@ts-ignore
     state.struct.struct_active = gestion_active
-    const structIndex = structStore.struct.findIndex(e => e.id === struct_id);
-    const name_struct = structStore.struct[structIndex].struct_name;
+    //@ts-ignore
+    const name_struct = state.struct.struct_name
     const etat = gestion_active === 1 ? "Actif" : "Non-Actif";
     userStore.sendMsg(`${name_struct} est maintenant ${etat}`, "success");
   }catch (e){
@@ -44,8 +44,17 @@ async function goChangeActiveStruct(gestion_active: number, gestion_name : strin
 }
 
 
-function goChangeActiveDroitStruct(gestion_active: number, gestion_name : string){
-  userStore.sendMsg(` Demande de modification pour ${gestion_name} pour ${gestion_active}`,"warning");
+async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : string){
+  try {
+    //@ts-ignore
+    const struct_id = state.struct.struct_id;
+    await structStore.changeDroitActive(struct_id, gestion_name,gestion_active);
+    //@ts-ignore
+    state.struct.gestion[gestion_name] = gestion_active
+  }catch (e) {
+    //@ts-ignore
+    userStore.sendMsg(e.error, "warning")
+  }
 }
 
 </script>

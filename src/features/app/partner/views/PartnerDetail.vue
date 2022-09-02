@@ -3,13 +3,15 @@ import {useRoute} from "vue-router";
 import type {PartnerDetailInterface} from "@/shared/interfaces";
 import {dataPartnerById} from "@/shared/services";
 import {reactive, watchEffect} from "vue";
-import StructInDetailPartner from "@/features/app/partner/components/structInDetailPartner.vue";
 import {useUserStore} from "@/stores/userStore";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {usePartnerStore} from "@/stores/partnerStore";
+import {useStructStore} from "@/stores/structStore";
 
 const route = useRoute()
 const userStore = useUserStore()
+const partnerStore = usePartnerStore()
+const structStore = useStructStore()
 
 
 const state = reactive<{
@@ -30,7 +32,6 @@ watchEffect(async ()=>{
 
 async function goChangeActivePartner(active_state: number){
   try {
-    const partnerStore = usePartnerStore()
     //@ts-ignore
     const partnerId = state.partner.partner_id;
     //@ts-ignore
@@ -52,7 +53,6 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
   try {
     //@ts-ignore
     const partnerId = state.partner.partner_id
-    const partnerStore = usePartnerStore()
     await partnerStore.changeActiveDroit(partnerId, gestion_name, gestion_active)
     //@ts-ignore
     state.partner.gestion[gestion_name] = gestion_active
@@ -147,10 +147,12 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
         </table>
         <div class="mt_20">
           <h5 class="mb_10">Structure associés :</h5>
-          <div v-if="state.partner.struct" v-for="struct in state.partner.struct" :key="struct.id">
-            <struct-in-detail-partner
-                :data="struct"
-            />
+          <div v-if="state.partner.struct"
+               v-for="struct in state.partner.struct"
+               :key="struct.id"
+               class="d_flex justify_content_center align_items_center"
+          >
+            <router-link :to="'/app/struct/detail/'+struct.id">{{struct.struct_name}} | {{struct.struct_active===1 ? "Actif" : "Non-Actif"}}</router-link>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import type {FilterInterface, StructAddInterface, StructInterface} from "@/shared/interfaces";
-import {addStruct, changeActiveStruct, fetchAllStruct} from "@/shared/services";
+import {addStruct, changeActiveDroitStruct, changeActiveStruct, fetchAllStruct} from "@/shared/services";
 import {DEFAULT_FILTER, type FilterUpdate} from "@/shared/interfaces";
 
 
@@ -54,6 +54,12 @@ export const useStructStore = defineStore("structStore",{
                 this.filters.etat = filterUpdate.etat
             }else{
                 this.filters = {... DEFAULT_FILTER}
+            }
+        },
+        async changeDroitActive(struct_id:number, gestion_name:string,gestion_active:number){
+            const editDroitStruct = await changeActiveDroitStruct(struct_id, gestion_name, gestion_active)
+            if (editDroitStruct){
+                this.needRefresh = true
             }
         }
     }
