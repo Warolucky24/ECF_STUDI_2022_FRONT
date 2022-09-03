@@ -34,7 +34,7 @@ function goChangeActive(active_state: number){
       </div>
       <div class="w_75 d_flex justify_content_arround align_items_center">
         <div class="d_flex justify_content_center align_items_center">
-          <BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/>
+          <div v-if="userStore.currentUser.is_admin"><BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/></div>
           <div class="ms_10" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Non-Actif"}}</div>
         </div>
         <div class="d_flex flex_column">

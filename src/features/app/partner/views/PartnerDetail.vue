@@ -165,8 +165,4 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
   max-height: 100px
   border-radius: 5px
 
-.color_green
-  color: green
-.color_red
-  color: red
 </style>
