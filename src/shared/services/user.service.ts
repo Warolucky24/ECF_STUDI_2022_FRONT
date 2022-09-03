@@ -18,11 +18,11 @@ export async function connectUser(User : UserConnectInterface): Promise<User> {
     }
 
 }
-export async function updateUser($email : string ,value: string, column: string){
+export async function updateUser(email : string ,value: string, column: string){
     const response = await (await fetch(`${BASE_URL}/user/${column}`,{
         method: "PUT",
         body: JSON.stringify({
-            user_email : $email,
+            user_email : email,
             value: value
         })
     })).json()

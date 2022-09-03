@@ -1,7 +1,13 @@
 import {defineStore} from "pinia";
 import type {PartnerAddInterface, PartnerInterface} from "@/shared/interfaces/PartnerInterface";
 import {DEFAULT_FILTER, type FilterInterface, type FilterUpdate} from "@/shared/interfaces";
-import {addPartner, changeActiveDroitPartner, changeActivePartner, fetchAllPartner} from "@/shared/services";
+import {
+    addPartner,
+    changeActiveDroitPartner,
+    changeActivePartner,
+    fetchAllPartner,
+    updatePartner
+} from "@/shared/services";
 
 interface PartnerStoreInterface{
     partner: PartnerInterface[],
@@ -65,6 +71,15 @@ export const usePartnerStore = defineStore("partner", {
                 this.filters.etat = filterUpdate.etat
             }else{
                 this.filters = {... DEFAULT_FILTER}
+            }
+        },
+        async updatePartner(partner_id: number, partner_name: string, logo_url: string){
+            const response = await updatePartner(partner_id, partner_name, logo_url)
+            if (response){
+                this.needRefresh = true
+                const partnerIndex = this.partner.findIndex(e => e.id === partner_id)
+                this.partner[partnerIndex].logo_url = logo_url
+                this.partner[partnerIndex].partner_name = partner_name
             }
         }
     }

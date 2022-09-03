@@ -66,3 +66,18 @@ export async function changeActiveDroitStruct(struct_id:number, gestion_name:str
         throw  response;
     }
 }
+
+export async function updateStruct(struct_id : number , struct_name: string){
+    const response = await (await fetch(`${BASE_URL}/struct`,{
+        method: "PUT",
+        body: JSON.stringify({
+            struct_id : struct_id,
+            struct_name: struct_name
+        })
+    })).json()
+    if (!response.error){
+        return response;
+    }else{
+        throw response;
+    }
+}

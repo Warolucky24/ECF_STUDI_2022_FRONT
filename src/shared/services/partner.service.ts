@@ -68,3 +68,20 @@ export async function changeActiveDroitPartner(partner_id:number, gestion_name:s
         throw  response;
     }
 }
+
+
+export async function updatePartner(partner_id : number ,partner_name: string, logo_url: string){
+    const response = await (await fetch(`${BASE_URL}/partner`,{
+        method: "PUT",
+        body: JSON.stringify({
+            partner_id : partner_id,
+            partner_name: partner_name,
+            logo_url: logo_url
+        })
+    })).json()
+    if (!response.error){
+        return response;
+    }else{
+        throw response;
+    }
+}
