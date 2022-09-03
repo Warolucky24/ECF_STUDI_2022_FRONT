@@ -6,12 +6,10 @@ import {reactive, watchEffect} from "vue";
 import {useUserStore} from "@/stores/userStore";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {usePartnerStore} from "@/stores/partnerStore";
-import {useStructStore} from "@/stores/structStore";
 
 const route = useRoute()
 const userStore = useUserStore()
 const partnerStore = usePartnerStore()
-const structStore = useStructStore()
 
 
 const state = reactive<{
@@ -67,7 +65,7 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
 <template>
   <div class="container" v-if="state.partner">
     <div>
-      <router-link to="/app/partner" class="btn_primary">Retour</router-link>
+      <div @click="$router.go(-1)" class="btn_primary">Retour</div>
     </div>
     <div class="separator_secondary"></div>
     <div class=" d_flex flex_column justify_content_center align_items_center">

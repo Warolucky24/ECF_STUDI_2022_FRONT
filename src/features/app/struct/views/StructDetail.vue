@@ -62,7 +62,7 @@ async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : 
 <template>
   <div class="container" v-if="state.struct">
     <div>
-      <router-link to="/app/struct" class="btn_primary">Retour</router-link>
+      <div @click="$router.go(-1)" class="btn_primary">Retour</div>
     </div>
     <div class="separator_secondary"></div>
     <div class="d_flex flex_column justify_content_center align_items_center">

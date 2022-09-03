@@ -18,13 +18,12 @@ export async function connectUser(User : UserConnectInterface): Promise<User> {
     }
 
 }
-export async function changePassword($email : string ,password: string){
-    console.log(password)
-    const response = await (await fetch(`${BASE_URL}/user/password`,{
+export async function updateUser($email : string ,value: string, column: string){
+    const response = await (await fetch(`${BASE_URL}/user/${column}`,{
         method: "PUT",
         body: JSON.stringify({
             user_email : $email,
-            user_password: password
+            value: value
         })
     })).json()
     if (!response.error){
