@@ -26,7 +26,7 @@ function goChangeActive(active_state:number){
 <template>
   <div class="d_flex card justify_content_between align_items_center">
     <template v-if="!modifyStructBool">
-      <div class="d_flex align_items_center">
+      <div class="w_25 d_flex align_items_center">
         <router-link :to="'/app/struct/detail/'+props.data.id" class="link_effect">{{props.data.struct_name}}</router-link>
       </div>
       <div class="d_flex justify_content_center align_items_center">
