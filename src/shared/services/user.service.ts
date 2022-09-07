@@ -32,3 +32,12 @@ export async function updateUser(email : string ,value: string, column: string){
         throw response;
     }
 }
+
+export async function fetchAllUsers():Promise<User[]>{
+    const response = await (await fetch(`${BASE_URL}/users`)).json()
+    if (!response.error){
+        return response;
+    }else{
+        throw response;
+    }
+}

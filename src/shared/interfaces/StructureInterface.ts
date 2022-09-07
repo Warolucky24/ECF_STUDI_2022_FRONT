@@ -6,6 +6,8 @@ export interface StructInterface{
     struct_name: string,
     logo_url: string,
     user_id: number
+    user_name: string
+    email: string
 }
 
 export interface StructPartnerDetailInterface{

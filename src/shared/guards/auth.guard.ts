@@ -13,17 +13,3 @@ export function isNoConnectGuard(){
         return "/app"
     }
 }
-
-export function notAdminGuardPartner(){
-    const userStore = useUserStore()
-    if (!userStore.currentUser.is_admin){
-        return "/app/profil"
-    }
-}
-
-export function notAdminGuardStruct(){
-    const userStore = useUserStore()
-    if (!userStore.currentUser.is_admin){
-        return "/app/profil"
-    }
-}

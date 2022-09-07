@@ -9,14 +9,14 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     },
     {
         path: "profil",
-        component: () => import('@/features/app/views/profilView.vue'),
+        component: () => import('@/features/app/views/ProfilView.vue'),
         meta:{
             page: "profil"
         }
     },
     {
         path: "partner",
-        component: () => import('@/features/app/partner/partnerView.vue'),
+        component: () => import('@/features/app/partner/PartnerView.vue'),
         children: PARTNER_ROUTE,
         meta: {
             page: "partner"
@@ -24,7 +24,7 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     },
     {
         path: "struct",
-        component: () => import('@/features/app/struct/structView.vue'),
+        component: () => import('@/features/app/struct/StructView.vue'),
         children: STRUCT_ROUTE,
         meta: {
             page: "struct"

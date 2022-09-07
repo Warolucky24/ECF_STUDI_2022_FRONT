@@ -2,13 +2,12 @@ import {defineStore} from "pinia";
 import type {FilterInterface, StructAddInterface, StructInterface} from "@/shared/interfaces";
 import {addStruct, changeActiveDroitStruct, changeActiveStruct, fetchAllStruct, updateStruct} from "@/shared/services";
 import {DEFAULT_FILTER, type FilterUpdate} from "@/shared/interfaces";
+import {useUserStore} from "@/stores/userStore";
 
 
 interface StructStoreInterface{
     struct : StructInterface[],
     filters: FilterInterface,
-    isLoading : boolean,
-    loaded: boolean,
     needRefresh: boolean
 }
 
@@ -16,8 +15,6 @@ export const useStructStore = defineStore("structStore",{
     state: ():StructStoreInterface =>({
         struct : [],
         filters: {... DEFAULT_FILTER},
-        isLoading : false,
-        loaded: false,
         needRefresh : false
     }),
     getters: {
@@ -31,9 +28,7 @@ export const useStructStore = defineStore("structStore",{
     },
     actions: {
         async fetchStruct(){
-            this.isLoading = true
             this.struct = await fetchAllStruct();
-            this.isLoading = false
         },
         async changeActive(struct_id : number, active:number){
             const editStruct = await changeActiveStruct(struct_id, active)
@@ -62,12 +57,15 @@ export const useStructStore = defineStore("structStore",{
                 this.needRefresh = true
             }
         },
-        async updateStruct(struct_id: number, struct_name: string){
+        async updateStruct(struct_id: number, struct_name: string, user_email:string, user_name:string){
+            const userStore = useUserStore()
             const response = await updateStruct(struct_id, struct_name)
-            if (response){
+            const response2 = await userStore.updateName(user_email, user_name)
+            if (response && response2){
                 this.needRefresh =true
                 const structIndex = this.struct.findIndex(e => e.id === struct_id)
                 this.struct[structIndex].struct_name = struct_name
+                this.struct[structIndex].user_name = user_name
             }
         }
     }
@@ -75,12 +73,9 @@ export const useStructStore = defineStore("structStore",{
 
 export function initialFetchStruct(){
     const structStore = useStructStore()
-    if(!structStore.loaded || structStore.needRefresh){
-        if (structStore.needRefresh){
-            structStore.struct = []
-            structStore.needRefresh = false
-        }
+    if (structStore.needRefresh){
+        structStore.struct = []
+        structStore.needRefresh = false
     }
     structStore.fetchStruct()
-    structStore.loaded = true
 }

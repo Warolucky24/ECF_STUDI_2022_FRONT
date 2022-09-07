@@ -90,7 +90,7 @@ async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : 
       </div>
       <div class="m_10">
         <h5>Partner Lié :</h5>
-        <router-link :to="'/app/partner/detail/'+state.struct.partner_id">{{state.struct.partner_name}}</router-link>
+        <router-link :to="'/app/partner/detail/'+state.struct.partner_id" class="txt_link">{{state.struct.partner_name}}</router-link>
       </div>
       <div class="m_10">
         <h5>Droits :</h5>

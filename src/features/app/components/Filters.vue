@@ -34,7 +34,6 @@ const emit = defineEmits<{
       </p>
     </div>
   </div>
-
 </template>
 
 <style scoped lang="sass">

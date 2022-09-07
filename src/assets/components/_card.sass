@@ -1,4 +1,5 @@
 .card
+  position: relative
   width: 100%
   background: white
   padding: 12px
@@ -6,7 +7,6 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
   transition: all .4s
   cursor: pointer
-  position: relative
   overflow: hidden
 
   .card_img
@@ -20,12 +20,10 @@
     content: ""
     width: 8px
     height: 100%
-    background: red
   .bg_green
     background: green
   .bg_red
     background: red
-
-
   &:hover
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px
+    transform: scale(1.01)

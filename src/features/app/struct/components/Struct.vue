@@ -26,7 +26,7 @@ function goChangeActive(active_state:number){
 <template>
   <div class="d_flex card justify_content_between align_items_center">
     <template v-if="!modifyStructBool">
-      <div class="w_25 d_flex align_items_center">
+      <div class="d_flex align_items_center">
         <router-link :to="'/app/struct/detail/'+props.data.id" class="link_effect">{{props.data.struct_name}}</router-link>
       </div>
       <div class="d_flex justify_content_center align_items_center">
@@ -44,10 +44,16 @@ function goChangeActive(active_state:number){
           <span class="ms_10">{{props.data.partner_name}}</span>
         </router-link>
       </div>
+      <div class="d_flex flex_column justify_content_center align_items_center">
+        <div><b>Nom gérant :</b></div>
+        <div>{{props.data.user_name}}</div>
+        <div><b>Email :</b></div>
+        <div>{{props.data.email}}</div>
+      </div>
     </template>
-    <div v-if="modifyStructBool">
-      <StructUpdate :struct_id="props.data.id" :struct_name="props.data.struct_name" @is-update="modifyStructBool = !modifyStructBool" />
-    </div>
+    <template v-if="modifyStructBool">
+      <StructUpdate :struct="props.data" @is-update="modifyStructBool = !modifyStructBool" />
+    </template>
     <div v-if="userStore.currentUser.is_admin && !modifyStructBool" class="d_flex justify_content_center align_items_center">
       <div id="btn_modify" @click="modifyStructBool = !modifyStructBool">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

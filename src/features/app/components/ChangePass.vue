@@ -29,7 +29,7 @@ const {value : pass2_value, errorMessage : pass2_error} = useField("password2")
 
 const tryChangePass = handleSubmit(async (formValue, {resetForm}) => {
   try {
-    await userStore.changePassword(formValue.password);
+    await userStore.updatePassword(formValue.password);
     userStore.sendMsg("Mot de passe changé !", "success");
     emit("goClose");
     resetForm()

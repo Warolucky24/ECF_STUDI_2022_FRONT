@@ -47,10 +47,9 @@ function goChangeActive(active_state: number){
         </div>
       </div>
     </template>
-
-    <div v-if="modifyPartnerBool">
-      <PartnerUpdate :partner_id="props.data.id" :partner_name="props.data.partner_name" :logo_url="props.data.logo_url" @is-update="modifyPartnerBool = !modifyPartnerBool"/>
-    </div>
+    <template v-if="modifyPartnerBool">
+      <PartnerUpdate :data="props.data" @is-update="modifyPartnerBool = !modifyPartnerBool"/>
+    </template>
 
     <div v-if="userStore.currentUser.is_admin && !modifyPartnerBool" class="d_flex justify_content_center align_items_center">
       <div id="btn_modify" @click="modifyPartnerBool = !modifyPartnerBool">

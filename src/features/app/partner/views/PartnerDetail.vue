@@ -63,7 +63,7 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
 
 </script>
 <template>
-  <div class="container" v-if="state.partner">
+  <div v-if="state.partner">
     <div>
       <div @click="$router.go(-1)" class="btn_primary">Retour</div>
     </div>
@@ -156,7 +156,6 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped lang="sass">

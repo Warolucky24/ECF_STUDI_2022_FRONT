@@ -23,7 +23,7 @@ const {value, errorMessage} = useField("name")
 
 const tryChangeName = handleSubmit(async(formValue, {resetForm}) => {
   try {
-    await userStore.changeName(formValue.name)
+    await userStore.updateName(userStore.currentUser.email,formValue.name)
     userStore.sendMsg("Nom changé !", "success")
     userStore.currentUser.user_name = formValue.name
     emit("goClose")

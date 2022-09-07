@@ -33,7 +33,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
 </script>
 
 <template>
-  <div class="container">
+  <div>
     <div class="d_flex justify_content_between align_items_center" id="container_sub_head">
       <Filters
           :filters="partnerStore.filters"
@@ -58,7 +58,6 @@ function UpdateFilter(updateFilter : FilterUpdate){
       <div class="modal_back" @click="addPartner = false"></div>
     </div>
   </div>
-
 </template>
 <style scoped lang="sass">
 @import "@/assets/main.sass"
