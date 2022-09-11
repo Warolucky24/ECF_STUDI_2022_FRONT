@@ -39,7 +39,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
           :filters="partnerStore.filters"
           @update-filter="UpdateFilter"
       />
-      <div class="btn_primary" @click="addPartner= true">Ajoutez</div>
+      <div class="btn_primary" @click="addPartner= true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
         <div

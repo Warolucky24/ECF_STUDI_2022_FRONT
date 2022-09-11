@@ -11,7 +11,8 @@ const useStore = useUserStore()
 const initialValues = {
   partner_name: "",
   partner_active: "1",
-  user_email: ""
+  user_email: "",
+  user_name: ""
 }
 
 const emit = defineEmits<{
@@ -23,7 +24,8 @@ const validationSchema = toFormValidator(
     z.object({
       partner_name: z.string(required_error).min(3),
       partner_active: z.string(required_error),
-      user_email: z.string(required_error).email()
+      user_email: z.string(required_error).email(),
+      user_name: z.string(required_error).min(3)
     })
 )
 const {handleSubmit} = useForm({
@@ -34,6 +36,7 @@ const {handleSubmit} = useForm({
 const {value : partner_name , errorMessage : partner_error } = useField("partner_name");
 const {value : partner_active, errorMessage : partner_active_error} = useField('partner_active')
 const {value : user_email, errorMessage : user_email_error } = useField("user_email")
+const {value : user_name, errorMessage : user_name_error} = useField("user_name");
 
 const tryCreatePartner = handleSubmit(async (formValues) => {
   try {
@@ -58,14 +61,18 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
         <tr>
           <td colspan="2">
             <select v-model="partner_active"  class="w_100 text_center" :class="{error_input : partner_active_error}">
-              <option value="0">Non-Actif</option>
+              <option value="0">Inactif</option>
               <option value="1">Actif</option>
             </select>
           </td>
         </tr>
         <tr>
-          <td>Email du compte partenaire :</td>
+          <td>Mail du compte partenaire :</td>
           <td><input type="email" v-model="user_email" :class="{error_input : user_email_error}"></td>
+        </tr>
+        <tr>
+          <td>Nom du gérant :</td>
+          <td><input type="text" v-model="user_name" :class="{error_input : user_name_error}"></td>
         </tr>
       </table>
       <button class="btn_effect mt_20" type="submit">

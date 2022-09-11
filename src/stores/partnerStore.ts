@@ -46,10 +46,10 @@ export const usePartnerStore = defineStore("partner", {
             this.isLoading = true
             const response = await addPartner(formValues)
             if (response){
-                this.needRefresh = true
+                this.needRefresh = true;
+                this.partner.push(response)
             }
             this.isLoading = false
-            this.needRefresh = true
         },
         async changeActive(partner_id : number, active: number){
             const editPartner = await changeActivePartner(partner_id, active)

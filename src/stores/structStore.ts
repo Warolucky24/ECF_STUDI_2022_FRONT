@@ -39,8 +39,11 @@ export const useStructStore = defineStore("structStore",{
             }
         },
         async addStruct(formValues : StructAddInterface){
-            await addStruct(formValues);
-            this.needRefresh = true
+            const response = await addStruct(formValues);
+            if (response){
+                this.struct.push(response)
+                this.needRefresh = true
+            }
         },
         updateFilter(filterUpdate : FilterUpdate){
             if (filterUpdate.search !== undefined){

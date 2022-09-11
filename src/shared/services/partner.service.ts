@@ -3,7 +3,7 @@ import type {PartnerAddInterface, PartnerDetailInterface, PartnerInterface} from
 
 
 export async function fetchAllPartner(): Promise<PartnerInterface[]> {
-    const response = await (await fetch(`${BASE_URL}/partner-all`)).json();
+    const response = await (await fetch(`${BASE_URL}/partner`)).json();
     if(!response.error){
         return response;
     }else{
@@ -28,9 +28,6 @@ export async function  addPartner(formValues : PartnerAddInterface){
             "Content-type": "application/json"
         }
     })).json()
-    console.log(response)
-
-
     if(!response.error){
         return response;
     }else{

@@ -31,6 +31,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
   structStore.updateFilter(updateFilter);
 }
 
+
 </script>
 
 <template>
@@ -49,7 +50,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
           :key="struct.id"
       >
         <Struct
-            v-if="userStore.currentUser.is_admin || userStore.currentUser.id === struct.user_id"
+            v-if="userStore.currentUser.is_admin || userStore.currentUser.id === struct.user_id || userStore.currentUser.id === struct.partner_user_id"
             :data="struct" :key="struct.struct_name"
             @go-change-active-struct="changeActiveStruct"
         />

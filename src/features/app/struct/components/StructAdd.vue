@@ -17,7 +17,8 @@ const initialValues= {
   user_email: "",
   struct_name: "",
   struct_active: "1",
-  partner_id : ""
+  partner_id : "",
+  user_name : ""
 }
 const emit = defineEmits<{
   (e: "closeModal"):void
@@ -29,7 +30,8 @@ const validationSchema = toFormValidator(
       user_email: z.string(required_error).email(),
       struct_name: z.string(required_error).min(3),
       struct_active: z.string(required_error),
-      partner_id: z.number(required_error)
+      partner_id: z.number(required_error),
+      user_name: z.string(required_error).min(3)
     })
 )
 
@@ -42,6 +44,7 @@ const {value : value_user_email, errorMessage : error_user_email}  = useField("u
 const {value : value_struct_name, errorMessage : error_struct_name} = useField("struct_name");
 const {value : value_struct_active, errorMessage: error_struct_active} = useField("struct_active");
 const {value : value_partner_id, errorMessage : error_partner_id} = useField("partner_id");
+const {value : value_user_name, errorMessage : error_user_name} = useField('user_name');
 
 
 const tryCreateStruct = handleSubmit(async (formValues) => {
@@ -78,13 +81,17 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
         <td><input type="text" v-model="value_struct_name" :class="{error_input : error_struct_name}"></td>
       </tr>
       <tr>
-        <td>Email gérant de la structure :</td>
+        <td class="text_end">Mail gérant :</td>
         <td><input type="email" v-model="value_user_email" :class="{error_input : error_user_email}"></td>
+      </tr>
+      <tr>
+        <td class="text_end">Nom du gérant :</td>
+        <td><input type="text" v-model="value_user_name" :class="{error_input : error_user_name}"></td>
       </tr>
       <tr>
         <td colspan="2">
           <select v-model="value_struct_active"  class="w_100 text_center" :class="{error_input : error_struct_active}">
-            <option value="0">Non-Actif</option>
+            <option value="0">Inactive</option>
             <option value="1">Actif</option>
           </select>
         </td>

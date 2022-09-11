@@ -57,6 +57,19 @@ async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : 
   }
 }
 
+async function goChangeActiveUser(gestion_active: number, user_email: string){
+  try {
+    await userStore.updateActive(user_email, gestion_active);
+    //@ts-ignore
+    state.struct.user_active = gestion_active;
+    const etat = gestion_active===1 ? "Actif" : "Inactif";
+    userStore.sendMsg(`L gérant est maintenant ${etat}`, "success");
+  }catch (e){
+    //@ts-ignore
+    userStore.sendMsg(e.error, "danger");
+  }
+}
+
 </script>
 
 <template>
@@ -71,8 +84,8 @@ async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : 
         <div v-if="userStore.currentUser.is_admin">
           <BtnActifNoActif :state="state.struct.struct_active" @changeactive="goChangeActiveStruct" :name="state.struct.struct_name"/>
         </div>
-        <div class="ms_10" :class="{color_green : state.struct.struct_id===1 , color_red : state.struct.struct_id!==1}">
-          {{state.struct.struct_id===1 ? "Actif" : "Non-Actif"}}
+        <div class="ms_10" :class="{text_green : state.struct.struct_active===1 , color_red : state.struct.struct_active!==1}">
+          {{state.struct.struct_active===1 ? "Actif" : "Inactive"}}
         </div>
       </div>
       <div class="m_10">
@@ -83,69 +96,73 @@ async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : 
             <td>{{state.struct.user_name}}</td>
           </tr>
           <tr>
-            <td>Email :</td>
+            <td>Mail :</td>
             <td>{{state.struct.user_email}}</td>
+          </tr>
+          <tr>
+            <td v-if="userStore.currentUser.is_admin">
+              <BtnActifNoActif :name="state.struct.user_email" :state="state.struct.user_active"  @changeactive="goChangeActiveUser" />
+            </td>
+            <td :class="{text_green : state.struct.user_active===1 , text_red : state.struct.user_active!==1}">{{state.struct.user_active===1 ? "Actif" : "Inactif"}}</td>
           </tr>
         </table>
       </div>
-      <div class="m_10">
-        <h5>Partner Lié :</h5>
-        <router-link :to="'/app/partner/detail/'+state.struct.partner_id" class="txt_link">{{state.struct.partner_name}}</router-link>
+      <div class="m_10" v-if="userStore.currentUser.is_admin || userStore.currentUser.id === state.struct.partner_user_id">
+        <h5>Partenaire Lié :</h5>
+        <router-link :to="'/app/partner/detail/'+state.struct.partner_id" class="txt_link">
+          {{state.struct.partner_name}} | <span :class="{text_green : state.struct.partner_active===1 , text_red : state.struct.partner_active!==1}">{{state.struct.partner_active===1 ? "Actif" : "Inactif"}}</span>
+        </router-link>
       </div>
       <div class="m_10">
         <h5>Droits :</h5>
         <table>
           <tr>
-            <td>Vente de boissons :</td>
+            <td>Ventes de boissons :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.struct.gestion.v_boisson" @changeactive="goChangeActiveDroitStruct" :name="'v_boisson'"/>
             </td>
-            <td v-else>
-              {{state.struct.gestion.v_boisson === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.struct.gestion.v_boisson===1 , text_red : state.struct.gestion.v_boisson!==1}">
+              {{state.struct.gestion.v_boisson === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Vente de vêtements :</td>
+            <td>Ventes de vêtements :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.struct.gestion.v_vetement" @changeactive="goChangeActiveDroitStruct"  :name="'v_vetement'"/>
             </td>
-            <td v-else>
-              {{state.struct.gestion.v_vetement === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.struct.gestion.v_vetement===1 , text_red : state.struct.gestion.v_vetement!==1}">
+              {{state.struct.gestion.v_vetement === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Cours particulier :</td>
+            <td>Cours Particulier :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.struct.gestion.c_particulier" @changeactive="goChangeActiveDroitStruct"  :name="'c_particulier'"/>
             </td>
-            <td v-else>
-              {{state.struct.gestion.c_particulier === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.struct.gestion.c_particulier===1 , text_red : state.struct.gestion.c_particulier!==1}">
+              {{state.struct.gestion.c_particulier === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Cours de pilate :</td>
+            <td>Cours de Pilate :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.struct.gestion.c_pilate" @changeactive="goChangeActiveDroitStruct"  :name="'c_pilate'"/>
             </td>
-            <td v-else>
-              {{state.struct.gestion.c_pilate === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.struct.gestion.c_pilate===1 , text_red : state.struct.gestion.c_pilate!==1}">
+              {{state.struct.gestion.c_pilate === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Cours de crosstrainning :</td>
+            <td>Cours de Crosstrainning :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.struct.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitStruct" :name="'c_crosstrainning'"/>
             </td>
-            <td v-else>
-              {{state.struct.gestion.c_crosstrainning === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.struct.gestion.c_crosstrainning===1 , text_red : state.struct.gestion.c_crosstrainning!==1}">
+              {{state.struct.gestion.c_crosstrainning === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
         </table>
       </div>
     </div>
-
-
-
-
   </div>
 </template>

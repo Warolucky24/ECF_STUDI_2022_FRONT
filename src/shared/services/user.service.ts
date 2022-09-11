@@ -16,9 +16,9 @@ export async function connectUser(User : UserConnectInterface): Promise<User> {
     }else{
         throw response;
     }
-
 }
-export async function updateUser(email : string ,value: string, column: string){
+
+export async function updateUser(email : string ,value: string|number, column: string){
     const response = await (await fetch(`${BASE_URL}/user/${column}`,{
         method: "PUT",
         body: JSON.stringify({
@@ -33,11 +33,14 @@ export async function updateUser(email : string ,value: string, column: string){
     }
 }
 
-export async function fetchAllUsers():Promise<User[]>{
-    const response = await (await fetch(`${BASE_URL}/users`)).json()
+export async function deletePartnerOrStructService(id:number, type:string){
+    const response = await (await fetch(`${BASE_URL}/${type}/${id}`,{
+        method: "DELETE"
+    })).json()
     if (!response.error){
         return response;
     }else{
         throw response;
     }
+
 }

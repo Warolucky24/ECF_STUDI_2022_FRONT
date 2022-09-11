@@ -4,7 +4,7 @@ import {number} from "zod";
 
 
 export async function fetchAllStruct(): Promise<StructInterface[]>{
-    const response = await (await fetch(`${BASE_URL}/struct-all`)).json()
+    const response = await (await fetch(`${BASE_URL}/struct`)).json()
     if(!response.error){
         return response;
     }else{

@@ -11,12 +11,17 @@ const emit = defineEmits<{
   (e: 'goClose'):void
 }>()
 
+const initialValues = {
+  name: userStore.currentUser.user_name
+}
+
 const validationSchema = z.object({
   name : z.string().min(3)
 })
 
 const {handleSubmit} = useForm({
-  validationSchema: toFormValidator(validationSchema)
+  validationSchema: toFormValidator(validationSchema),
+  initialValues
 })
 
 const {value, errorMessage} = useField("name")
@@ -24,7 +29,7 @@ const {value, errorMessage} = useField("name")
 const tryChangeName = handleSubmit(async(formValue, {resetForm}) => {
   try {
     await userStore.updateName(userStore.currentUser.email,formValue.name)
-    userStore.sendMsg("Nom changé !", "success")
+    userStore.sendMsg("Modification pris en compte !", "success")
     userStore.currentUser.user_name = formValue.name
     emit("goClose")
     resetForm()

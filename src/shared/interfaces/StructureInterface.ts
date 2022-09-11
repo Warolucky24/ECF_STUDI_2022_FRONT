@@ -1,24 +1,24 @@
+import type {GestionInterface} from "@/shared/interfaces/GestionInterface";
+
 export interface StructInterface{
     id: number,
+    struct_name: string,
+    struct_active: number,
     partner_id: number,
     partner_name: string,
-    struct_active: number,
-    struct_name: string,
+    partner_user_id: number,
     logo_url: string,
-    user_id: number
-    user_name: string
-    email: string
+    user_id: number,
+    email: string,
+    user_name: string,
+    user_active: number
 }
 
 export interface StructPartnerDetailInterface{
     id: number,
     struct_name : string,
     struct_active : number,
-    c_crosstrainning:number,
-    c_particulier: number,
-    c_pilate: number,
-    v_boisson: number,
-    v_vetement: number
+    gestion : GestionInterface
 }
 
 export interface StructAddInterface{
@@ -30,18 +30,15 @@ export interface StructAddInterface{
 
 export interface StructDetailInterface{
     struct_id : number,
+    struct_name: string,
+    struct_active: number,
     partner_id: number,
+    partner_user_id: number,
     partner_name: string,
+    partner_active: number,
     user_id: number,
     user_name: string,
     user_email: string,
-    struct_name: string,
-    struct_active: number,
-    gestion: {
-        c_crosstrainning:number,
-        c_particulier: number,
-        c_pilate: number,
-        v_boisson: number,
-        v_vetement: number
-    }
+    user_active: number,
+    gestion: GestionInterface
 }

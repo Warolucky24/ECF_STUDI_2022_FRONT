@@ -99,11 +99,11 @@ button
   border-radius: 7px
   background: $primary_2
 
-  @include xs
+  +md_max
     width: 100vw
     height: 100vh
     margin: auto
-  @include md
+  +md_min
   width: 50vw
   height: 50vh
   margin: 25vh 25vw

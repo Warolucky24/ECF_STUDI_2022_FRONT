@@ -19,7 +19,7 @@ const emit = defineEmits<{
           type="text"
           :value="filters.search"
           @input="emit('updateFilter',{search: ($event.target as HTMLInputElement).value})"
-          placeholder="rechercher"
+          placeholder="Rechercher"
           class="input_search"
       />
     </div>

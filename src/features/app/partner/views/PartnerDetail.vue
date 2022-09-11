@@ -50,16 +50,28 @@ async function goChangeActivePartner(active_state: number){
 async function goChangeActiveDroitPartner(gestion_active: number, gestion_name : string){
   try {
     //@ts-ignore
-    const partnerId = state.partner.partner_id
-    await partnerStore.changeActiveDroit(partnerId, gestion_name, gestion_active)
+    const partnerId = state.partner.partner_id;
+    await partnerStore.changeActiveDroit(partnerId, gestion_name, gestion_active);
     //@ts-ignore
-    state.partner.gestion[gestion_name] = gestion_active
+    state.partner.gestion[gestion_name] = gestion_active;
   }catch (e){
     //@ts-ignore
-    userStore.sendMsg(e.error, "danger")
+    userStore.sendMsg(e.error, "danger");
   }
 }
 
+async function goChangeActiveUser(gestion_active: number, user_email: string){
+  try {
+    await userStore.updateActive(user_email, gestion_active);
+    //@ts-ignore
+    state.partner.user_active = gestion_active;
+    const etat = gestion_active===1 ? "Actif" : "Inactif";
+    userStore.sendMsg(`Le gérant est maintenant ${etat}`, "success");
+  }catch (e){
+    //@ts-ignore
+    userStore.sendMsg(e.error, "danger");
+  }
+}
 
 </script>
 <template>
@@ -77,8 +89,8 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
         <div v-if="userStore.currentUser.is_admin">
           <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" :name="state.partner.partner_name"/>
         </div>
-        <div class="ms_10" :class="{color_green : state.partner.partner_active===1 , color_red : state.partner.partner_active!==1}">
-          {{state.partner.partner_active===1 ? "Actif" : "Non-Actif"}}
+        <div class="ms_10" :class="{text_green : state.partner.partner_active===1 , text_red : state.partner.partner_active!==1}">
+          {{state.partner.partner_active===1 ? "Actif" : "Inactif"}}
         </div>
       </div>
       <div class="m_10">
@@ -89,68 +101,79 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
             <td>{{state.partner.user_name}}</td>
           </tr>
           <tr>
-            <td>Email :</td>
+            <td>Mail :</td>
             <td>{{state.partner.user_email}}</td>
+          </tr>
+          <tr>
+            <td v-if="userStore.currentUser.is_admin">
+              <BtnActifNoActif :name="state.partner.user_email" :state="state.partner.user_active" @changeactive="goChangeActiveUser" />
+            </td>
+            <td v-else></td>
+            <td>
+              <span :class="{text_green : state.partner.user_active===1 , text_red : state.partner.user_active!==1}">
+                {{state.partner.user_active===1 ? "Actif" : "Inactif"}}
+              </span>
+            </td>
           </tr>
         </table>
       </div>
       <div class="m_10">
-        <h5 class="mb_10">Droit :</h5>
+        <h5 class="mb_10">Droits :</h5>
         <table>
           <tr>
-            <td>Vente de boissons :</td>
+            <td>Ventes de boissons :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.v_boisson" @changeactive="goChangeActiveDroitPartner" :name="'v_boisson'"/>
             </td>
-            <td v-else>
-              {{state.partner.gestion.v_boisson === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.partner.gestion.v_boisson===1 , text_red : state.partner.gestion.v_boisson!==1}">
+              {{state.partner.gestion.v_boisson === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Vente de vêtements :</td>
+            <td>Ventes de vêtements :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.v_vetement" @changeactive="goChangeActiveDroitPartner"  :name="'v_vetement'"/>
             </td>
-            <td v-else>
-              {{state.partner.gestion.v_vetement === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.partner.gestion.v_vetement===1 , text_red : state.partner.gestion.v_vetement!==1}">
+              {{state.partner.gestion.v_vetement === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Cours particulier :</td>
+            <td>Cours Particulier :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.c_particulier" @changeactive="goChangeActiveDroitPartner"  :name="'c_particulier'"/>
             </td>
-            <td v-else>
-              {{state.partner.gestion.c_particulier === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.partner.gestion.c_particulier===1 , text_red : state.partner.gestion.c_particulier!==1}">
+              {{state.partner.gestion.c_particulier === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Cours de pilate :</td>
+            <td>Cours de Pilate :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.c_pilate" @changeactive="goChangeActiveDroitPartner"  :name="'c_pilate'"/>
             </td>
-            <td v-else>
-              {{state.partner.gestion.c_pilate === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.partner.gestion.c_pilate===1 , text_red : state.partner.gestion.c_pilate!==1}">
+              {{state.partner.gestion.c_pilate === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
           <tr>
-            <td>Cours de crosstrainning :</td>
+            <td>Cours de Crosstrainning :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitPartner" :name="'c_crosstrainning'"/>
             </td>
-            <td v-else>
-              {{state.partner.gestion.c_crosstrainning === 1 ? "Actif" : "Non-Actif"}}
+            <td v-else :class="{text_green : state.partner.gestion.c_crosstrainning===1 , text_red : state.partner.gestion.c_crosstrainning!==1}">
+              {{state.partner.gestion.c_crosstrainning === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
         </table>
         <div class="mt_20">
-          <h5 class="mb_10">Structure associés :</h5>
+          <h5 class="mb_10">Structures associées :</h5>
           <div v-if="state.partner.struct"
                v-for="struct in state.partner.struct"
                :key="struct.id"
                class="d_flex justify_content_center align_items_center"
           >
-            <router-link :to="'/app/struct/detail/'+struct.id">{{struct.struct_name}} | {{struct.struct_active===1 ? "Actif" : "Non-Actif"}}</router-link>
+            <router-link class="txt_link" :to="'/app/struct/detail/'+struct.id">{{struct.struct_name}} | {{struct.struct_active===1 ? "Actif" : "Inactive"}}</router-link>
           </div>
         </div>
       </div>

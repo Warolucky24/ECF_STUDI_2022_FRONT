@@ -4,9 +4,11 @@ import type {PartnerInterface} from "@/shared/interfaces/PartnerInterface";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {useUserStore} from "@/stores/userStore";
 import {ref} from "vue";
+import Delete from "@/features/app/components/Delete.vue";
 
 const userStore = useUserStore()
 const modifyPartnerBool = ref<boolean>(false)
+const deletePartnerBool = ref<boolean>(false)
 
 const props = defineProps<{
   data : PartnerInterface
@@ -35,7 +37,7 @@ function goChangeActive(active_state: number){
       <div class="w_75 d_flex justify_content_arround align_items_center">
         <div class="d_flex justify_content_center align_items_center">
           <div v-if="userStore.currentUser.is_admin"><BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/></div>
-          <div class="ms_10" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Non-Actif"}}</div>
+          <div class="ms_10" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Inactif"}}</div>
         </div>
         <div class="d_flex flex_column">
           <div>
@@ -58,13 +60,25 @@ function goChangeActive(active_state: number){
           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
         </svg>
       </div>
+      <div id="btn_delete" class="mx_10" @click="deletePartnerBool = !deletePartnerBool">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+        </svg>
+      </div>
+    </div>
+    <div v-if="deletePartnerBool">
+      <Delete :id="props.data.id" :name="props.data.partner_name" type="partner" @go-close="deletePartnerBool = !deletePartnerBool" />
     </div>
     <div class="card_etat" :class="{bg_red : props.data.partner_active!==1, bg_green : props.data.partner_active===1}"></div>
   </div>
 </template>
 
 <style scoped lang="sass">
-
+#btn_delete
+  cursor: pointer
+  transition: all .4s
+  &:hover
+    color: red
 #btn_modify
   cursor: pointer
   transition: all .4s

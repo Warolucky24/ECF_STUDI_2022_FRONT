@@ -30,14 +30,14 @@ const close = ()=> {
 @import "@/assets/main.sass"
 #popup
   color: $gray
-  width: 50vw
+  width: 70vw
   text-align: center
   font-size: 0.9em
   border-radius: 4px
   padding: 15px 10px
   z-index: 1000
   position: absolute
-  left: 25vw
+  left: 15vw
   bottom: 40px
   animation: enterEffect .4s ease
 .danger
