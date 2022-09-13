@@ -41,7 +41,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
           :filters="structStore.filters"
           @update-filter="UpdateFilter"
       />
-      <div class="btn_primary" @click="addStructModal = true">Ajouter</div>
+      <div class="btn_primary" id="addPartner" @click="addStructModal = true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
       <div

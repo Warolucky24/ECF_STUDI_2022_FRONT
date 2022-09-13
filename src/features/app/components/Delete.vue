@@ -22,13 +22,7 @@ async function goDelete(){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger")
   }
-
-
-
-
 }
-
-
 </script>
 
 

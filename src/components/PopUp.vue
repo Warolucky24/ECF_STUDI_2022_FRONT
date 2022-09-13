@@ -30,16 +30,22 @@ const close = ()=> {
 @import "@/assets/main.sass"
 #popup
   color: $gray
-  width: 70vw
   text-align: center
   font-size: 0.9em
   border-radius: 4px
-  padding: 15px 10px
+  padding: 25px 10px
   z-index: 1000
   position: absolute
-  left: 15vw
   bottom: 40px
   animation: enterEffect .4s ease
+
+  +lg_max
+    width: 95vw
+    left: 2.5vw
+  +lg_min
+    width: 70vw
+  left: 15vw
+
 .danger
   background: $danger_1
 .success

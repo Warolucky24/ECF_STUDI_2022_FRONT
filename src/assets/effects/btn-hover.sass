@@ -22,7 +22,7 @@ $height_btn_effect : 50px
         color: $secondary
         font-weight: bold
         font-size: 1.2em
-        margin-left: 15px
+        margin-left: 20px
         z-index: 10
         transition: all .2s ease-in
     &> .font
@@ -34,6 +34,11 @@ $height_btn_effect : 50px
         transition: width .3s ease-out
         border: none
         border-radius: $height_btn_effect
+    +lg_max
+        .font
+            width: 100%
+        .btn_effect:hover .font
+            background: red
     &:hover .font
         width: 100%
 

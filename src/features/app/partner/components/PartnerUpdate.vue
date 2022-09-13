@@ -43,7 +43,6 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
     await partnerStore.updatePartner(data.id, formValues.partner_name, formValues.logo_url, data.email, formValues.user_name);
     userStore.sendMsg("Modification pris en compte", "success")
     emit("isUpdate")
-    console.log('tes')
   }catch (e) {
     //@ts-ignore
     userStore.sendMsg(e.error, "warning")
@@ -55,7 +54,7 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
 
 
 <template>
-  <form class="d_flex justify_content_between align_items_center w_100" @submit="tryUpdate">
+  <form @submit="tryUpdate">
     <div class="d_flex flex_column justify_content_center align_items_center">
       <div>Nom partenaire : </div>
       <div><input type="text" v-model="value_name" :class="{error_input : error_name}"></div>
@@ -70,14 +69,23 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
     </div>
     <div class="d_flex flex_column justify_content_center align_items_center">
       <button type="submit" class="btn_success m_5">Modifer</button>
-      <div class="btn_warning m_5" @click="emit('isUpdate')">Retour</div>
     </div>
   </form>
 </template>
 
 <style scoped lang="sass">
 @import "@/assets/main.sass"
+
 form
-  width: 1fr
+  display: flex
+  flex-wrap: wrap
+  margin: auto
+  width: 100%
+  +lg_max
+    justify-content: center
+    align-items: center
+  +lg_min
+    justify-content: space-between
+    align-items: center
 
 </style>

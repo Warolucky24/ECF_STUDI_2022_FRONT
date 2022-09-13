@@ -77,7 +77,7 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
 <template>
   <div v-if="state.partner">
     <div>
-      <div @click="$router.go(-1)" class="btn_primary">Retour</div>
+      <div @click="$router.go(-1)" class="btn_primary" id="back_btn">Retour</div>
     </div>
     <div class="separator_secondary"></div>
     <div class=" d_flex flex_column justify_content_center align_items_center">
@@ -182,9 +182,14 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
 </template>
 
 <style scoped lang="sass">
+@import "@/assets/main.sass"
+
 #LogoPartnerBig
   max-width: 100px
   max-height: 100px
   border-radius: 5px
-
+#back_btn
+  +lg_max
+    width: 70vw
+    margin: auto
 </style>

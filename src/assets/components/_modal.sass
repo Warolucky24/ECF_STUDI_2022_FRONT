@@ -5,19 +5,27 @@
   left: 0
 
   .modal_content
-    min-width: 50vw
     background: $primary
-    min-height: 350px
     position: absolute
     z-index: 70
     border-radius: 6px
-    top: 3vh
-    left: 25vw
     border: 1px solid $secondary
     color: white
     display: flex
     justify-content: center
     align-items: center
+
+    +lg_min
+      min-width: 50vw
+      min-height: 350px
+      top: 3vh
+      left: 25vw
+    +lg_max
+      width: 95vw
+      height: 50vh
+      top: 1vh
+      left: 2.5vw
+
     .title
       font-size: 1.3em
   .modal_back

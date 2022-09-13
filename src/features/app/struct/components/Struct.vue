@@ -39,18 +39,20 @@ function goChangeActive(active_state:number){
           {{props.data.struct_active===1 ? "Actif" : "Inactive"}}
         </div>
       </div>
-      <div class="d_flex flex_column justify_content_arround align_items_center">
-        <div class="m_5"><b>Partenaire :</b></div>
-        <router-link :to="'/app/partner/detail/'+props.data.partner_id" class="d_flex justify_content_center align_items_center link">
-          <img :src="props.data.logo_url" alt="" class="card_img">
-          <span class="ms_10">{{props.data.partner_name}}</span>
-        </router-link>
-      </div>
-      <div class="d_flex flex_column justify_content_center align_items_center">
-        <div><b>Nom gérant :</b></div>
-        <div>{{props.data.user_name}}</div>
-        <div><b>Mail :</b></div>
-        <div>{{props.data.email}}</div>
+      <div id="hide_mobil" class="d_flex justify_content_arround w_100 align_items_center">
+        <div class="d_flex flex_column justify_content_arround align_items_center">
+          <div class="m_5"><b>Partenaire :</b></div>
+          <router-link :to="'/app/partner/detail/'+props.data.partner_id" class="d_flex justify_content_center align_items_center link">
+            <img :src="props.data.logo_url" alt="" class="card_img">
+            <span class="ms_10">{{props.data.partner_name}}</span>
+          </router-link>
+        </div>
+        <div class="d_flex flex_column justify_content_center align_items_center">
+          <div><b>Nom gérant :</b></div>
+          <div>{{props.data.user_name}}</div>
+          <div><b>Mail :</b></div>
+          <div>{{props.data.email}}</div>
+        </div>
       </div>
     </template>
     <template v-if="modifyStructBool">
@@ -81,6 +83,7 @@ function goChangeActive(active_state:number){
 </template>
 
 <style scoped lang="sass">
+@import "@/assets/main.sass"
 .link
   color: black
   text-decoration: none
@@ -97,4 +100,8 @@ function goChangeActive(active_state:number){
   transition: all .4s
   &:hover
     color: red
+
+#hide_mobil
+  +lg_max
+    display: none
 </style>

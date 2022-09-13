@@ -39,7 +39,7 @@ function goChangeActive(active_state: number){
           <div v-if="userStore.currentUser.is_admin"><BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/></div>
           <div class="ms_10" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Inactif"}}</div>
         </div>
-        <div class="d_flex flex_column">
+        <div class="d_flex flex_column" id="gerant">
           <div>
             <b>Nom du gérant :</b> {{props.data.user_name}}
           </div>
@@ -74,6 +74,12 @@ function goChangeActive(active_state: number){
 </template>
 
 <style scoped lang="sass">
+@import "@/assets/main.sass"
+
+#gerant
+  +lg_max
+    display: none
+
 #btn_delete
   cursor: pointer
   transition: all .4s

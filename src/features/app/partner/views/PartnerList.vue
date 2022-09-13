@@ -39,7 +39,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
           :filters="partnerStore.filters"
           @update-filter="UpdateFilter"
       />
-      <div class="btn_primary" @click="addPartner= true">Ajouter</div>
+      <div class="btn_primary" id="addPartner" @click="addPartner= true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
         <div
@@ -61,9 +61,11 @@ function UpdateFilter(updateFilter : FilterUpdate){
 </template>
 <style scoped lang="sass">
 @import "@/assets/main.sass"
+
 #addPartner
   +lg_max
     margin-top: 5px
+
 #container_sub_head
   +lg_min
     flex-direction: row
