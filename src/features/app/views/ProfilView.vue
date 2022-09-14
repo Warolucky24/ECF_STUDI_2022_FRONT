@@ -15,13 +15,11 @@ const state = reactive<{
   openName: false
 })
 
-
-
 </script>
 
 
 <template>
-  <div class="container d_flex justify_content_center align_items_center flex_column">
+  <div class="container d_flex justify_content_center align_items_center flex_column content">
     <h4 class="m_5">Bienvenue {{userStore.currentUser.user_name}}</h4>
     <div>
       <div class="m_5">Mail : {{userStore.currentUser.email}}</div>
@@ -41,7 +39,7 @@ const state = reactive<{
 
     <div>
       <div @click="state.openPass = !state.openPass" id="btn_change_pass">
-        Changer de mot de passe
+        <b>Changer de mot de passe</b>
       </div>
 
       <div v-if="state.openPass" class="modal">
@@ -59,7 +57,7 @@ const state = reactive<{
       </div>
 
       <div class="need_new_pass_msg" v-if="userStore.currentUser.first_connect">
-        Password actuel généré automatiquement. veuillez le changer !
+       <b>Password actuel généré automatiquement. veuillez le changer !</b>
       </div>
     </div>
 

@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import {useUserStore} from "@/stores/userStore";
-import PopUp from "@/components/PopUp.vue";
-const userStore = useUserStore();
+import ListPopup from "@/components/ListPopup.vue";
 
 </script>
 
 <template>
   <RouterView></RouterView>
-  <pop-up
-      v-if="userStore.error"
-      :msg="userStore.error"
-      :style="userStore.style"
-  />
+  <ListPopup />
 </template>
 

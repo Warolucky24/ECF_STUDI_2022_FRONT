@@ -9,21 +9,28 @@ import {useRouter} from "vue-router";
 const router = useRouter()
 const userStore = useUserStore()
 
+const initialValues = {
+  user_email: "",
+  user_password: "",
+  souvenir: true
+}
 
 const required_error = {required_error : "Veuillez renseigner ce champ"}
 const validationSchema = toFormValidator(
     z.object({
       user_email : z.string(required_error).email({message: "Email non valide"}),
-      user_password : z.string(required_error)
+      user_password : z.string(required_error),
+      souvenir: z.boolean(required_error)
     })
 )
 const {handleSubmit} = useForm({
-  validationSchema
+  validationSchema,
+  initialValues
 })
 
 const {value : value_email, errorMessage : error_email} = useField("user_email")
 const {value : value_password, errorMessage : error_password} = useField("user_password")
-
+const {value : value_souvenir} = useField("souvenir")
 
 const tryConnect = handleSubmit( async (formValues) => {
   try {
@@ -33,7 +40,6 @@ const tryConnect = handleSubmit( async (formValues) => {
     console.log(e)
   }
 })
-
 
 </script>
 
@@ -64,6 +70,10 @@ const tryConnect = handleSubmit( async (formValues) => {
               class="input_text"
           >
         </td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" v-model="value_souvenir" checked></td>
+        <td class="txt_white">Se souvenir de moi</td>
       </tr>
     </table>
     <button class="btn_effect mt_20">

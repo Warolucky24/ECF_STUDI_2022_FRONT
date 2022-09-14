@@ -78,10 +78,10 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
       <div @click="$router.go(-1)" class="btn_primary" id="back_btn">Retour</div>
     </div>
     <div class="separator_secondary"></div>
-    <div class="d_flex flex_column justify_content_center align_items_center">
+    <div class="d_flex flex_column justify_content_center align_items_center content">
       <h3 class="m_10">{{state.struct.struct_name}}</h3>
       <div class="d_flex justify_content_center align_items_center">
-        <div v-if="userStore.currentUser.is_admin">
+        <div v-if="userStore.currentUser.is_admin || userStore.currentUser.id === state.struct.partner_user_id">
           <BtnActifNoActif :state="state.struct.struct_active" @changeactive="goChangeActiveStruct" :name="state.struct.struct_name"/>
         </div>
         <div class="ms_10" :class="{text_green : state.struct.struct_active===1 , color_red : state.struct.struct_active!==1}">

@@ -8,6 +8,18 @@ export interface User{
 }
 
 export interface UserConnectInterface{
-    email: string,
-    password: string
+    user_email: string,
+    user_password: string,
+    souvenir: boolean
+
+}
+
+
+export const  defaultUser = {
+    id: 0,
+    email: "none",
+    first_connect: false,
+    is_admin: true,
+    user_active: true,
+    user_name: "none",
 }

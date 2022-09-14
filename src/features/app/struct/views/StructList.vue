@@ -38,9 +38,13 @@ function UpdateFilter(updateFilter : FilterUpdate){
   <div class="container">
     <div class="d_flex justify_content_between align_items_center" id="container_sub_head">
       <Filters
+          v-if="userStore.currentUser.is_admin"
           :filters="structStore.filters"
           @update-filter="UpdateFilter"
       />
+      <div class="nbr_select">
+        {{structStore.filteredStruct.length > 1 ? "trouvés : "+structStore.filteredStruct.length : "trouvé : "+structStore.filteredStruct.length }}
+      </div>
       <div class="btn_primary" id="addPartner" @click="addStructModal = true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
@@ -66,6 +70,11 @@ function UpdateFilter(updateFilter : FilterUpdate){
 <style scoped lang="sass">
 @import "@/assets/main.sass"
 #addPartner
+  background: white
+  border: 1px solid $secondary
+  box-shadow: $boxShadow
+  &:hover
+    box-shadow: -4px 2px 7px 0px rgba(0, 0, 0, 0.25)
   +lg_max
     margin-top: 5px
 #container_sub_head

@@ -44,7 +44,7 @@ const emit = defineEmits<{
   +lg_min
     flex-direction: row
 #container_etat
-  background: $primary
+  background: white
   border-radius: 5px 10px
   overflow: hidden
   border: 1px solid $secondary

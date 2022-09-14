@@ -80,7 +80,7 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
       <div @click="$router.go(-1)" class="btn_primary" id="back_btn">Retour</div>
     </div>
     <div class="separator_secondary"></div>
-    <div class=" d_flex flex_column justify_content_center align_items_center">
+    <div class="d_flex flex_column justify_content_center align_items_center content">
       <div>
         <img :src="state.partner.logo_url" alt="LogoPartner" id="LogoPartnerBig">
       </div>

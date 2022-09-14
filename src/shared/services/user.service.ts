@@ -6,7 +6,10 @@ export async function connectUser(User : UserConnectInterface): Promise<User> {
     const response = await (await fetch(`${BASE_URL}/login`,
         {
             method: "POST",
-            body: JSON.stringify(User),
+            body: JSON.stringify({
+                user_email: User.user_email,
+                user_password: User.user_password
+            }),
             headers: {
                 "Content-type": "application/json"
             }

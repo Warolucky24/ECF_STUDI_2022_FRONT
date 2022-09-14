@@ -3,53 +3,61 @@ import type {User, UserConnectInterface} from "@/shared/interfaces";
 import {connectUser, deletePartnerOrStructService, updateUser} from "@/shared/services";
 import {usePartnerStore} from "@/stores/partnerStore";
 import {useStructStore} from "@/stores/structStore";
+import {defaultUser} from "@/shared/interfaces";
 
 export type Style = "danger" | "success" | "warning"
+
+interface PopPupInterface{
+    text: string,
+    style: Style
+}
+
 
 interface UserStoreInterface{
     isConnected : boolean,
     currentUser: User,
     error: any,
-    style: Style
+    style: Style,
+    list_pop: PopPupInterface[]
+
 }
 
 export const useUserStore = defineStore("userStore", {
     state: (): UserStoreInterface => ({
         isConnected: false,
-        currentUser: {
-            id: 0,
-            email: "none",
-            first_connect: false,
-            is_admin: true,
-            user_active: true,
-            user_name: "none",
-        },
+        currentUser: defaultUser,
         error: null,
         style: "danger",
+        list_pop : []
     }),
     getters: {
 
     },
     actions: {
         sendMsg(msg: string, style : Style){
-            this.error = msg
-            this.style = style
-            setTimeout(()=> {
-                this.error = null
+            const new_msg: PopPupInterface = {text: msg, style: style}
+            this.list_pop.push(new_msg)
+            setTimeout(()=>{
+                this.list_pop.splice(0,1);
             },4000)
         },
         goConnect: async function (formConnect: UserConnectInterface) {
             try {
                 this.error = null
-                this.currentUser = await connectUser(formConnect);
-                this.error = null;
+                const user = await connectUser(formConnect);
+                this.currentUser = user
                 this.isConnected = true
+                if (user.first_connect){
+                    this.sendMsg("Veuillez modifier votre mot de passe", "danger");
+                }
+                if (formConnect.souvenir){
+                    localStorage.setItem("user", JSON.stringify(user));
+                }
                 this.sendMsg("Vous êtes connecté", "success")
             } catch (e) {
                 this.isConnected = false
                 // @ts-ignore
                 this.sendMsg(e.error, "danger")
-
             }
         },
         async updatePassword(password: string){
