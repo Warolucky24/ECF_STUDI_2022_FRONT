@@ -17,3 +17,10 @@ export function isNoConnectGuard(){
         return "/app"
     }
 }
+
+export function isAdminGuard(){
+    const userStore = useUserStore()
+    if (!userStore.currentUser.is_admin){
+        return "/app"
+    }
+}

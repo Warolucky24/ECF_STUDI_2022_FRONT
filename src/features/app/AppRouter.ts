@@ -1,6 +1,9 @@
 import type {RouteRecordRaw} from "vue-router";
 import {PARTNER_ROUTE} from "@/features/app/partner/partner.route";
 import {STRUCT_ROUTE} from "@/features/app/struct/struct.route";
+import {initialFetchStruct} from "@/stores/structStore";
+import {initialFetchPartner} from "@/stores/partnerStore";
+import {isAdminGuard} from "@/shared/guards/auth.guard";
 
 export const APP_ROUTES: RouteRecordRaw[] = [
     {
@@ -28,6 +31,14 @@ export const APP_ROUTES: RouteRecordRaw[] = [
         children: STRUCT_ROUTE,
         meta: {
             page: "struct"
+        }
+    },
+    {
+        path: "dashboard",
+        beforeEnter: [initialFetchStruct, initialFetchPartner, isAdminGuard],
+        component: () => import('@/features/app/views/Dashboard.vue'),
+        meta: {
+            page: "dash"
         }
     }
 ]

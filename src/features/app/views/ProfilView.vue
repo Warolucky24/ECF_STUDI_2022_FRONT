@@ -15,6 +15,10 @@ const state = reactive<{
   openName: false
 })
 
+function goChangeName(name: string){
+  userStore.currentUser.user_name = name
+}
+
 </script>
 
 
@@ -51,7 +55,12 @@ const state = reactive<{
 
       <div v-if="state.openName" class="modal">
         <div class="modal_content">
-          <ChangeName @go-close="state.openName = false"/>
+          <ChangeName
+              :name="userStore.currentUser.user_name"
+              :email="userStore.currentUser.email"
+              @go-close="state.openName = false"
+              @is-submit="goChangeName"
+          />
         </div>
         <div class="modal_back" @click="state.openName = false"></div>
       </div>

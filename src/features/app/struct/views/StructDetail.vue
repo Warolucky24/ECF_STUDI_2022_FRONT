@@ -11,6 +11,7 @@ import {useStructStore} from "@/stores/structStore";
 const route = useRoute()
 const userStore = useUserStore()
 const structStore = useStructStore()
+
 const state = reactive<{
   struct : StructDetailInterface | null
 }>({

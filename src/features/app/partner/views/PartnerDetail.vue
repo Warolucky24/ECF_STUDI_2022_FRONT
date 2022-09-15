@@ -6,6 +6,7 @@ import {reactive, watchEffect} from "vue";
 import {useUserStore} from "@/stores/userStore";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {usePartnerStore} from "@/stores/partnerStore";
+import ChangeName from "@/features/app/components/ChangeName.vue";
 
 const route = useRoute()
 const userStore = useUserStore()
@@ -13,9 +14,11 @@ const partnerStore = usePartnerStore()
 
 
 const state = reactive<{
-  partner: PartnerDetailInterface | null
+  partner: PartnerDetailInterface | null,
+  modalUpdateNameGerant: boolean
 }>({
-  partner : null
+  partner : null,
+  modalUpdateNameGerant: false
 
 })
 
@@ -73,6 +76,12 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
   }
 }
 
+function goChangeName(name:string)
+{
+  //@ts-ignore
+  state.partner.user_name = name
+}
+
 </script>
 <template>
   <div v-if="state.partner">
@@ -99,6 +108,14 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
           <tr>
             <td>Nom : </td>
             <td>{{state.partner.user_name}}</td>
+            <td>
+              <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>Mail :</td>
@@ -178,6 +195,17 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
         </div>
       </div>
     </div>
+    <div v-if="state.modalUpdateNameGerant" class="modal">
+      <div class="modal_content">
+        <ChangeName
+            :name="state.partner.user_name"
+            :email="state.partner.user_email"
+            @go-close="state.modalUpdateNameGerant = false"
+            @is-submit="goChangeName"
+        />
+      </div>
+      <div class="modal_back" @click="state.modalUpdateNameGerant = false"></div>
+    </div>
   </div>
 </template>
 
@@ -192,4 +220,10 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
   +lg_max
     width: 70vw
     margin: auto
+
+#btn_modify
+  cursor: pointer
+  transition: all .4s
+  &:hover
+    color: green
 </style>
