@@ -19,7 +19,8 @@ async function changeActivePartner(partner_id: number, active_state: number){
     const partnerIndex = partnerStore.partner.findIndex((e) => e.id === partner_id);
     const name_partner = partnerStore.partner[partnerIndex].partner_name
     const etat = active_state === 1 ? "Actif" : "Non-Actif";
-    userStore.sendMsg(`${name_partner} est maintenant ${etat}`, "success");
+    const color = active_state === 1 ? "success" : "warning";
+    userStore.sendMsg(`${name_partner} est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");

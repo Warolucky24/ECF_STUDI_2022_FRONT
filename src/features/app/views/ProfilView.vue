@@ -26,7 +26,7 @@ function goChangeName(name: string){
   <div class="container d_flex justify_content_center align_items_center flex_column content">
     <h4 class="m_5">Bienvenue {{userStore.currentUser.user_name}}</h4>
     <div>
-      <div class="m_5">Mail : {{userStore.currentUser.email}}</div>
+      <div class="m_5">Email : {{userStore.currentUser.email}}</div>
     </div>
     <div class="d_flex justify_content_center align_items_center m_5">
       <div>Nom : {{userStore.currentUser.user_name}}</div>

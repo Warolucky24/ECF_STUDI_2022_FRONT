@@ -42,7 +42,8 @@ async function goChangeActivePartner(active_state: number){
     const partnerIndex = partnerStore.partner.findIndex((e) => e.id === partnerId);
     const name_partner = partnerStore.partner[partnerIndex].partner_name
     const etat = active_state === 1 ? "Actif" : "Non-Actif";
-    userStore.sendMsg(`${name_partner} est maintenant ${etat}`, "success");
+    const color = active_state === 1 ? "success" : "warning";
+    userStore.sendMsg(`${name_partner} est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");
@@ -57,6 +58,9 @@ async function goChangeActiveDroitPartner(gestion_active: number, gestion_name :
     await partnerStore.changeActiveDroit(partnerId, gestion_name, gestion_active);
     //@ts-ignore
     state.partner.gestion[gestion_name] = gestion_active;
+    const stateGestion = gestion_active === 1 ? "Actif" : "Inactif";
+    const color = gestion_active === 1 ? "success" : "warning";
+    userStore.sendMsg(`Update : ${gestion_name} est maintenant ${stateGestion}`,color)
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");
@@ -69,7 +73,8 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
     //@ts-ignore
     state.partner.user_active = gestion_active;
     const etat = gestion_active===1 ? "Actif" : "Inactif";
-    userStore.sendMsg(`Le gérant est maintenant ${etat}`, "success");
+    const color = gestion_active===1 ? "success" : "warning";
+    userStore.sendMsg(`Le gérant est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");

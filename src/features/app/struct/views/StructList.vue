@@ -19,7 +19,8 @@ async function changeActiveStruct(struct_id: number, active_state: number){
     const structIndex = structStore.struct.findIndex(e => e.id === struct_id);
     const name_struct = structStore.struct[structIndex].struct_name;
     const etat = active_state === 1 ? "Actif" : "Non-Actif";
-    userStore.sendMsg(`${name_struct} est maintenant ${etat}`, "success");
+    const color = active_state === 1 ? "success" : "warning";
+    userStore.sendMsg(`${name_struct} est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");

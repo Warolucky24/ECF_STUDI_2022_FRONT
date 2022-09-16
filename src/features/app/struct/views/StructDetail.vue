@@ -37,7 +37,8 @@ async function goChangeActiveStruct(gestion_active: number, gestion_name : strin
     //@ts-ignore
     const name_struct = state.struct.struct_name
     const etat = gestion_active === 1 ? "Actif" : "Non-Actif";
-    userStore.sendMsg(`${name_struct} est maintenant ${etat}`, "success");
+    const color = gestion_active === 1 ? "success" : "warning";
+    userStore.sendMsg(`${name_struct} est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger")
@@ -52,6 +53,9 @@ async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : 
     await structStore.changeDroitActive(struct_id, gestion_name,gestion_active);
     //@ts-ignore
     state.struct.gestion[gestion_name] = gestion_active
+    const stateGestion = gestion_active === 1 ? "Actif" : "Inactif";
+    const color = gestion_active === 1 ? "success" : "warning";
+    userStore.sendMsg(`Update : ${gestion_name} est maintenant ${stateGestion}`,color)
   }catch (e) {
     //@ts-ignore
     userStore.sendMsg(e.error, "warning")
@@ -64,7 +68,8 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
     //@ts-ignore
     state.struct.user_active = gestion_active;
     const etat = gestion_active===1 ? "Actif" : "Inactif";
-    userStore.sendMsg(`L gérant est maintenant ${etat}`, "success");
+    const color = gestion_active === 1 ? "success" : "warning";
+    userStore.sendMsg(`L gérant est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");
