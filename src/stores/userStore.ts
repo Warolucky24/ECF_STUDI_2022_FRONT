@@ -51,7 +51,7 @@ export const useUserStore = defineStore("userStore", {
                     this.sendMsg("Veuillez modifier votre mot de passe", "danger");
                 }
                 if (formConnect.souvenir){
-                    localStorage.setItem("user", JSON.stringify(user));
+                    console.log('je veux que l\'on se souvienne de moi');
                 }
                 this.sendMsg("Vous êtes connecté", "success")
             } catch (e) {

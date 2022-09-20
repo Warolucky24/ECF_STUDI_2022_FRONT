@@ -11,7 +11,6 @@ const userStore = useUserStore();
 const un_connect = () => {
   userStore.isConnected = false;
   userStore.currentUser = defaultUser;
-  localStorage.removeItem("user");
   userStore.sendMsg("Vous êtes maintenant deconnecte", "danger");
   router.push("/");
 }
