@@ -44,6 +44,7 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
 @import "@/assets/main.sass"
 
 .card_dash
+  cursor: pointer
   border: 1px solid $primary
   background: white
   width: 350px

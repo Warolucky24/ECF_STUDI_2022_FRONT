@@ -38,7 +38,7 @@ function goChangeName(name: string){
       </div>
     </div>
     <div class="m_5">
-      Admin : {{userStore.currentUser.is_admin ? "Oui" : "Non"}}
+      Administrateur : {{userStore.currentUser.is_admin ? "Oui" : "Non"}}
     </div>
 
     <div>

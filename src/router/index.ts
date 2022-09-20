@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ConnectView from '@/views/Connect.view.vue'
 import {APP_ROUTES} from "@/features/app/AppRouter";
 import {isConnectGuard, isNoConnectGuard} from "@/shared/guards/auth.guard";
-import {useUserStore} from "@/stores/userStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
