@@ -37,13 +37,13 @@ function UpdateFilter(updateFilter : FilterUpdate){
 
 <template>
   <div class="container">
-    <div class="d_flex justify_content_between align_items_center" id="container_sub_head">
+    <div class="flex content-between items-center" id="container_sub_head">
       <Filters
           v-if="userStore.currentUser.is_admin"
           :filters="structStore.filters"
           @update-filter="UpdateFilter"
       />
-      <div class="nbr_select">
+      <div class="nbr_select grow">
         {{structStore.filteredStruct.length > 1 ? "trouvés : "+structStore.filteredStruct.length : "trouvé : "+structStore.filteredStruct.length }}
       </div>
       <div class="btn_primary" id="addPartner" @click="addStructModal = true">Ajouter</div>

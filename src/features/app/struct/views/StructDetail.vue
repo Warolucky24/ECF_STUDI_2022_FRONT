@@ -87,117 +87,121 @@ function goChangeName(name:string)
 </script>
 
 <template>
-  <div class="container" v-if="state.struct">
+  <div v-if="state.struct">
     <div>
       <div @click="$router.go(-1)" class="btn_primary" id="back_btn">Retour</div>
     </div>
     <div class="separator_secondary"></div>
-    <div class="d_flex flex_column justify_content_center align_items_center content">
-      <h3 class="m_10">{{state.struct.struct_name}}</h3>
-      <div class="d_flex justify_content_center align_items_center">
+    <div class="content flex m-2 content-center items-center flex-col">
+      <h3 class="m-2 font-bold text-2xl">{{state.struct.struct_name}}</h3>
+      <div class="flex content-center items-center">
         <div v-if="userStore.currentUser.is_admin || userStore.currentUser.id === state.struct.partner_user_id">
           <BtnActifNoActif :state="state.struct.struct_active" @changeactive="goChangeActiveStruct" :name="state.struct.struct_name"/>
         </div>
-        <div class="ms_10" :class="{text_green : state.struct.struct_active===1 , color_red : state.struct.struct_active!==1}">
+        <div class="ml-2" :class="{text_green : state.struct.struct_active===1 , text_red : state.struct.struct_active!==1}">
           {{state.struct.struct_active===1 ? "Actif" : "Inactive"}}
         </div>
       </div>
-      <div class="m_10">
-        <h5>Gérant :</h5>
-        <table>
-          <tr>
-            <td>Nom :</td>
-            <td>{{state.struct.user_name}}</td>
-            <td>
-              <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                </svg>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Mail :</td>
-            <td>{{state.struct.user_email}}</td>
-          </tr>
-          <tr>
-            <td v-if="userStore.currentUser.is_admin">
-              <BtnActifNoActif :name="state.struct.user_email" :state="state.struct.user_active"  @changeactive="goChangeActiveUser" />
-            </td>
-            <td :class="{text_green : state.struct.user_active===1 , text_red : state.struct.user_active!==1}">{{state.struct.user_active===1 ? "Actif" : "Inactif"}}</td>
-          </tr>
-        </table>
-      </div>
-      <div class="m_10" v-if="userStore.currentUser.is_admin || userStore.currentUser.id === state.struct.partner_user_id">
-        <h5>Partenaire Lié :</h5>
-        <router-link :to="'/app/partner/detail/'+state.struct.partner_id" class="txt_link">
-          {{state.struct.partner_name}} | <span :class="{text_green : state.struct.partner_active===1 , text_red : state.struct.partner_active!==1}">{{state.struct.partner_active===1 ? "Actif" : "Inactif"}}</span>
-        </router-link>
-      </div>
-      <div class="m_10">
-        <h5>Droits :</h5>
-        <table>
-          <tr>
-            <td>Ventes de boissons :</td>
-            <td v-if="userStore.currentUser.is_admin">
-              <btn-actif-no-actif :state="state.struct.gestion.v_boisson" @changeactive="goChangeActiveDroitStruct" :name="'v_boisson'"/>
-            </td>
-            <td v-else :class="{text_green : state.struct.gestion.v_boisson===1 , text_red : state.struct.gestion.v_boisson!==1}">
-              {{state.struct.gestion.v_boisson === 1 ? "Actif" : "Inactif"}}
-            </td>
-          </tr>
-          <tr>
-            <td>Ventes de vêtements :</td>
-            <td v-if="userStore.currentUser.is_admin">
-              <btn-actif-no-actif :state="state.struct.gestion.v_vetement" @changeactive="goChangeActiveDroitStruct"  :name="'v_vetement'"/>
-            </td>
-            <td v-else :class="{text_green : state.struct.gestion.v_vetement===1 , text_red : state.struct.gestion.v_vetement!==1}">
-              {{state.struct.gestion.v_vetement === 1 ? "Actif" : "Inactif"}}
-            </td>
-          </tr>
-          <tr>
-            <td>Cours Particulier :</td>
-            <td v-if="userStore.currentUser.is_admin">
-              <btn-actif-no-actif :state="state.struct.gestion.c_particulier" @changeactive="goChangeActiveDroitStruct"  :name="'c_particulier'"/>
-            </td>
-            <td v-else :class="{text_green : state.struct.gestion.c_particulier===1 , text_red : state.struct.gestion.c_particulier!==1}">
-              {{state.struct.gestion.c_particulier === 1 ? "Actif" : "Inactif"}}
-            </td>
-          </tr>
-          <tr>
-            <td>Cours de Pilate :</td>
-            <td v-if="userStore.currentUser.is_admin">
-              <btn-actif-no-actif :state="state.struct.gestion.c_pilate" @changeactive="goChangeActiveDroitStruct"  :name="'c_pilate'"/>
-            </td>
-            <td v-else :class="{text_green : state.struct.gestion.c_pilate===1 , text_red : state.struct.gestion.c_pilate!==1}">
-              {{state.struct.gestion.c_pilate === 1 ? "Actif" : "Inactif"}}
-            </td>
-          </tr>
-          <tr>
-            <td>Cours de Crosstrainning :</td>
-            <td v-if="userStore.currentUser.is_admin">
-              <btn-actif-no-actif :state="state.struct.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitStruct" :name="'c_crosstrainning'"/>
-            </td>
-            <td v-else :class="{text_green : state.struct.gestion.c_crosstrainning===1 , text_red : state.struct.gestion.c_crosstrainning!==1}">
-              {{state.struct.gestion.c_crosstrainning === 1 ? "Actif" : "Inactif"}}
-            </td>
-          </tr>
-        </table>
-      </div>
     </div>
-    <div class="modal" v-if="state.modalUpdateNameGerant">
-      <div class="modal_content">
-        <ChangeName
-            :name="state.struct.user_name"
-            :email="state.struct.user_email"
-            @go-close="state.modalUpdateNameGerant = false"
-            @is-submit="goChangeName"
-        />
+    <div class="md:flex">
+      <div class="md:basis-1/3">
+        <div class="content m-2">
+          <h5 class="font-bold">Gérant :</h5>
+          <div class="flex content-center items-center">
+            <div class="ml-3">
+              <span class="font-bold ">Nom :</span> {{state.struct.user_name}}
+            </div>
+            <div id="btn_modify" class="ml-2" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-3">
+            <span class="font-bold">Mail :</span> {{state.struct.user_email}}
+          </div>
+          <div class="flex">
+            <div v-if="userStore.currentUser.is_admin">
+              <BtnActifNoActif :name="state.struct.user_email" :state="state.struct.user_active"  @changeactive="goChangeActiveUser" />
+            </div>
+            <div class="ml-1" :class="{text_green : state.struct.user_active===1 , text_red : state.struct.user_active!==1}">{{state.struct.user_active===1 ? "Actif" : "Inactif"}}</div>
+          </div>
+        </div>
+        <div class="content m-2">
+          <div class="m_10" v-if="userStore.currentUser.is_admin || userStore.currentUser.id === state.struct.partner_user_id">
+            <h5 class="font-bold">Partenaire Lié :</h5>
+            <router-link :to="'/app/partner/detail/'+state.struct.partner_id" class="txt_link ml-2">
+              {{state.struct.partner_name}} | <span :class="{text_green : state.struct.partner_active===1 , text_red : state.struct.partner_active!==1}">{{state.struct.partner_active===1 ? "Actif" : "Inactif"}}</span>
+            </router-link>
+          </div>
+        </div>
       </div>
-      <div class="modal_back"></div>
+      <div class="content m-2 md:basis-2/3">
+          <h5 class="font-bold">Droits :</h5>
+          <table class="table-auto m-auto border-separate">
+            <tr>
+              <td class="text-end pr-2">Ventes de boissons :</td>
+              <td v-if="userStore.currentUser.is_admin">
+                <btn-actif-no-actif :state="state.struct.gestion.v_boisson" @changeactive="goChangeActiveDroitStruct" :name="'v_boisson'"/>
+              </td>
+              <td v-else :class="{text_green : state.struct.gestion.v_boisson===1 , text_red : state.struct.gestion.v_boisson!==1}">
+                {{state.struct.gestion.v_boisson === 1 ? "Actif" : "Inactif"}}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-end pr-2">Ventes de vêtements :</td>
+              <td v-if="userStore.currentUser.is_admin">
+                <btn-actif-no-actif :state="state.struct.gestion.v_vetement" @changeactive="goChangeActiveDroitStruct"  :name="'v_vetement'"/>
+              </td>
+              <td v-else :class="{text_green : state.struct.gestion.v_vetement===1 , text_red : state.struct.gestion.v_vetement!==1}">
+                {{state.struct.gestion.v_vetement === 1 ? "Actif" : "Inactif"}}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-end pr-2">Cours Particulier :</td>
+              <td v-if="userStore.currentUser.is_admin">
+                <btn-actif-no-actif :state="state.struct.gestion.c_particulier" @changeactive="goChangeActiveDroitStruct"  :name="'c_particulier'"/>
+              </td>
+              <td v-else :class="{text_green : state.struct.gestion.c_particulier===1 , text_red : state.struct.gestion.c_particulier!==1}">
+                {{state.struct.gestion.c_particulier === 1 ? "Actif" : "Inactif"}}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-end pr-2">Cours de Pilate :</td>
+              <td v-if="userStore.currentUser.is_admin">
+                <btn-actif-no-actif :state="state.struct.gestion.c_pilate" @changeactive="goChangeActiveDroitStruct"  :name="'c_pilate'"/>
+              </td>
+              <td v-else :class="{text_green : state.struct.gestion.c_pilate===1 , text_red : state.struct.gestion.c_pilate!==1}">
+                {{state.struct.gestion.c_pilate === 1 ? "Actif" : "Inactif"}}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-end pr-2">Cours de Crosstrainning :</td>
+              <td v-if="userStore.currentUser.is_admin">
+                <btn-actif-no-actif :state="state.struct.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitStruct" :name="'c_crosstrainning'"/>
+              </td>
+              <td v-else :class="{text_green : state.struct.gestion.c_crosstrainning===1 , text_red : state.struct.gestion.c_crosstrainning!==1}">
+                {{state.struct.gestion.c_crosstrainning === 1 ? "Actif" : "Inactif"}}
+              </td>
+            </tr>
+          </table>
+      </div>
     </div>
   </div>
+
+  <div class="modal" v-if="state.modalUpdateNameGerant">
+    <div class="modal_content">
+      <ChangeName
+          :name="state.struct.user_name"
+          :email="state.struct.user_email"
+          @go-close="state.modalUpdateNameGerant = false"
+          @is-submit="goChangeName"
+      />
+    </div>
+    <div class="modal_back"></div>
+  </div>
+
 </template>
 
 <style scoped lang="sass">

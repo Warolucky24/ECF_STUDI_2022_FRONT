@@ -26,7 +26,7 @@ const state = reactive<{
 
 
 <template>
-  <nav class="mb_20" id="nav_desktop">
+  <nav class="mb-5" id="nav_desktop">
     <div v-if="userStore.currentUser.is_admin">
       <router-link class="nav_link" :class="{underline_left_to_right : route.meta.page !== 'dash'}" to="/app/dashboard">Dashboard</router-link>
     </div>
@@ -34,12 +34,14 @@ const state = reactive<{
     <router-link class="nav_link"  :class="{underline_left_to_right : route.meta.page !== 'struct'}" to="/app/struct">Structures</router-link>
 
     <div id="img_user" @click="state.dropUser = !state.dropUser">
-      <div class="d_flex justify_content_around align_items_center">
-        <div class="txt_white me_10 txt_user">{{userStore.currentUser.user_name}}</div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-        </svg>
+      <div class="flex content-around items-center">
+        <div class="text-white me_10 txt_user">{{userStore.currentUser.user_name}}</div>
+        <div class="rounded ml-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          </svg>
+        </div>
       </div>
       <div class="dropdown_user" v-if="state.dropUser">
         <router-link to="/app/profil">Profil</router-link>

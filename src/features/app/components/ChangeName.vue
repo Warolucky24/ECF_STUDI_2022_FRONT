@@ -48,10 +48,10 @@ const tryChangeName = handleSubmit(async(formValue) => {
 </script>
 
 <template>
-  <form @submit="tryChangeName" class="d_flex flex_column justify_content_center align_items_center">
+  <form @submit="tryChangeName" class="flex flex-col content-center items-center">
     <div>
-      <div class="text_center mb_10">Nouveau nom :</div>
-      <div><input type="text" v-model="value" :class="{error_input: errorMessage}"></div>
+      <div class="text_center mb_10">Votre nom :</div>
+      <div><input class="text-black" type="text" v-model="value" :class="{error_input: errorMessage}"></div>
     </div>
     <div class="d_flex m_10">
       <button class="btn_success me_5">Valider</button>

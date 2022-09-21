@@ -28,12 +28,12 @@ function goActif(){
   <Teleport to="body">
     <div v-if="state.open" class="modal">
       <div class="modal_back" @click="state.open = false"></div>
-      <div class=" mt_10 d_flex flex_column justify_content_center align_items_center modal_content">
-        <div class="title">Veuillez confirmer l'opération :</div>
-        <div class="m_10">{{props.name}} de {{props.state !== 1 ? "Actif" : "Non-Actif"}} à {{props.state === 1 ? "Actif" : "Non-Actif"}}</div>
-        <div class="d_flex justify_content_arround align_items_center">
-          <div class="btn_success m_5" @click="goActif">Oui</div>
-          <div class="btn_warning m_5" @click="state.open = false">Non</div>
+      <div class=" mt_10 flex flex_column justify_content_center align_items_center modal_content">
+        <div class="font-bold text-2xl">Veuillez confirmer l'opération :</div>
+        <div class="m-2">{{props.name}} de {{props.state !== 1 ? "Actif" : "Non-Actif"}} à {{props.state === 1 ? "Actif" : "Non-Actif"}}</div>
+        <div class="flex content-around items-center">
+          <div class="btn_success m-1" @click="goActif">Oui</div>
+          <div class="btn_warning m-1" @click="state.open = false">Non</div>
         </div>
       </div>
     </div>

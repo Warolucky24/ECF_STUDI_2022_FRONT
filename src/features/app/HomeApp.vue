@@ -6,7 +6,7 @@ import Header from "@/features/app/components/Header.vue";
   <Header/>
   <router-view v-slot="{ Component, route }">
     <Transition name="page" mode="out-in" appear>
-      <div  :key="route.path" class="container">
+      <div  :key="route.path" class="container m-auto">
         <component :is="Component"/>
       </div>
     </Transition>

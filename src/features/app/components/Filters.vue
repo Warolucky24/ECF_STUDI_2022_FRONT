@@ -13,7 +13,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="d_flex justify_content_center align_items_center" id="container_filter">
+  <div class="flex content-center items-center" id="container_filter">
     <div>
       <input
           type="text"
@@ -23,7 +23,7 @@ const emit = defineEmits<{
           class="input_search"
       />
     </div>
-    <div class="d_flex" id="container_etat">
+    <div class="flex" id="container_etat">
       <p
           class="etat_filter"
           :class="{selected : filters.etat === filter}"

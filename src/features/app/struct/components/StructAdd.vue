@@ -61,7 +61,7 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
 </script>
 
 <template>
-  <form @submit="tryCreateStruct" class="d_flex flex_column justify_content_center align_items_center" id="form">
+  <form @submit="tryCreateStruct" class="flex flex-col content-center items-center h-auto p-5" id="form">
     <table>
       <tr>
         <td colspan="2">
@@ -81,11 +81,11 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
         <td><input type="text" v-model="value_struct_name" :class="{error_input : error_struct_name}"></td>
       </tr>
       <tr>
-        <td class="text_end">Mail gérant :</td>
+        <td class="text-end">Mail gérant :</td>
         <td><input type="email" v-model="value_user_email" :class="{error_input : error_user_email}"></td>
       </tr>
       <tr>
-        <td class="text_end">Nom du gérant :</td>
+        <td class="text-end">Nom du gérant :</td>
         <td><input type="text" v-model="value_user_name" :class="{error_input : error_user_name}"></td>
       </tr>
       <tr>
@@ -97,7 +97,7 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
         </td>
       </tr>
     </table>
-    <button class="btn_effect mt_20" type="submit">
+    <button class="btn_effect mt-5" type="submit">
       <div class="font"></div>
       <div class="text"><span>Enregistrer</span></div>
     </button>

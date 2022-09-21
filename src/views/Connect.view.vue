@@ -45,11 +45,11 @@ const tryConnect = handleSubmit( async (formValues) => {
 
 
 <template>
-  <form class="form_connect d_flex flex_column justify_content_arround align_items_center" @submit="tryConnect">
-    <h1>Page de connection</h1>
+  <form class="form_connect flex flex-col content-between items-center h-auto" @submit="tryConnect">
+    <h1 class="font-bold text-3xl m-6">Page de connection</h1>
     <table>
       <tr>
-        <td class="text_end">Email :</td>
+        <td class="text-end font-bold">Email :</td>
         <td>
           <input
             type="email"
@@ -60,7 +60,7 @@ const tryConnect = handleSubmit( async (formValues) => {
         ></td>
       </tr>
       <tr>
-        <td class="text_end">Mot de passe :</td>
+        <td class="text-end font-bold">Mot de passe :</td>
         <td>
           <input
               type="password"
@@ -76,7 +76,7 @@ const tryConnect = handleSubmit( async (formValues) => {
         <td class="txt_white">Se souvenir de moi</td>
       </tr>
     </table>
-    <button class="btn_effect mt_20">
+    <button class="btn_effect mt-4">
       <div class="font"></div>
       <div class="text"><span>Se connecter</span></div>
     </button>

@@ -94,56 +94,67 @@ function goChangeName(name:string)
       <div @click="$router.go(-1)" class="btn_primary" id="back_btn">Retour</div>
     </div>
     <div class="separator_secondary"></div>
-    <div class="d_flex flex_column justify_content_center align_items_center content">
+    <div class="content flex m-2">
       <div>
-        <img :src="state.partner.logo_url" alt="LogoPartner" id="LogoPartnerBig">
+        <img :src="state.partner.logo_url" alt="LogoPartner" id="LogoPartnerBig" class="m-8">
       </div>
-      <h3 class="m_10">{{state.partner.partner_name}}</h3>
-      <div class="d_flex justify_content_center align_items_center">
-        <div v-if="userStore.currentUser.is_admin">
-          <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" :name="state.partner.partner_name"/>
-        </div>
-        <div class="ms_10" :class="{text_green : state.partner.partner_active===1 , text_red : state.partner.partner_active!==1}">
-          {{state.partner.partner_active===1 ? "Actif" : "Inactif"}}
+      <div class="flex flex-col items-center flex-auto">
+        <h1 class="m-4 font-bold text-2xl">{{state.partner.partner_name}}</h1>
+        <div class="flex">
+          <div v-if="userStore.currentUser.is_admin">
+            <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" :name="state.partner.partner_name"/>
+          </div>
+          <div class="ml-3" :class="{text_green : state.partner.partner_active===1 , text_red : state.partner.partner_active!==1}">
+            {{state.partner.partner_active===1 ? "Actif" : "Inactif"}}
+          </div>
         </div>
       </div>
-      <div class="m_10">
-        <h5>Gérant :</h5>
-        <table>
-          <tr>
-            <td>Nom : </td>
-            <td>{{state.partner.user_name}}</td>
-            <td>
-              <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                </svg>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Mail :</td>
-            <td>{{state.partner.user_email}}</td>
-          </tr>
-          <tr>
-            <td v-if="userStore.currentUser.is_admin">
-              <BtnActifNoActif :name="state.partner.user_email" :state="state.partner.user_active" @changeactive="goChangeActiveUser" />
-            </td>
-            <td v-else></td>
-            <td>
-              <span :class="{text_green : state.partner.user_active===1 , text_red : state.partner.user_active!==1}">
+    </div>
+    <div class="md:flex">
+      <div class="md:basis-1/3">
+        <div class="content m-2">
+          <h5 class="font-bold">Gérant :</h5>
+          <div class="flex content-center items-center pl-2">
+            <div class="ml-3 mr-2"><span class="font-bold">Nom :</span> {{state.partner.user_name}}</div>
+            <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mb-2 pl-2 ml-3">
+            <span class="font-bold">Mail :</span> {{state.partner.user_email}}
+          </div>
+          <div class="flex content-center items-center ml-3">
+            <BtnActifNoActif  v-if="userStore.currentUser.is_admin" :name="state.partner.user_email" :state="state.partner.user_active" @changeactive="goChangeActiveUser" />
+            <span
+                class="ml-2"
+                :class="{text_green : state.partner.user_active===1 , text_red : state.partner.user_active!==1}"
+            >
                 {{state.partner.user_active===1 ? "Actif" : "Inactif"}}
               </span>
-            </td>
-          </tr>
-        </table>
+          </div>
+        </div>
+        <div class="content m-2">
+          <div class="mt_20">
+            <h5 class="mb-1 font-bold">Structures associées :</h5>
+            <div v-if="state.partner.struct"
+                 v-for="struct in state.partner.struct"
+                 :key="struct.id"
+                 class="flex content-center items-center pl-2"
+            >
+              <router-link class="txt_link" :to="'/app/struct/detail/'+struct.id">{{struct.struct_name}} | {{struct.struct_active===1 ? "Actif" : "Inactive"}}</router-link>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="m_10">
-        <h5 class="mb_10">Droits :</h5>
-        <table>
+    <div class="content md:basis-2/3 m-2">
+        <h5 class="mb-5 font-bold">Droits :</h5>
+        <table class="table-auto w-96 m-auto border-separate">
+          <tbody>
           <tr>
-            <td>Ventes de boissons :</td>
+            <td class="text-end pr-2">Ventes de boissons :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.v_boisson" @changeactive="goChangeActiveDroitPartner" :name="'v_boisson'"/>
             </td>
@@ -152,7 +163,7 @@ function goChangeName(name:string)
             </td>
           </tr>
           <tr>
-            <td>Ventes de vêtements :</td>
+            <td class="text-end pr-2">Ventes de vêtements :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.v_vetement" @changeactive="goChangeActiveDroitPartner"  :name="'v_vetement'"/>
             </td>
@@ -161,7 +172,7 @@ function goChangeName(name:string)
             </td>
           </tr>
           <tr>
-            <td>Cours Particulier :</td>
+            <td class="text-end pr-2">Cours Particulier :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.c_particulier" @changeactive="goChangeActiveDroitPartner"  :name="'c_particulier'"/>
             </td>
@@ -170,7 +181,7 @@ function goChangeName(name:string)
             </td>
           </tr>
           <tr>
-            <td>Cours de Pilate :</td>
+            <td class="text-end pr-2">Cours de Pilate :</td>
             <td v-if="userStore.currentUser.is_admin">
               <btn-actif-no-actif :state="state.partner.gestion.c_pilate" @changeactive="goChangeActiveDroitPartner"  :name="'c_pilate'"/>
             </td>
@@ -179,26 +190,16 @@ function goChangeName(name:string)
             </td>
           </tr>
           <tr>
-            <td>Cours de Crosstrainning :</td>
+            <td class="text-end pr-2">Cours de Crosstrainning :</td>
             <td v-if="userStore.currentUser.is_admin">
-              <btn-actif-no-actif :state="state.partner.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitPartner" :name="'c_crosstrainning'"/>
+              <btn-actif-no-actif :state="state.partner.gestion.c_crosstrainning" @changeactive="goChangeActiveDroitPartner" name="c_crosstrainning"/>
             </td>
             <td v-else :class="{text_green : state.partner.gestion.c_crosstrainning===1 , text_red : state.partner.gestion.c_crosstrainning!==1}">
               {{state.partner.gestion.c_crosstrainning === 1 ? "Actif" : "Inactif"}}
             </td>
           </tr>
+          </tbody>
         </table>
-        <div class="mt_20">
-          <h5 class="mb_10">Structures associées :</h5>
-          <div v-if="state.partner.struct"
-               v-for="struct in state.partner.struct"
-               :key="struct.id"
-               class="d_flex justify_content_center align_items_center"
-          >
-            <router-link class="txt_link" :to="'/app/struct/detail/'+struct.id">{{struct.struct_name}} | {{struct.struct_active===1 ? "Actif" : "Inactive"}}</router-link>
-          </div>
-        </div>
-      </div>
     </div>
     <div v-if="state.modalUpdateNameGerant" class="modal">
       <div class="modal_content">
@@ -211,6 +212,7 @@ function goChangeName(name:string)
       </div>
       <div class="modal_back" @click="state.modalUpdateNameGerant = false"></div>
     </div>
+  </div>
   </div>
 </template>
 

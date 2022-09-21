@@ -35,13 +35,13 @@ function UpdateFilter(updateFilter : FilterUpdate){
 
 <template>
   <div>
-    <div class="d_flex justify_content_between align_items_center" id="container_sub_head">
+    <div class="flex content-between items-center" id="container_sub_head">
       <Filters
           v-if="userStore.currentUser.is_admin"
           :filters="partnerStore.filters"
           @update-filter="UpdateFilter"
       />
-      <div class="nbr_select">
+      <div class="nbr_select grow">
         {{partnerStore.filteredPartner.length > 1 ? "Trouvés : "+partnerStore.filteredPartner.length : "Trouvé : "+partnerStore.filteredPartner.length}}
       </div>
       <div class="btn_primary" id="addPartner" @click="addPartner= true">Ajouter</div>

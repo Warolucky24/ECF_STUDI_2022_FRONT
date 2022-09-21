@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import PartnerUpdate from "@/features/app/partner/components/PartnerUpdate.vue";
 import type {PartnerInterface} from "@/shared/interfaces/PartnerInterface";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {useUserStore} from "@/stores/userStore";
@@ -7,7 +6,6 @@ import {ref} from "vue";
 import Delete from "@/features/app/components/Delete.vue";
 
 const userStore = useUserStore()
-const modifyPartnerBool = ref<boolean>(false)
 const deletePartnerBool = ref<boolean>(false)
 
 const props = defineProps<{
@@ -26,20 +24,19 @@ function goChangeActive(active_state: number){
 </script>
 
 <template>
-  <div class="d_flex card">
-    <template v-if="!modifyPartnerBool">
+  <div class="flex m-3 card">
       <div>
-        <img class="m_5 card_img" :src="props.data.logo_url" alt="logo">
+        <img class="m-1 rounded h-11" :src="props.data.logo_url" alt="logo">
       </div>
-      <div class="w_25 d_flex align_items_center">
+      <div class="flex items-center content-center">
         <router-link :to="'/app/partner/detail/'+props.data.id" class="link_effect card_title">{{props.data.partner_name}}</router-link>
       </div>
-      <div class="w_75 d_flex justify_content_arround align_items_center">
-        <div class="d_flex justify_content_center align_items_center">
+      <div class="w_75 flex content-around items-center">
+        <div class="flex content-center items-center">
           <div v-if="userStore.currentUser.is_admin"><BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/></div>
           <div class="ms_10" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Inactif"}}</div>
         </div>
-        <div class="d_flex flex_column" id="gerant">
+        <div class="flex flex-col" id="gerant">
           <div>
             <b>Nom du gérant :</b> {{props.data.user_name}}
           </div>
@@ -48,18 +45,8 @@ function goChangeActive(active_state: number){
           </div>
         </div>
       </div>
-    </template>
-    <template v-if="modifyPartnerBool">
-      <PartnerUpdate :data="props.data" @is-update="modifyPartnerBool = !modifyPartnerBool"/>
-    </template>
 
-    <div v-if="userStore.currentUser.is_admin && !modifyPartnerBool" class="d_flex justify_content_center align_items_center">
-      <div id="btn_modify" @click="modifyPartnerBool = !modifyPartnerBool">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-        </svg>
-      </div>
+    <div v-if="userStore.currentUser.is_admin" class="d_flex justify_content_center align_items_center">
       <div id="btn_delete" class="mx_10" @click="deletePartnerBool = !deletePartnerBool">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
           <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
@@ -72,6 +59,8 @@ function goChangeActive(active_state: number){
     <div class="card_etat" :class="{bg_red : props.data.partner_active!==1, bg_green : props.data.partner_active===1}"></div>
   </div>
 </template>
+
+
 
 <style scoped lang="sass">
 @import "@/assets/main.sass"

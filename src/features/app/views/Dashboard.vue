@@ -13,7 +13,7 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
 </script>
 
 <template>
-  <div class="d_flex flex_wrap">
+  <div class="flex content-center items-center">
     <div class="card_dash">
       <div class="card_content">
         <div>{{partnerStore.partner.length}}</div>
@@ -38,7 +38,16 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
       </div>
     </div>
   </div>
+  <div class="content m-2">
+    <h1 class="font-bold">Historique :</h1>
+    <div>19:12/12 : update user ....</div>
+    <div>19:12/12 : update user ....</div>
+    <div>19:12/12 : update user ....</div>
+    <div>19:12/12 : update user ....</div>
+    <div>19:12/12 : update user ....</div>
+  </div>
 </template>
+
 
 <style scoped lang="sass">
 @import "@/assets/main.sass"
