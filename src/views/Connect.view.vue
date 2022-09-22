@@ -45,41 +45,52 @@ const tryConnect = handleSubmit( async (formValues) => {
 
 
 <template>
-  <form class="z-50 fixed flex flex-col content-between items-center h-auto bg-sky-800 rounded-md" @submit="tryConnect">
-    <h1 class="font-bold text-3xl m-6 text-sky-900">Page de connection</h1>
-    <table>
-      <tr>
-        <td class="text-end font-bold">Email :</td>
-        <td>
-          <input
-            type="email"
-            v-model="value_email"
-            id="email_user"
-            :class="{ error_input : error_email}"
-            class="input_text"
-        ></td>
-      </tr>
-      <tr>
-        <td class="text-end font-bold">Mot de passe :</td>
-        <td>
-          <input
-              type="password"
-              v-model="value_password"
-              id="password_user"
-              :class="{error_input : error_password}"
-              class="input_text"
-          >
-        </td>
-      </tr>
-      <tr>
-        <td><input type="checkbox" v-model="value_souvenir" checked></td>
-        <td class="txt_white">Se souvenir de moi</td>
-      </tr>
-    </table>
-    <button class="btn_effect mt-4">
-      <div class="font"></div>
-      <div class="text"><span>Se connecter</span></div>
-    </button>
+  <form
+      class="z-50 fixed top-auto left-auto flex flex-col content-between h-full w-full"
+      @submit="tryConnect"
+  >
+    <div class="flex flex-col content-between items-center relative p-4 m-auto md:w-1/2 md:h-3/5 bg-sky-800 rounded-md border-indigo-400 border-2">
+      <h1 class="font-bold text-3xl m-6 text-sky-900 text-center">Page de connection</h1>
+      <table>
+        <tr>
+          <td class="text-end font-bold">Email :</td>
+          <td>
+            <input
+                type="email"
+                v-model="value_email"
+                id="email_user"
+                :class="{ error_input : error_email}"
+                class="input_text"
+            ></td>
+        </tr>
+        <tr>
+          <td class="text-end font-bold">Mot de passe :</td>
+          <td>
+            <input
+                type="password"
+                v-model="value_password"
+                id="password_user"
+                :class="{error_input : error_password}"
+                class="input_text"
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="checkbox" v-model="value_souvenir"
+                   class="w-5 h-5 bg-sky-200"
+                   checked>
+          </td>
+          <td class="txt_white">Se souvenir de moi</td>
+        </tr>
+      </table>
+      <button
+          type="submit"
+          class="bg-red-100 transition p-4 text-indigo-400 focus:outline-none"
+        >
+        Se connecter
+      </button>
+    </div>
   </form>
   <div id="bg"></div>
 </template>
