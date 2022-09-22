@@ -26,7 +26,7 @@ const state = reactive<{
 
 
 <template>
-  <nav class="mb-5" id="nav_desktop">
+  <nav class="mb-5 bg-sky-900 w-96">
     <div v-if="userStore.currentUser.is_admin">
       <router-link class="nav_link" :class="{underline_left_to_right : route.meta.page !== 'dash'}" to="/app/dashboard">Dashboard</router-link>
     </div>
@@ -58,7 +58,6 @@ const state = reactive<{
 nav
   height: 60px
   width: 100vw
-  background: $primary
   display: flex
   align-items: center
 
