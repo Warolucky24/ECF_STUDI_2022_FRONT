@@ -38,9 +38,9 @@ function goChangeActive(active_state:number){
         </div>
       </div>
       <div id="hide_mobil" class="w-2/5 flex content-around items-center">
-        <div class="w-1/2 flex flex-col content-around items-center">
+        <div class="w-1/2 flex flex-col content-center items-center">
           <div class="m-1"><b>Partenaire :</b></div>
-          <router-link :to="'/app/partner/detail/'+props.data.partner_id" class="d_flex justify_content_center align_items_center link">
+          <router-link :to="'/app/partner/detail/'+props.data.partner_id" class="flex content-center items-center link">
             <img :src="props.data.logo_url" alt="" class="m-1 rounded h-9">
             <span class="ms_10">{{props.data.partner_name}}</span>
           </router-link>

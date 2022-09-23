@@ -7,18 +7,20 @@ import {useUserStore} from "@/stores/userStore";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {usePartnerStore} from "@/stores/partnerStore";
 import ChangeName from "@/features/app/components/ChangeName.vue";
+import PartnerUpdate from "@/features/app/partner/components/PartnerUpdate.vue";
 
 const route = useRoute()
 const userStore = useUserStore()
 const partnerStore = usePartnerStore()
 
-
 const state = reactive<{
   partner: PartnerDetailInterface | null,
-  modalUpdateNameGerant: boolean
+  modalUpdateNameGerant: boolean,
+  modalUpdatePartner: boolean
 }>({
   partner : null,
-  modalUpdateNameGerant: false
+  modalUpdateNameGerant: false,
+  modalUpdatePartner: false
 
 })
 
@@ -49,7 +51,6 @@ async function goChangeActivePartner(active_state: number){
     userStore.sendMsg(e.error, "danger");
   }
 }
-
 
 async function goChangeActiveDroitPartner(gestion_active: number, gestion_name : string){
   try {
@@ -83,15 +84,24 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
 
 function goChangeName(name:string)
 {
-  //@ts-ignore
-  state.partner.user_name = name
+  if (state.partner){
+    state.partner.user_name = name
+  }
+}
+
+function goUpdatePartner(partner_name:string, logo_url:string, user_name:string){
+  if (state.partner){
+    state.partner.partner_name = partner_name;
+    state.partner.logo_url = logo_url;
+    state.partner.user_name = user_name;
+  }
 }
 
 </script>
 <template>
   <div v-if="state.partner">
     <div>
-      <div @click="$router.go(-1)" class="btn_primary" id="back_btn">Retour</div>
+      <div @click="$router.go(-1)" class="btn_primary w-full" id="back_btn">Retour</div>
     </div>
     <div class="separator_secondary"></div>
     <div class="content flex m-2">
@@ -99,7 +109,15 @@ function goChangeName(name:string)
         <img :src="state.partner.logo_url" alt="LogoPartner" id="LogoPartnerBig" class="m-8">
       </div>
       <div class="flex flex-col items-center flex-auto">
-        <h1 class="m-4 font-bold text-2xl">{{state.partner.partner_name}}</h1>
+        <div class="flex content-center items-center">
+          <h1 class="m-4 font-bold text-2xl">{{state.partner.partner_name}}</h1>
+          <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdatePartner = true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+          </div>
+        </div>
         <div class="flex">
           <div v-if="userStore.currentUser.is_admin">
             <BtnActifNoActif :state="state.partner.partner_active" @changeactive="goChangeActivePartner" :name="state.partner.partner_name"/>
@@ -116,7 +134,7 @@ function goChangeName(name:string)
           <h5 class="font-bold">Gérant :</h5>
           <div class="flex content-center items-center pl-2">
             <div class="ml-3 mr-2"><span class="font-bold">Nom :</span> {{state.partner.user_name}}</div>
-            <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
+            <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -208,6 +226,13 @@ function goChangeName(name:string)
             @go-close="state.modalUpdateNameGerant = false"
             @is-submit="goChangeName"
         />
+    </div>
+    <div v-if="state.modalUpdatePartner">
+      <PartnerUpdate
+          :data="state.partner"
+          @go-close="state.modalUpdatePartner = false"
+          @is-submit="goUpdatePartner"
+      />
     </div>
   </div>
   </div>

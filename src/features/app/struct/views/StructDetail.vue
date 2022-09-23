@@ -72,7 +72,7 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
     state.struct.user_active = gestion_active;
     const etat = gestion_active===1 ? "Actif" : "Inactif";
     const color = gestion_active === 1 ? "success" : "warning";
-    userStore.sendMsg(`L gérant est maintenant ${etat}`, color);
+    userStore.sendMsg(`Le gérant est maintenant ${etat}`, color);
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger");

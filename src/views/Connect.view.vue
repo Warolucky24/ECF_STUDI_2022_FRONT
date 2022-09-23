@@ -49,9 +49,9 @@ const tryConnect = handleSubmit( async (formValues) => {
       class="z-50 fixed top-auto left-auto flex flex-col content-between h-full w-full"
       @submit="tryConnect"
   >
-    <div class="flex flex-col content-between items-center h-full relative p-4 m-auto md:w-1/2 md:h-3/5 bg-sky-800 rounded-md border-indigo-400 border-2">
-      <h1 class="font-bold text-3xl m-6 text-sky-900 text-center">Page de connection</h1>
-      <table>
+    <div class="flex flex-col content-between items-center w-full h-full relative p-4 m-auto md:w-1/2 md:h-2/5 bg-sky-800 rounded-md border-indigo-400 border-2">
+      <h1 class="font-bold text-3xl m-6 text-sky-900 text-center h-1/6 text-indigo-400">Page de connection</h1>
+      <table class="h-3/6">
         <tr>
           <td class="text-end font-bold">Email :</td>
           <td>
@@ -86,9 +86,10 @@ const tryConnect = handleSubmit( async (formValues) => {
       </table>
       <button
           type="submit"
-          class="bg-red-100 transition p-4 text-indigo-400 focus:outline-none"
+          class="h-2/6 btn_effect m-2"
         >
-        Se connecter
+        <div class="font bg-slate-200"></div>
+        <div class="text text-indigo-400"><span>Se connecter</span></div>
       </button>
     </div>
   </form>
@@ -97,8 +98,7 @@ const tryConnect = handleSubmit( async (formValues) => {
 
 <style lang="sass" scoped>
 @import "@/assets/main.sass"
-h1
-  color: $secondary
+
 #bg
   position: absolute
   top: 0px
@@ -112,24 +112,6 @@ h1
 button
   background: none
   border: none
-
-.form_connect
-  position: absolute
-  z-index: 10
-  padding: 20px
-  border-radius: 7px
-  background: $primary_2
-
-  +md_max
-    width: 100vw
-    height: 100vh
-    margin: auto
-  +md_min
-  width: 50vw
-  height: 50vh
-  margin: 25vh 25vw
-  border: 3px solid $secondary
-
 
 table, td, tr
   background: transparent
