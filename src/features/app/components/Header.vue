@@ -97,21 +97,21 @@ nav
     flex-direction: column
     right: 5px
     top: 45px
-    border: 1px solid $secondary
-    background: $primary
+    border: 2px solid #818cf8
+    background: #0c4a6e
     min-width: 150px
     padding: 10px 15px
     text-align: end
     border-radius: 5px 5px
     &:hover
-      color: $secondary
+      color: #818cf8
     a
       color: white
       padding: 4px
       text-decoration: none
       transition: all .4s
       &:hover
-        color: $secondary
+        color: #818cf8
 
 
 </style>

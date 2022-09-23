@@ -24,39 +24,46 @@ function goChangeActive(active_state: number){
 </script>
 
 <template>
-  <div class="flex m-3 card">
-      <div>
+  <div class="m-3 card">
+    <div class="flex content-around items-center">
+      <div class="w-1/5">
         <img class="m-1 rounded h-11" :src="props.data.logo_url" alt="logo">
       </div>
-      <div class="flex items-center content-center">
+      <div class="flex items-center content-center w-1/5">
         <router-link :to="'/app/partner/detail/'+props.data.id" class="link_effect card_title">{{props.data.partner_name}}</router-link>
       </div>
-      <div class="w_75 flex content-around items-center">
+      <div class="w-2/5 lg:1/5 flex content-around items-center">
         <div class="flex content-center items-center">
           <div v-if="userStore.currentUser.is_admin"><BtnActifNoActif :state="props.data.partner_active" @changeactive="goChangeActive" :name="props.data.partner_name"/></div>
-          <div class="ms_10" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Inactif"}}</div>
-        </div>
-        <div class="flex flex-col" id="gerant">
-          <div>
-            <b>Nom du gérant :</b> {{props.data.user_name}}
-          </div>
-          <div>
-            <b>Mail du gérant :</b> {{props.data.email}}
-          </div>
+          <div class="ml-1" :class="{text_red: props.data.partner_active!==1, text_green: props.data.partner_active===1}">{{props.data.partner_active? "Actif" : "Inactif"}}</div>
         </div>
       </div>
-
-    <div v-if="userStore.currentUser.is_admin" class="d_flex justify_content_center align_items_center">
-      <div id="btn_delete" class="mx_10" @click="deletePartnerBool = !deletePartnerBool">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-        </svg>
+      <div class="flex flex-col w-1/5 text-center" id="gerant">
+        <div>
+          <b>Nom du gérant :</b>
+        </div>
+        <div>
+          {{props.data.user_name}}
+        </div>
+        <div>
+          <b>Mail du gérant :</b>
+        </div>
+        <div>
+          {{props.data.email}}
+        </div>
+      </div>
+      <div v-if="userStore.currentUser.is_admin" class="ml-4 w-1/5">
+        <div id="btn_delete" class="w-1/3 m-auto" @click="deletePartnerBool = !deletePartnerBool">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill block" viewBox="0 0 16 16">
+            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+          </svg>
+        </div>
       </div>
     </div>
-    <div v-if="deletePartnerBool">
-      <Delete :id="props.data.id" :name="props.data.partner_name" type="partner" @go-close="deletePartnerBool = !deletePartnerBool" />
-    </div>
-    <div class="card_etat" :class="{bg_red : props.data.partner_active!==1, bg_green : props.data.partner_active===1}"></div>
+    <div class="card_etat" :class="{'bg-red-600' : props.data.partner_active!==1, 'bg-emerald-500' : props.data.partner_active===1}"></div>
+  </div>
+  <div v-if="deletePartnerBool">
+    <Delete :id="props.data.id" :name="props.data.partner_name" type="partner" @go-close="deletePartnerBool = !deletePartnerBool" />
   </div>
 </template>
 

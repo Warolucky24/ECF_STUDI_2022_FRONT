@@ -47,8 +47,6 @@ function goActif(){
         </div>
       </div>
     </div>
-
-
   </Teleport>
 
 </template>

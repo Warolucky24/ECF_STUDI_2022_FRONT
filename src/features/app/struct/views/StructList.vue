@@ -46,7 +46,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
       <div class="nbr_select grow">
         {{structStore.filteredStruct.length > 1 ? "trouvés : "+structStore.filteredStruct.length : "trouvé : "+structStore.filteredStruct.length }}
       </div>
-      <div class="btn_primary" id="addPartner" @click="addStructModal = true">Ajouter</div>
+      <div class="btn_primary" id="addStruct" @click="addStructModal = true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
       <div
@@ -60,9 +60,8 @@ function UpdateFilter(updateFilter : FilterUpdate){
             @go-change-active-struct="changeActiveStruct"
         />
       </div>
-    <div class="modal" v-if="addStructModal">
-      <div class="modal_content"><StructAdd @close-modal="addStructModal = false"/></div>
-      <div class="modal_back" @click="addStructModal = false"></div>
+    <div v-if="addStructModal">
+      <StructAdd @close-modal="addStructModal = false"/>
     </div>
   </div>
 
@@ -70,9 +69,9 @@ function UpdateFilter(updateFilter : FilterUpdate){
 
 <style scoped lang="sass">
 @import "@/assets/main.sass"
-#addPartner
+#addStruct
   background: white
-  border: 1px solid $secondary
+  border: 1px solid #075985
   box-shadow: $boxShadow
   &:hover
     box-shadow: -4px 2px 7px 0px rgba(0, 0, 0, 0.25)

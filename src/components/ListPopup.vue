@@ -67,6 +67,6 @@ const userStore = useUserStore()
   border-radius: 4px
   padding: 25px 10px
   border: 1px solid gray
-  box-shadow: 0px 4px 7px #818cf8
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.48)
 
 </style>

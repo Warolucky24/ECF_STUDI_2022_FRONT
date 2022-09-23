@@ -59,8 +59,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
           />
         </div>
     <div class="modal" v-if="addPartner">
-      <div class="modal_content"><PartnerAdd  @close-modal="addPartner = false"/></div>
-      <div class="modal_back" @click="addPartner = false"></div>
+      <PartnerAdd  @close-modal="addPartner = false"/>
     </div>
   </div>
 </template>
@@ -69,8 +68,9 @@ function UpdateFilter(updateFilter : FilterUpdate){
 
 #addPartner
   background: white
-  border: 1px solid $secondary
+  border: 1px solid #0c4a6e
   box-shadow: $boxShadow
+  color: #0c4a6e
   &:hover
     box-shadow: -4px 2px 7px 0px rgba(0, 0, 0, 0.25)
   +lg_max

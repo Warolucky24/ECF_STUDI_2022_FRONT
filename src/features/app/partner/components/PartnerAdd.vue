@@ -51,37 +51,56 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 </script>
 
 <template>
-  <div class="d_flex justify_content_center align_items_center" id="form">
-    <form @submit="tryCreatePartner" class="d_flex flex_column justify_content_center align_items_center">
-      <table>
-        <tr>
-          <td>Nom du partenaire :</td>
-          <td><input type="text" v-model="partner_name" :class="{error_input : partner_error}"></td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <select v-model="partner_active"  class="w_100 text_center" :class="{error_input : partner_active_error}">
-              <option value="0">Inactif</option>
-              <option value="1">Actif</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>Mail du compte partenaire :</td>
-          <td><input type="email" v-model="user_email" :class="{error_input : user_email_error}"></td>
-        </tr>
-        <tr>
-          <td>Nom du gérant :</td>
-          <td><input type="text" v-model="user_name" :class="{error_input : user_name_error}"></td>
-        </tr>
-      </table>
-      <button class="btn_effect mt_20" type="submit">
-        <div class="font"></div>
-        <div class="text"><span>Enregistrer</span></div>
-      </button>
-    </form>
-  </div>
-
+  <Teleport to="body">
+    <div class=" bg-gray-600 bg-opacity-30 overflow-x-hidden fixed top-0 right-0 z-50 w-full h-full justify-center items-center">
+      <div class="relative p-4  m-auto ms:w-3/4 md:w-3/5 lg:w-1/2">
+        <div class="relative bg-sky-800 rounded-lg shadow">
+          <button @click="emit('closeModal')" class="absolute top-3 right-2.5 text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="p-6 text-center">
+            <div>
+              <form @submit="tryCreatePartner" class="flex flex-col content-center items-center">
+                <table>
+                  <tr>
+                    <td colspan="2" class="font-bold text-2xl text-white p-3">Partenaire : </td>
+                  </tr>
+                  <tr>
+                    <td class="text-end text-white">Nom :</td>
+                    <td><input type="text" v-model="partner_name" :class="{error_input : partner_error}"></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <select v-model="partner_active"  class="w-full text-center" :class="{error_input : partner_active_error}">
+                        <option value="0">Inactif</option>
+                        <option value="1">Actif</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="text-2xl font-bold p-4 text-white">Gérant :</td>
+                  </tr>
+                  <tr>
+                    <td class="text-end text-white">Mail :</td>
+                    <td><input type="email" v-model="user_email" :class="{error_input : user_email_error}"></td>
+                  </tr>
+                  <tr>
+                    <td class="text-end text-white">Nom :</td>
+                    <td><input type="text" v-model="user_name" :class="{error_input : user_name_error}"></td>
+                  </tr>
+                </table>
+                <button class="btn_effect mt-4" type="submit">
+                  <div class="font"></div>
+                  <div class="text"><span>Enregistrer</span></div>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped lang="sass">
@@ -97,5 +116,5 @@ button
   outline: none
 .btn_effect
   .font
-    background: $primary_2
+    background: #0c4a6e
 </style>

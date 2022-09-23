@@ -201,16 +201,13 @@ function goChangeName(name:string)
           </tbody>
         </table>
     </div>
-    <div v-if="state.modalUpdateNameGerant" class="modal">
-      <div class="modal_content">
+    <div v-if="state.modalUpdateNameGerant">
         <ChangeName
             :name="state.partner.user_name"
             :email="state.partner.user_email"
             @go-close="state.modalUpdateNameGerant = false"
             @is-submit="goChangeName"
         />
-      </div>
-      <div class="modal_back" @click="state.modalUpdateNameGerant = false"></div>
     </div>
   </div>
   </div>

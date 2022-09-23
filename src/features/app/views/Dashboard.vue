@@ -20,9 +20,9 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
         <div>Partenaires</div>
       </div>
       <div class="card_footer">
-        <div>{{nbrPartnerActif}} Actif</div>
+        <div>{{nbrPartnerActif}} Actifs</div>
         <div class="separator_card"></div>
-        <div>{{nbrPartnerInactif}} inactif</div>
+        <div>{{nbrPartnerInactif}} inactifs</div>
       </div>
     </div>
 
@@ -32,9 +32,9 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
         <div>Structures</div>
       </div>
       <div class="card_footer">
-        <div>{{nbrStructActif}} Actif</div>
+        <div>{{nbrStructActif}} Actifs</div>
         <div class="separator_card"></div>
-        <div>{{nbrStructInactive}} Inactive</div>
+        <div>{{nbrStructInactive}} Inactives</div>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
 
 .card_dash
   cursor: pointer
-  border: 1px solid $primary
+  border: 1px solid #818cf8
   background: white
   width: 350px
   height: 250px
@@ -62,7 +62,7 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.25)
   margin: 10px
   overflow: hidden
-  color: $secondary
+  color: #818cf8
   transition: all .4s
   &:hover
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.50)
@@ -79,7 +79,7 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
       margin-bottom: 5px
   .card_footer
     height: 50px
-    background: $primary
+    background: #e0f2fe
     display: flex
     justify-content: space-around
     align-items: center
@@ -88,7 +88,7 @@ const nbrStructInactive = structStore.struct.filter(e => e.struct_active === 0).
       width: calc(350px / 3  - 2px)
       text-align: center
     .separator_card
-      background: $secondary
+      background: #818cf8
       width: 2px
       height: 30px
 

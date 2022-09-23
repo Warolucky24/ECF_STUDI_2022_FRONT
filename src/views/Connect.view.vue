@@ -49,7 +49,7 @@ const tryConnect = handleSubmit( async (formValues) => {
       class="z-50 fixed top-auto left-auto flex flex-col content-between h-full w-full"
       @submit="tryConnect"
   >
-    <div class="flex flex-col content-between items-center relative p-4 m-auto md:w-1/2 md:h-3/5 bg-sky-800 rounded-md border-indigo-400 border-2">
+    <div class="flex flex-col content-between items-center h-full relative p-4 m-auto md:w-1/2 md:h-3/5 bg-sky-800 rounded-md border-indigo-400 border-2">
       <h1 class="font-bold text-3xl m-6 text-sky-900 text-center">Page de connection</h1>
       <table>
         <tr>

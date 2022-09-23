@@ -13,14 +13,14 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex content-center items-center" id="container_filter">
+  <div class="flex content-center items-center " id="container_filter">
     <div>
       <input
           type="text"
           :value="filters.search"
           @input="emit('updateFilter',{search: ($event.target as HTMLInputElement).value})"
           placeholder="Rechercher"
-          class="input_search"
+          class="border-sky-900 mx-1"
       />
     </div>
     <div class="flex" id="container_etat">
@@ -47,15 +47,15 @@ const emit = defineEmits<{
   background: white
   border-radius: 5px 10px
   overflow: hidden
-  border: 1px solid $secondary
+  border: 1px solid #0c4a6e
 .etat_filter
   transition: all 0.4s
-  color: $secondary
+  color: #0c4a6e
   text-align: center
   min-width: 60px
   padding: 9px
   cursor: pointer
 .selected
-  background: $secondary
+  background: #0c4a6e
   color: white
 </style>
