@@ -188,10 +188,7 @@ function goChangeName(name:string)
           </table>
       </div>
     </div>
-  </div>
-
-  <div class="modal" v-if="state.modalUpdateNameGerant">
-    <div class="modal_content">
+      <div v-if="state.modalUpdateNameGerant">
       <ChangeName
           :name="state.struct.user_name"
           :email="state.struct.user_email"
@@ -199,9 +196,7 @@ function goChangeName(name:string)
           @is-submit="goChangeName"
       />
     </div>
-    <div class="modal_back"></div>
   </div>
-
 </template>
 
 <style scoped lang="sass">
