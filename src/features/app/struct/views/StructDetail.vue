@@ -115,7 +115,7 @@ function updateStruct()
         </div>
       </div>
       <div>
-        {{state.struct.struct_adress}} , {{state.struct.struct_postal}} {{state.struct.struct_city}}
+        {{state.struct.struct_address}} , {{state.struct.struct_postal}} {{state.struct.struct_city}}
       </div>
     </div>
     <div class="md:flex">

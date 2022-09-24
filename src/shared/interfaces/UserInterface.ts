@@ -23,4 +23,5 @@ export const  defaultUser = {
     is_admin: true,
     user_active: true,
     user_name: "none",
+    profil_url: ""
 }

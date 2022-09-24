@@ -37,7 +37,7 @@ export interface StructDetailInterface{
     struct_id : number,
     struct_name: string,
     struct_active: number,
-    struct_adress: string,
+    struct_address: string,
     struct_city: string,
     struct_postal: number,
     partner_id: number,

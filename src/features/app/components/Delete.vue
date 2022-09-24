@@ -50,11 +50,4 @@ async function goDelete(){
       </div>
     </div>
   </Teleport>
-
-
-
-
-
-
-
 </template>
