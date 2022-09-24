@@ -4,7 +4,8 @@ export interface User{
     first_connect: boolean,
     is_admin: boolean,
     user_active: boolean,
-    user_name: string
+    user_name: string,
+    profil_url: string
 }
 
 export interface UserConnectInterface{

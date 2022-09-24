@@ -90,9 +90,9 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
                     <td><input type="text" v-model="user_name" :class="{error_input : user_name_error}"></td>
                   </tr>
                 </table>
-                <button class="btn_effect mt-4" type="submit">
-                  <div class="font"></div>
-                  <div class="text"><span>Enregistrer</span></div>
+                <button class="btn_effect m-4" type="submit">
+                  <div class="font bg-slate-200"></div>
+                  <div class="text text-indigo-400"><span>Se connecter</span></div>
                 </button>
               </form>
             </div>
@@ -104,17 +104,5 @@ const tryCreatePartner = handleSubmit(async (formValues) => {
 </template>
 
 <style scoped lang="sass">
-@import "@/assets/main.sass"
 
-#form
-  min-height: 400px
-.error_input
-  border: 1px solid red
-button
-  background: none
-  border: none
-  outline: none
-.btn_effect
-  .font
-    background: #0c4a6e
 </style>

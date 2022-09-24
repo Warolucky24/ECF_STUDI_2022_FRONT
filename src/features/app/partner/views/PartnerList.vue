@@ -47,22 +47,29 @@ function UpdateFilter(updateFilter : FilterUpdate){
       <div class="btn_primary" id="addPartner" @click="addPartner= true">Ajouter</div>
     </div>
     <div class="separator_secondary"></div>
-        <div
-            v-for="partner in partnerStore.filteredPartner"
-            class="m_10"
-            :key="partner.id"
-        >
-          <Partner
-              v-if="userStore.currentUser.is_admin || userStore.currentUser.id === partner.user_id"
-              :data="partner" :key="partner.partner_name"
-              @go-change-active-partner="changeActivePartner"
-          />
-        </div>
+    <div class="flex flex-col">
+      <template
+          v-for="partner in partnerStore.filteredPartner"
+          :key="partner.id"
+      >
+        <Partner
+            v-if="userStore.currentUser.is_admin || userStore.currentUser.id === partner.user_id"
+            :data="partner" :key="partner.partner_name"
+            @go-change-active-partner="changeActivePartner"
+        />
+      </template>
+    </div>
+
+
+
     <div class="modal" v-if="addPartner">
       <PartnerAdd  @close-modal="addPartner = false"/>
     </div>
   </div>
 </template>
+
+
+
 <style scoped lang="sass">
 @import "@/assets/main.sass"
 

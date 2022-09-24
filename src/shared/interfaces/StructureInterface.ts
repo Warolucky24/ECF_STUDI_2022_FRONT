@@ -9,6 +9,7 @@ export interface StructInterface{
     partner_user_id: number,
     logo_url: string,
     user_id: number,
+    profil_url: string,
     email: string,
     user_name: string,
     user_active: number
@@ -18,7 +19,11 @@ export interface StructPartnerDetailInterface{
     id: number,
     struct_name : string,
     struct_active : number,
-    gestion : GestionInterface
+    v_vetement: number,
+    v_boisson: number,
+    c_particulier: number,
+    c_crosstrainning: number,
+    c_pilate: number
 }
 
 export interface StructAddInterface{
@@ -32,6 +37,9 @@ export interface StructDetailInterface{
     struct_id : number,
     struct_name: string,
     struct_active: number,
+    struct_adress: string,
+    struct_city: string,
+    struct_postal: number,
     partner_id: number,
     partner_user_id: number,
     partner_name: string,

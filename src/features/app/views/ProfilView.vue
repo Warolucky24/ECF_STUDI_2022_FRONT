@@ -24,9 +24,10 @@ function goChangeName(name: string){
 
 <template>
   <div class="container flex flex-col content-center items-center content">
-    <h4 class="m-1">Bienvenue {{userStore.currentUser.user_name}}</h4>
+    <h4 class="m-1 font-bold text-2xl">Bienvenue {{userStore.currentUser.user_name}}</h4>
+    <img class="rounded-md w-1/6 my-3" :src="userStore.currentUser.profil_url" alt="profil_logo">
     <div>
-      <div class="m-1">Mail : {{userStore.currentUser.email}}</div>
+      <div class="my-2">Mail : {{userStore.currentUser.email}}</div>
     </div>
     <div class="flex content-center items-center m-1">
       <div>Nom : {{userStore.currentUser.user_name}}</div>
@@ -46,30 +47,22 @@ function goChangeName(name: string){
         <b>Changer de mot de passe</b>
       </div>
 
-      <div v-if="state.openPass" class="modal">
-        <div class="modal_content">
+      <div v-if="state.openPass">
           <ChangePass @go-close="state.openPass = false"/>
-        </div>
-        <div class="modal_back" @click="state.openPass = false"></div>
       </div>
 
-      <div v-if="state.openName" class="modal">
-        <div class="modal_content">
+      <div v-if="state.openName">
           <ChangeName
               :name="userStore.currentUser.user_name"
               :email="userStore.currentUser.email"
               @go-close="state.openName = false"
               @is-submit="goChangeName"
           />
-        </div>
-        <div class="modal_back" @click="state.openName = false"></div>
       </div>
-
       <div class="need_new_pass_msg" v-if="userStore.currentUser.first_connect">
-       <b>Password actuel généré automatiquement. veuillez le changer !</b>
+        <b>Password actuel généré automatiquement. veuillez le changer !</b>
       </div>
     </div>
-
   </div>
 
 </template>

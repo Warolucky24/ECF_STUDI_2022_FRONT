@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useUserStore} from "@/stores/userStore";
 import {reactive, watchEffect} from "vue";
 import type {StructDetailInterface} from "@/shared/interfaces";
@@ -10,6 +10,7 @@ import {useStructStore} from "@/stores/structStore";
 import ChangeName from "@/features/app/components/ChangeName.vue";
 
 const route = useRoute()
+const router = useRouter()
 const userStore = useUserStore()
 const structStore = useStructStore()
 
@@ -24,13 +25,17 @@ const state = reactive<{
 watchEffect(async  () => {
   try {
     state.struct = await dataStructById(parseInt(route.params.struct_id as string))
+    //@ts-ignore
+    if (state.struct.partner_user_id !== userStore.currentUser.id && state.struct.user_id !== userStore.currentUser.id && userStore.currentUser.is_admin !== 1){
+      await router.push("/app");
+    }
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger")
   }
 })
 
-async function goChangeActiveStruct(gestion_active: number, gestion_name : string){
+async function goChangeActiveStruct(gestion_active: number){
   try {
     //@ts-ignore
     const struct_id = state.struct.struct_id;
@@ -80,8 +85,15 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
 }
 function goChangeName(name:string)
 {
-  //@ts-ignore
-  state.struct.user_name = name
+  if (state.struct)
+  {
+    state.struct.user_name = name
+  }
+}
+
+function updateStruct()
+{
+
 }
 
 </script>
@@ -101,6 +113,9 @@ function goChangeName(name:string)
         <div class="ml-2" :class="{text_green : state.struct.struct_active===1 , text_red : state.struct.struct_active!==1}">
           {{state.struct.struct_active===1 ? "Actif" : "Inactive"}}
         </div>
+      </div>
+      <div>
+        {{state.struct.struct_adress}} , {{state.struct.struct_postal}} {{state.struct.struct_city}}
       </div>
     </div>
     <div class="md:flex">

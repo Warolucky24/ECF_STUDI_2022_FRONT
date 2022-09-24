@@ -50,10 +50,7 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
     userStore.sendMsg(e.error, "warning")
   }
 }})
-
-
 </script>
-
 
 <template>
   <Teleport to="body">
@@ -79,7 +76,7 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
                 <div><input type="text" v-model="value_name_user" :class="{error_input : error_name_user}"></div>
               </div>
               <div class="m-3">
-                <button type="submit" class="btn_success m_5">Modifer</button>
+                <button type="submit" class="m-3 bg-emerald-600 p-3 rounded-md hover:bg-emerald-500 transition duration-300">Modifer</button>
               </div>
             </form>
           </div>
@@ -87,22 +84,4 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
       </div>
     </div>
   </Teleport>
-
 </template>
-
-<style scoped lang="sass">
-@import "@/assets/main.sass"
-
-form
-  display: flex
-  flex-wrap: wrap
-  margin: auto
-  width: 100%
-  +lg_max
-    justify-content: center
-    align-items: center
-  +lg_min
-    justify-content: space-between
-    align-items: center
-
-</style>

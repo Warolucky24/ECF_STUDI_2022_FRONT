@@ -53,7 +53,7 @@ const tryConnect = handleSubmit( async (formValues) => {
       <h1 class="font-bold text-3xl m-6 text-sky-900 text-center h-1/6 text-indigo-400">Page de connection</h1>
       <table class="h-3/6">
         <tr>
-          <td class="text-end font-bold">Email :</td>
+          <td class="text-end font-bold text-white">Email :</td>
           <td>
             <input
                 type="email"
@@ -64,7 +64,7 @@ const tryConnect = handleSubmit( async (formValues) => {
             ></td>
         </tr>
         <tr>
-          <td class="text-end font-bold">Mot de passe :</td>
+          <td class="text-end font-bold text-white">Mot de passe :</td>
           <td>
             <input
                 type="password"
@@ -76,17 +76,17 @@ const tryConnect = handleSubmit( async (formValues) => {
           </td>
         </tr>
         <tr>
-          <td>
+          <td class="text-end">
             <input type="checkbox" v-model="value_souvenir"
-                   class="w-5 h-5 bg-sky-200"
+                   class="w-5 h-5 bg-sky-200 m-1"
                    checked>
           </td>
-          <td class="txt_white">Se souvenir de moi</td>
+          <td class="text-white">Se souvenir de moi</td>
         </tr>
       </table>
       <button
           type="submit"
-          class="h-2/6 btn_effect m-2"
+          class="h-2/6 btn_effect m-4"
         >
         <div class="font bg-slate-200"></div>
         <div class="text text-indigo-400"><span>Se connecter</span></div>
@@ -101,23 +101,13 @@ const tryConnect = handleSubmit( async (formValues) => {
 
 #bg
   position: absolute
-  top: 0px
-  left: 0px
+  top: 0
+  left: 0
   width: 100vw
   height: 100vh
   background-image: url("@/../public/img/bg_connect.jpg")
   background-repeat: no-repeat
   background-size: cover
   z-index: 1
-button
-  background: none
-  border: none
 
-table, td, tr
-  background: transparent
-table td:first-child
-  text-align: end
-  color: $gray
-.error_input
-  border-color: red
 </style>

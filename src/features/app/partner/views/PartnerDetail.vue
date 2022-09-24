@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import type {PartnerDetailInterface} from "@/shared/interfaces";
 import {dataPartnerById} from "@/shared/services";
 import {reactive, watchEffect} from "vue";
@@ -10,6 +10,7 @@ import ChangeName from "@/features/app/components/ChangeName.vue";
 import PartnerUpdate from "@/features/app/partner/components/PartnerUpdate.vue";
 
 const route = useRoute()
+const router = useRouter()
 const userStore = useUserStore()
 const partnerStore = usePartnerStore()
 
@@ -27,6 +28,10 @@ const state = reactive<{
 watchEffect(async ()=>{
   try {
     state.partner = await dataPartnerById(parseInt(route.params.partner_id as string));
+    //@ts-ignore
+    if (state.partner.user_id !== userStore.currentUser.id && userStore.currentUser.is_admin !== 1){
+      await router.push("/app");
+    }
   }catch (e){
     // @ts-ignore
     userStore.sendMsg(e.error, "danger");
@@ -144,7 +149,7 @@ function goUpdatePartner(partner_name:string, logo_url:string, user_name:string)
           <div class="mb-2 pl-2 ml-3">
             <span class="font-bold">Mail :</span> {{state.partner.user_email}}
           </div>
-          <div class="flex content-center items-center ml-3">
+          <div class="flex content-center items-center ml-4">
             <BtnActifNoActif  v-if="userStore.currentUser.is_admin" :name="state.partner.user_email" :state="state.partner.user_active" @changeactive="goChangeActiveUser" />
             <span
                 class="ml-2"

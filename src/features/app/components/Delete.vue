@@ -38,10 +38,11 @@ async function goDelete(){
           </button>
           <div class="p-6 text-center">
             <div class="flex flex-col content-center items-center">
+              <h1 class="text-red-500 text-2xl font-bold" >Zone de danger !</h1>
               <h3 class="text-white text-2xl m-3">Etes-vous sur de supprimer {{props.type=== "partner"? "le partenaire" : "la structure"}} : {{props.name}}</h3>
               <div class="flex m-2">
-                <div class="p-3 rounded-md bg-emerald-600 hover:bg-emerald-500 transition duration-300 cursor-pointer m-2" @click="goDelete">Confirmer</div>
-                <div class="p-3 rounded-md bg-amber-600 hover:bg-amber-500 transition duration-300 cursor-pointer m-2" @click="emit('goClose')">Surtout pas !</div>
+                <div class="p-3 rounded-md bg-red-600 hover:bg-red-500 transition duration-300 cursor-pointer m-2" @click="goDelete">Confirmer</div>
+                <div class="p-3 rounded-md bg-emerald-600 hover:bg-emerald-500 transition duration-300 cursor-pointer m-2" @click="emit('goClose')">Surtout pas !</div>
               </div>
             </div>
           </div>
