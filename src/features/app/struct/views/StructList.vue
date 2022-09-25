@@ -4,7 +4,7 @@ import {useStructStore} from "@/stores/structStore";
 import {useUserStore} from "@/stores/userStore";
 import Struct from "@/features/app/struct/components/Struct.vue";
 import Filters from "@/features/app/components/Filters.vue";
-import type { FilterUpdate} from "@/shared/interfaces";
+import type {FilterUpdate, StructAddInterface} from "@/shared/interfaces";
 import StructAdd from "@/features/app/struct/components/StructAdd.vue";
 import {ref} from "vue";
 
@@ -26,7 +26,6 @@ async function changeActiveStruct(struct_id: number, active_state: number){
     userStore.sendMsg(e.error, "danger");
   }
 }
-
 
 function UpdateFilter(updateFilter : FilterUpdate){
   structStore.updateFilter(updateFilter);

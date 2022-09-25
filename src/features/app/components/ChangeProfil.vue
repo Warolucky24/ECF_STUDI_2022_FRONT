@@ -6,23 +6,21 @@ import {useField, useForm} from "vee-validate";
 import {toFormValidator} from "@vee-validate/zod";
 
 const userStore = useUserStore()
-
 const emit = defineEmits<{
   (e: "goClose"):void
-  (e: 'goSubmit', name:string):void
+  (e: 'goSubmit', profil:string):void
 }>()
 
 const props = defineProps<{
-  name : string
+  profil: string
 }>()
 
-
 const initialValues = {
-  name: props.name
+  profil: props.profil
 }
 
 const validationSchema = z.object({
-  name : z.string().min(3)
+  profil: z.string().min(3)
 })
 
 const {handleSubmit} = useForm({
@@ -30,10 +28,10 @@ const {handleSubmit} = useForm({
   initialValues
 })
 
-const {value, errorMessage: error_name} = useField("name")
+const {value, errorMessage: error_profil} = useField("profil")
 
-const tryChangeName = handleSubmit(async(formValue) => {
-  emit("goSubmit", formValue.name)
+const tryChangeProfil = handleSubmit(async (formValue)=>{
+  emit("goSubmit", formValue.profil)
 })
 
 </script>
@@ -48,10 +46,10 @@ const tryChangeName = handleSubmit(async(formValue) => {
             <span class="sr-only">Close modal</span>
           </button>
           <div class="p-6 text-center">
-            <form @submit="tryChangeName" class="flex flex-col content-center items-center">
+            <form @submit="tryChangeProfil" class="flex flex-col content-center items-center">
               <div>
-                <div class="text-center text-white text-2xl mb-4">Votre nom :</div>
-                <div><input class="text-black p-2" type="text" v-model="value" :class="{error_input: error_name}"></div>
+                <div class="text-center text-white text-2xl mb-4">Url profil :</div>
+                <div><input class="text-black p-2" type="text" v-model="value" :class="{error_input: error_profil}"></div>
               </div>
               <button id="btn_submit" class="p-3 rounded-md m-3 transition duration-500">Confirmer</button>
             </form>

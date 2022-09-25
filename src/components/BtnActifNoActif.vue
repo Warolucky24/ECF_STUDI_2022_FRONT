@@ -65,8 +65,8 @@ $largeur_btn: calc($largeur/1.8)
   background: rgba(128, 128, 128, 0.6)
   width: 100vw
   height: 100vh
-  top: 0px
-  left: 0px
+  top: 0
+  left: 0
 
 
 
@@ -87,13 +87,13 @@ $largeur_btn: calc($largeur/1.8)
   border : 2px solid black
   .button
     position : absolute
-    top: 0px
+    top: 0
     right: calc($largeur - $largeur_btn - 4px)
     width : $largeur_btn
     height: calc($hauteur - 4px)
     border-radius : $hauteur
     transition : all .3s ease-out
   .buttonValid
-    right : 0px
+    right : 0
 
 </style>

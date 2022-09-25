@@ -13,19 +13,17 @@ const {data} = defineProps<{
 
 const emit = defineEmits<{
   (e: "goClose"):void,
-  (e: "isSubmit", partner_name: string, logo_url: string, user_name: string):void
+  (e: "goSubmit", partner_name: string, logo_url: string):void
 }>()
 
 const initialValues = {
   partner_name: data.partner_name,
-  logo_url: data.logo_url,
-  user_name: data.user_name
+  logo_url: data.logo_url
 }
 const validationSchema = toFormValidator(
     z.object({
       partner_name: z.string().min(3),
-      logo_url: z.string().min(3),
-      user_name: z.string().min(3)
+      logo_url: z.string().min(3)
     })
 )
 
@@ -36,19 +34,9 @@ const {handleSubmit } = useForm({
 
 const {value : value_name, errorMessage: error_name} = useField("partner_name")
 const {value : value_logo, errorMessage: error_logo} = useField("logo_url")
-const {value : value_name_user, errorMessage: error_name_user} = useField("user_name")
 
 const tryUpdate = handleSubmit(async(formValues)=>{{
-  try {
-    const partnerStore = usePartnerStore();
-    await partnerStore.updatePartner(data.partner_id, formValues.partner_name, formValues.logo_url, data.user_email, formValues.user_name);
-    userStore.sendMsg("Modification pris en compte", "success")
-    emit("isSubmit", formValues.partner_name, formValues.logo_url, formValues.user_name)
-    emit('goClose')
-  }catch (e) {
-    //@ts-ignore
-    userStore.sendMsg(e.error, "warning")
-  }
+  emit('goSubmit', formValues.partner_name, formValues.logo_url)
 }})
 </script>
 
@@ -71,12 +59,8 @@ const tryUpdate = handleSubmit(async(formValues)=>{{
                 <div class="text-white">Logo URL :</div>
                 <div><input type="text" v-model="value_logo" :class="{error_input : error_logo}"></div>
               </div>
-              <div class="flex flex-col m-1">
-                <div class="text-white">Nom du gérant :</div>
-                <div><input type="text" v-model="value_name_user" :class="{error_input : error_name_user}"></div>
-              </div>
               <div class="m-3">
-                <button type="submit" class="m-3 bg-emerald-600 p-3 rounded-md hover:bg-emerald-500 transition duration-300">Modifer</button>
+                <button type="submit" class="m-3 bg-emerald-600 p-3 rounded-md hover:bg-emerald-500 transition duration-300 text-slate-200">Modifer</button>
               </div>
             </form>
           </div>

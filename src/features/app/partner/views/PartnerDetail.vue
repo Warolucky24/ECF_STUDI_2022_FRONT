@@ -87,18 +87,32 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
   }
 }
 
-function goChangeName(name:string)
-{
-  if (state.partner){
-    state.partner.user_name = name
+async function goChangeName(name: string) {
+  try {
+    if (state.partner) {
+      await userStore.updateName(state.partner.user_email, name)
+      userStore.sendMsg("Modification pris en compte !", "success")
+      state.partner.user_name = name
+      state.modalUpdateNameGerant = false
+    }
+  } catch (e) {
+    //@ts-ignore
+    userStore.sendMsg(e.error, "warning")
   }
 }
 
-function goUpdatePartner(partner_name:string, logo_url:string, user_name:string){
-  if (state.partner){
-    state.partner.partner_name = partner_name;
-    state.partner.logo_url = logo_url;
-    state.partner.user_name = user_name;
+async function goUpdatePartner(partner_name:string, logo_url:string){
+  try {
+    if (state.partner){
+      const partnerStore = usePartnerStore();
+      const partnerUpdateResponse = await partnerStore.updatePartner(state.partner.partner_id, partner_name, logo_url);
+      userStore.sendMsg("Modification pris en compte", "success")
+      state.partner = partnerUpdateResponse;
+      state.modalUpdatePartner = false
+    }
+  }catch (e) {
+    //@ts-ignore
+    userStore.sendMsg(e.error, "warning")
   }
 }
 
@@ -227,16 +241,15 @@ function goUpdatePartner(partner_name:string, logo_url:string, user_name:string)
     <div v-if="state.modalUpdateNameGerant">
         <ChangeName
             :name="state.partner.user_name"
-            :email="state.partner.user_email"
             @go-close="state.modalUpdateNameGerant = false"
-            @is-submit="goChangeName"
+            @go-submit="goChangeName"
         />
     </div>
     <div v-if="state.modalUpdatePartner">
       <PartnerUpdate
           :data="state.partner"
           @go-close="state.modalUpdatePartner = false"
-          @is-submit="goUpdatePartner"
+          @go-submit="goUpdatePartner"
       />
     </div>
   </div>

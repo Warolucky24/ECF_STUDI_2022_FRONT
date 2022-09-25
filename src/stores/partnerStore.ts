@@ -74,17 +74,14 @@ export const usePartnerStore = defineStore("partner", {
                 this.filters = {... DEFAULT_FILTER}
             }
         },
-        async updatePartner(partner_id: number, partner_name: string, logo_url: string, user_email:string, user_name:string){
-            const userStore =useUserStore()
+        async updatePartner(partner_id: number, partner_name: string, logo_url: string){
             const response = await updatePartner(partner_id, partner_name, logo_url)
-            const resp = await userStore.updateName(user_email, user_name)
-            if (response && resp){
+            if (response){
                 this.needRefresh = true
                 const partnerIndex = this.partner.findIndex(e => e.id === partner_id)
-                this.partner[partnerIndex].logo_url = logo_url
-                this.partner[partnerIndex].partner_name = partner_name
-                this.partner[partnerIndex].user_name = user_name
+                this.partner[partnerIndex] = response
             }
+            return response
         }
     }
 })

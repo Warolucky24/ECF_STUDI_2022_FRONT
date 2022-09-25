@@ -1,6 +1,5 @@
-import type {StructAddInterface, StructInterface} from "@/shared/interfaces";
+import type {StructAddInterface, StructInterface, StructUpdateInterface} from "@/shared/interfaces";
 import {BASE_URL} from "@/shared/services/index";
-import {number} from "zod";
 
 
 export async function fetchAllStruct(): Promise<StructInterface[]>{
@@ -67,12 +66,16 @@ export async function changeActiveDroitStruct(struct_id:number, gestion_name:str
     }
 }
 
-export async function updateStruct(struct_id : number , struct_name: string){
+export async function updateStruct(struct_id : number , formValues: StructUpdateInterface){
+
     const response = await (await fetch(`${BASE_URL}/struct`,{
         method: "PUT",
         body: JSON.stringify({
             struct_id : struct_id,
-            struct_name: struct_name
+            struct_name: formValues.struct_name,
+            struct_address: formValues.struct_address,
+            struct_city: formValues.struct_city,
+            struct_postal: formValues.struct_postal
         })
     })).json()
     if (!response.error){

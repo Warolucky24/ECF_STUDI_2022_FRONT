@@ -1,5 +1,10 @@
 import {defineStore} from "pinia";
-import type {FilterInterface, StructAddInterface, StructInterface} from "@/shared/interfaces";
+import type {
+    FilterInterface,
+    StructAddInterface,
+    StructInterface,
+    StructUpdateInterface
+} from "@/shared/interfaces";
 import {addStruct, changeActiveDroitStruct, changeActiveStruct, fetchAllStruct, updateStruct} from "@/shared/services";
 import {DEFAULT_FILTER, type FilterUpdate} from "@/shared/interfaces";
 import {useUserStore} from "@/stores/userStore";
@@ -60,16 +65,14 @@ export const useStructStore = defineStore("structStore",{
                 this.needRefresh = true
             }
         },
-        async updateStruct(struct_id: number, struct_name: string, user_email:string, user_name:string){
-            const userStore = useUserStore()
-            const response = await updateStruct(struct_id, struct_name)
-            const response2 = await userStore.updateName(user_email, user_name)
-            if (response && response2){
+        async updateStruct(struct_id: number, formValues: StructUpdateInterface){
+            const response = await updateStruct(struct_id, formValues)
+            if (response){
                 this.needRefresh =true
                 const structIndex = this.struct.findIndex(e => e.id === struct_id)
-                this.struct[structIndex].struct_name = struct_name
-                this.struct[structIndex].user_name = user_name
+                this.struct[structIndex] = response
             }
+            return response
         }
     }
 })

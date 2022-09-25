@@ -3,11 +3,12 @@
 import {useRoute, useRouter} from "vue-router";
 import {useUserStore} from "@/stores/userStore";
 import {reactive, watchEffect} from "vue";
-import type {StructDetailInterface} from "@/shared/interfaces";
+import type {StructDetailInterface, StructUpdateInterface} from "@/shared/interfaces";
 import {dataStructById} from "@/shared/services";
 import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {useStructStore} from "@/stores/structStore";
 import ChangeName from "@/features/app/components/ChangeName.vue";
+import StructUpdate from "@/features/app/struct/components/StructUpdate.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -16,10 +17,12 @@ const structStore = useStructStore()
 
 const state = reactive<{
   struct : StructDetailInterface | null,
-  modalUpdateNameGerant: boolean
+  modalUpdateNameGerant: boolean,
+  modalUpdateStruct: boolean
 }>({
   struct: null,
-  modalUpdateNameGerant: false
+  modalUpdateNameGerant: false,
+  modalUpdateStruct: false
 })
 
 watchEffect(async  () => {
@@ -37,22 +40,20 @@ watchEffect(async  () => {
 
 async function goChangeActiveStruct(gestion_active: number){
   try {
-    //@ts-ignore
-    const struct_id = state.struct.struct_id;
-    await structStore.changeActive(struct_id, gestion_active);
-    //@ts-ignore
-    state.struct.struct_active = gestion_active
-    //@ts-ignore
-    const name_struct = state.struct.struct_name
-    const etat = gestion_active === 1 ? "Actif" : "Non-Actif";
-    const color = gestion_active === 1 ? "success" : "warning";
-    userStore.sendMsg(`${name_struct} est maintenant ${etat}`, color);
+    if (state.struct){
+      const struct_id = state.struct.struct_id;
+      await structStore.changeActive(struct_id, gestion_active);
+      state.struct.struct_active = gestion_active
+      const name_struct = state.struct.struct_name
+      const etat = gestion_active === 1 ? "Actif" : "Non-Actif";
+      const color = gestion_active === 1 ? "success" : "warning";
+      userStore.sendMsg(`${name_struct} est maintenant ${etat}`, color);
+    }
   }catch (e){
     //@ts-ignore
     userStore.sendMsg(e.error, "danger")
   }
 }
-
 
 async function goChangeActiveDroitStruct(gestion_active: number, gestion_name : string){
   try {
@@ -83,17 +84,38 @@ async function goChangeActiveUser(gestion_active: number, user_email: string){
     userStore.sendMsg(e.error, "danger");
   }
 }
-function goChangeName(name:string)
+
+async function goChangeName(name:string)
 {
-  if (state.struct)
-  {
-    state.struct.user_name = name
+  try {
+    if (state.struct)
+    {
+      await userStore.updateName(state.struct.user_email, name)
+      userStore.sendMsg("Modification pris en compte !", "success")
+      state.modalUpdateNameGerant = false
+      state.struct.user_name = name
+    }
+  } catch (e) {
+    //@ts-ignore
+    userStore.sendMsg(e.error, "warning")
   }
+
 }
 
-function updateStruct()
+async function goUpdateStruct(formValues: StructUpdateInterface)
 {
-
+  try {
+    if (state.struct)
+    {
+      const response = await structStore.updateStruct(state.struct.struct_id, formValues)
+      userStore.sendMsg("Modification pris en compte !", "success")
+      state.modalUpdateStruct = false
+      state.struct = response
+    }
+  }catch (e){
+    //@ts-ignore
+    userStore.sendMsg(e.error, "warning")
+  }
 }
 
 </script>
@@ -105,7 +127,15 @@ function updateStruct()
     </div>
     <div class="separator_secondary"></div>
     <div class="content flex m-2 content-center items-center flex-col">
-      <h3 class="m-2 font-bold text-2xl">{{state.struct.struct_name}}</h3>
+      <div class="flex content-center items-center">
+        <h3 class="m-2 font-bold text-2xl">{{state.struct.struct_name}}</h3>
+        <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateStruct = true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+        </div>
+      </div>
       <div class="flex content-center items-center">
         <div v-if="userStore.currentUser.is_admin || userStore.currentUser.id === state.struct.partner_user_id">
           <BtnActifNoActif :state="state.struct.struct_active" @changeactive="goChangeActiveStruct" :name="state.struct.struct_name"/>
@@ -206,10 +236,16 @@ function updateStruct()
       <div v-if="state.modalUpdateNameGerant">
       <ChangeName
           :name="state.struct.user_name"
-          :email="state.struct.user_email"
           @go-close="state.modalUpdateNameGerant = false"
-          @is-submit="goChangeName"
+          @go-submit="goChangeName"
       />
+    </div>
+    <div v-if="state.modalUpdateStruct">
+      <StructUpdate
+        :data="state.struct"
+        @go-update="goUpdateStruct"
+        @go-close="state.modalUpdateStruct = false"
+        />
     </div>
   </div>
 </template>

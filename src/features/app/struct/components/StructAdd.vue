@@ -18,7 +18,10 @@ const initialValues= {
   struct_name: "",
   struct_active: "1",
   partner_id : "",
-  user_name : ""
+  user_name : "",
+  struct_address: "",
+  struct_city : "",
+  struct_postal: 2400
 }
 const emit = defineEmits<{
   (e: "closeModal"):void
@@ -31,7 +34,10 @@ const validationSchema = toFormValidator(
       struct_name: z.string(required_error).min(3),
       struct_active: z.string(required_error),
       partner_id: z.number(required_error),
-      user_name: z.string(required_error).min(3)
+      user_name: z.string(required_error).min(3),
+      struct_address: z.string(required_error).min(5),
+      struct_city: z.string(required_error).min(3),
+      struct_postal: z.number(required_error).min(0)
     })
 )
 
@@ -45,7 +51,9 @@ const {value : value_struct_name, errorMessage : error_struct_name} = useField("
 const {value : value_struct_active, errorMessage: error_struct_active} = useField("struct_active");
 const {value : value_partner_id, errorMessage : error_partner_id} = useField("partner_id");
 const {value : value_user_name, errorMessage : error_user_name} = useField('user_name');
-
+const {value : value_struct_address, errorMessage : error_struct_address} = useField('struct_address');
+const {value : value_struct_city, errorMessage : error_struct_city} = useField('struct_city');
+const {value : value_struct_postal, errorMessage : error_struct_postal} = useField('struct_postal');
 
 const tryCreateStruct = handleSubmit(async (formValues) => {
   try {
@@ -105,15 +113,15 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
                 </tr>
                 <tr>
                   <td class="text-end text-white">Adresse :</td>
-                  <td><input type="text"></td>
+                  <td><input type="text" v-model="value_struct_address" :class="{error_input : error_struct_address}"></td>
                 </tr>
                 <tr>
                   <td class="text-end text-white">Code postal :</td>
-                  <td><input type="number"></td>
+                  <td><input type="number" v-model="value_struct_postal" :class="{error_input : error_struct_postal}"></td>
                 </tr>
                 <tr>
                   <td class="text-end text-white">Ville :</td>
-                  <td><input type="text"></td>
+                  <td><input type="text" v-model="value_struct_city" :class="{error_input : error_struct_city}"></td>
                 </tr>
                 <tr>
                   <td colspan="2" class="text-2xl font-bold p-2 text-white">Gérant :</td>
@@ -128,8 +136,8 @@ const tryCreateStruct = handleSubmit(async (formValues) => {
                 </tr>
               </table>
               <button class="btn_effect mt-5" type="submit">
-                <div class="font"></div>
-                <div class="text"><span>Enregistrer</span></div>
+                <div class="font bg-slate-200"></div>
+                <div class="text text-indigo-400"><span>Enregistrer</span></div>
               </button>
             </form>
           </div>

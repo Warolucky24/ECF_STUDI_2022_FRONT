@@ -60,6 +60,10 @@ export const useUserStore = defineStore("userStore", {
                 this.sendMsg(e.error, "danger")
             }
         },
+        async updateUser(item:string, column: string)
+        {
+            return await updateUser(this.currentUser.email, item, column);
+        },
         async updatePassword(password: string){
             return await updateUser(this.currentUser.email, password, "password");
         },

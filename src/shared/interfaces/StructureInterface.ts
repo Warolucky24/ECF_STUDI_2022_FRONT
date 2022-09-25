@@ -29,9 +29,21 @@ export interface StructPartnerDetailInterface{
 export interface StructAddInterface{
     user_email: string,
     struct_name: string,
-    struct_active: string
-    partner_id: number
+    struct_active: string,
+    partner_id: number,
+    user_name: string,
+    struct_adress: string,
+    struct_postal: number,
+    struct_city: string
 }
+export interface StructUpdateInterface{
+    struct_name: string,
+    user_name: string,
+    struct_address: string,
+    struct_postal: number,
+    struct_city: string
+}
+
 
 export interface StructDetailInterface{
     struct_id : number,
