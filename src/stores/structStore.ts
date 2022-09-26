@@ -20,10 +20,11 @@ export const useStructStore = defineStore("structStore",{
     state: ():StructStoreInterface =>({
         struct : [],
         filters: {... DEFAULT_FILTER},
-        needRefresh : false
+        needRefresh : true
     }),
     getters: {
-        filteredStruct(state){
+        filteredStruct(state)
+        {
             return state.struct.filter(s => {
                 const etat_partner = s.struct_active === 1 ? "Actif" : "Non-actif";
                 return s.struct_name.toLocaleLowerCase().startsWith(state.filters.search.toLocaleLowerCase()) &&
@@ -32,10 +33,12 @@ export const useStructStore = defineStore("structStore",{
         }
     },
     actions: {
-        async fetchStruct(){
+        async fetchStruct()
+        {
             this.struct = await fetchAllStruct();
         },
-        async changeActive(struct_id : number, active:number){
+        async changeActive(struct_id : number, active:number)
+        {
             const editStruct = await changeActiveStruct(struct_id, active)
             if(editStruct){
                 this.needRefresh = true
@@ -43,14 +46,16 @@ export const useStructStore = defineStore("structStore",{
                 this.struct[structIndex].struct_active = active
             }
         },
-        async addStruct(formValues : StructAddInterface){
+        async addStruct(formValues : StructAddInterface)
+        {
             const response = await addStruct(formValues);
             if (response){
                 this.struct.push(response)
                 this.needRefresh = true
             }
         },
-        updateFilter(filterUpdate : FilterUpdate){
+        updateFilter(filterUpdate : FilterUpdate)
+        {
             if (filterUpdate.search !== undefined){
                 this.filters.search = filterUpdate.search
             }else if(filterUpdate.etat){
@@ -59,13 +64,15 @@ export const useStructStore = defineStore("structStore",{
                 this.filters = {... DEFAULT_FILTER}
             }
         },
-        async changeDroitActive(struct_id:number, gestion_name:string,gestion_active:number){
+        async changeDroitActive(struct_id:number, gestion_name:string,gestion_active:number)
+        {
             const editDroitStruct = await changeActiveDroitStruct(struct_id, gestion_name, gestion_active)
             if (editDroitStruct){
                 this.needRefresh = true
             }
         },
-        async updateStruct(struct_id: number, formValues: StructUpdateInterface){
+        async updateStruct(struct_id: number, formValues: StructUpdateInterface)
+        {
             const response = await updateStruct(struct_id, formValues)
             if (response){
                 this.needRefresh =true
@@ -77,11 +84,13 @@ export const useStructStore = defineStore("structStore",{
     }
 })
 
-export function initialFetchStruct(){
+export function initialFetchStruct()
+{
     const structStore = useStructStore()
-    if (structStore.needRefresh){
+    if (structStore.needRefresh)
+    {
         structStore.struct = []
         structStore.needRefresh = false
+        structStore.fetchStruct()
     }
-    structStore.fetchStruct()
 }

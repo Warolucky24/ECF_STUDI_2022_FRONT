@@ -10,8 +10,7 @@ export interface User{
 
 export interface UserConnectInterface{
     user_email: string,
-    user_password: string,
-    souvenir: boolean
+    user_password: string
 
 }
 

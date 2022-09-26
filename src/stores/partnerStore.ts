@@ -8,13 +8,10 @@ import {
     fetchAllPartner,
     updatePartner
 } from "@/shared/services";
-import {useUserStore} from "@/stores/userStore";
 
 interface PartnerStoreInterface{
     partner: PartnerInterface[],
     filters : FilterInterface,
-    isLoading: boolean,
-    loaded: boolean,
     needRefresh: boolean
 
 }
@@ -23,9 +20,7 @@ export const usePartnerStore = defineStore("partner", {
     state: (): PartnerStoreInterface => ({
         partner : [],
         filters : {...DEFAULT_FILTER},
-        isLoading: false,
-        loaded : false,
-        needRefresh : false
+        needRefresh : true
     }),
     getters: {
         filteredPartner(state){
@@ -37,21 +32,22 @@ export const usePartnerStore = defineStore("partner", {
         }
     },
     actions: {
-        async fetchPartner(){
-            this.isLoading = true
+        async fetchPartner()
+        {
             this.partner = await fetchAllPartner();
-            this.isLoading = false
         },
-        async addPartner(formValues: PartnerAddInterface){
-            this.isLoading = true
+
+        async addPartner(formValues: PartnerAddInterface)
+        {
             const response = await addPartner(formValues)
             if (response){
                 this.needRefresh = true;
                 this.partner.push(response)
             }
-            this.isLoading = false
         },
-        async changeActive(partner_id : number, active: number){
+
+        async changeActive(partner_id : number, active: number)
+        {
             const editPartner = await changeActivePartner(partner_id, active)
             if(editPartner){
                 this.needRefresh = true
@@ -59,13 +55,17 @@ export const usePartnerStore = defineStore("partner", {
                 this.partner[partnerIndex].partner_active = active
             }
         },
-        async changeActiveDroit(partner_id :number, gestion_name:string, gestion_active:number){
+
+        async changeActiveDroit(partner_id :number, gestion_name:string, gestion_active:number)
+        {
             const editDroitPartner = await changeActiveDroitPartner(partner_id, gestion_name, gestion_active);
             if (editDroitPartner){
                 this.needRefresh = true
             }
         },
-        updateFilter(filterUpdate : FilterUpdate){
+
+        updateFilter(filterUpdate : FilterUpdate)
+        {
             if (filterUpdate.search !== undefined){
                 this.filters.search = filterUpdate.search
             }else if(filterUpdate.etat){
@@ -74,7 +74,9 @@ export const usePartnerStore = defineStore("partner", {
                 this.filters = {... DEFAULT_FILTER}
             }
         },
-        async updatePartner(partner_id: number, partner_name: string, logo_url: string){
+
+        async updatePartner(partner_id: number, partner_name: string, logo_url: string)
+        {
             const response = await updatePartner(partner_id, partner_name, logo_url)
             if (response){
                 this.needRefresh = true
@@ -87,14 +89,13 @@ export const usePartnerStore = defineStore("partner", {
 })
 
 
-export function initialFetchPartner(){
+export function initialFetchPartner()
+{
     const partnerStore = usePartnerStore()
-    if (!partnerStore.loaded || partnerStore.needRefresh){
-        if(partnerStore.needRefresh){
-            partnerStore.partner = []
-            partnerStore. needRefresh = false
-        }
+    if (partnerStore.needRefresh)
+    {
+        partnerStore.partner = []
+        partnerStore. needRefresh = false
+        partnerStore.fetchPartner()
     }
-    partnerStore.fetchPartner()
-    partnerStore.loaded = true
 }

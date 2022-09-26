@@ -12,22 +12,16 @@ interface PopPupInterface{
     style: Style
 }
 
-
 interface UserStoreInterface{
     isConnected : boolean,
     currentUser: User,
-    error: any,
-    style: Style,
     list_pop: PopPupInterface[]
-
 }
 
 export const useUserStore = defineStore("userStore", {
     state: (): UserStoreInterface => ({
         isConnected: false,
         currentUser: defaultUser,
-        error: null,
-        style: "danger",
         list_pop : []
     }),
     getters: {
@@ -43,37 +37,42 @@ export const useUserStore = defineStore("userStore", {
         },
         goConnect: async function (formConnect: UserConnectInterface) {
             try {
-                this.error = null
                 const user = await connectUser(formConnect);
                 this.currentUser = user
                 this.isConnected = true
                 if (user.first_connect){
                     this.sendMsg("Veuillez modifier votre mot de passe", "danger");
                 }
-                if (formConnect.souvenir){
-                    console.log('je veux que l\'on se souvienne de moi');
-                }
-                this.sendMsg("Vous êtes connecté", "success")
+                this.sendMsg("Vous êtes maintenant connecté", "success")
             } catch (e) {
                 this.isConnected = false
                 // @ts-ignore
                 this.sendMsg(e.error, "danger")
             }
         },
+
         async updateUser(item:string, column: string)
         {
             return await updateUser(this.currentUser.email, item, column);
         },
-        async updatePassword(password: string){
+
+        async updatePassword(password: string)
+        {
             return await updateUser(this.currentUser.email, password, "password");
         },
-        async updateName(email:string, name: string){
+
+        async updateName(email:string, name: string)
+        {
             return await updateUser(email, name, "user_name");
         },
-        async updateActive(email: string, gestion_active:number){
+
+        async updateActive(email: string, gestion_active:number)
+        {
             return await updateUser(email, gestion_active, "user_active")
         },
-        async deletePartnerOrStruct(id : number, type:string){
+
+        async deletePartnerOrStruct(id : number, type:string)
+        {
             const response = deletePartnerOrStructService(id, type);
             if (type === "partner"){
                 const partnerStore = usePartnerStore()

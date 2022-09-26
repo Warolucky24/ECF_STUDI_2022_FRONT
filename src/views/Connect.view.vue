@@ -11,16 +11,14 @@ const userStore = useUserStore()
 
 const initialValues = {
   user_email: "",
-  user_password: "",
-  souvenir: true
+  user_password: ""
 }
 
 const required_error = {required_error : "Veuillez renseigner ce champ"}
 const validationSchema = toFormValidator(
     z.object({
       user_email : z.string(required_error).email({message: "Email non valide"}),
-      user_password : z.string(required_error),
-      souvenir: z.boolean(required_error)
+      user_password : z.string(required_error)
     })
 )
 const {handleSubmit} = useForm({
@@ -30,7 +28,6 @@ const {handleSubmit} = useForm({
 
 const {value : value_email, errorMessage : error_email} = useField("user_email")
 const {value : value_password, errorMessage : error_password} = useField("user_password")
-const {value : value_souvenir} = useField("souvenir")
 
 const tryConnect = handleSubmit( async (formValues) => {
   try {
@@ -74,14 +71,6 @@ const tryConnect = handleSubmit( async (formValues) => {
                 class="input_text"
             >
           </td>
-        </tr>
-        <tr>
-          <td class="text-end">
-            <input type="checkbox" v-model="value_souvenir"
-                   class="w-5 h-5 bg-sky-200 m-1"
-                   checked>
-          </td>
-          <td class="text-white">Se souvenir de moi</td>
         </tr>
       </table>
       <button
