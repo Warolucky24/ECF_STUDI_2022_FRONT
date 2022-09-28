@@ -55,7 +55,9 @@ export const useUserStore = defineStore("userStore", {
         {
             return await updateUser(this.currentUser.email, item, column);
         },
-
+        async updateProfil_url(email:string, profil:string){
+            return await updateUser(email, profil, "profil_url");
+        },
         async updatePassword(password: string)
         {
             return await updateUser(this.currentUser.email, password, "password");

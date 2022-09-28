@@ -14,9 +14,13 @@ const emit = defineEmits<{
 }>()
 
 function goActif(){
-  state.open = !state.open;
-  const active_state: number = props.state === 1 ? 0 : 1
-  emit("changeactive", active_state , props.name);
+  try {
+    state.open = !state.open;
+    const active_state: number = props.state === 1 ? 0 : 1
+    emit("changeactive", active_state , props.name);
+  }catch (e){
+    console.log(e)
+  }
 }
 </script>
 

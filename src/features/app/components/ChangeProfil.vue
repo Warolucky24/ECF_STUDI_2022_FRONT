@@ -45,13 +45,11 @@ const tryChangeProfil = handleSubmit(async (formValue)=>{
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             <span class="sr-only">Close modal</span>
           </button>
-          <div class="p-6 text-center">
-            <form @submit="tryChangeProfil" class="flex flex-col content-center items-center">
-              <div>
-                <div class="text-center text-white text-2xl mb-4">Url profil :</div>
-                <div><input class="text-black p-2" type="text" v-model="value" :class="{error_input: error_profil}"></div>
-              </div>
-              <button id="btn_submit" class="p-3 rounded-md m-3 transition duration-500">Confirmer</button>
+          <div class="p-6 text-center w-full">
+            <form @submit="tryChangeProfil" class="flex flex-col content-center items-center w-full">
+              <div class="text-center text-white text-2xl mb-4">Url profil :</div>
+              <input class="text-black p-2 w-full" type="text" v-model="value" :class="{error_input: error_profil}">
+              <button id="btn_submit" class="w-full p-3 rounded-md m-3 transition duration-500 text-white">Confirmer</button>
             </form>
           </div>
         </div>

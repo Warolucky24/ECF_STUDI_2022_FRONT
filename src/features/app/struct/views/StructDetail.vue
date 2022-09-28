@@ -9,6 +9,7 @@ import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {useStructStore} from "@/stores/structStore";
 import ChangeName from "@/features/app/components/ChangeName.vue";
 import StructUpdate from "@/features/app/struct/components/StructUpdate.vue";
+import ChangeProfil from "@/features/app/components/ChangeProfil.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -18,11 +19,13 @@ const structStore = useStructStore()
 const state = reactive<{
   struct : StructDetailInterface | null,
   modalUpdateNameGerant: boolean,
-  modalUpdateStruct: boolean
+  modalUpdateStruct: boolean,
+  modalUpdateProfilUser: boolean
 }>({
   struct: null,
   modalUpdateNameGerant: false,
-  modalUpdateStruct: false
+  modalUpdateStruct: false,
+  modalUpdateProfilUser: false
 })
 
 watchEffect(async  () => {
@@ -117,7 +120,19 @@ async function goUpdateStruct(formValues: StructUpdateInterface)
     userStore.sendMsg(e.error, "warning")
   }
 }
-
+async function goUpdateProfilUser(profil: string){
+  try {
+    if (state.struct){
+      await userStore.updateProfil_url(state.struct.user_email,profil);
+      userStore.sendMsg("Modification pris en compte !", "success")
+      state.struct.profil_url = profil
+      state.modalUpdateProfilUser = false
+    }
+  }catch (e){
+    //@ts-ignore
+    userStore.sendMsg(e.error, "danger")
+  }
+}
 </script>
 
 <template>
@@ -152,11 +167,20 @@ async function goUpdateStruct(formValues: StructUpdateInterface)
       <div class="md:basis-1/3">
         <div class="content m-2">
           <h5 class="font-bold">Gérant :</h5>
+          <div class="flex content-center">
+            <img :src="state.struct.profil_url" class="block w-1/3 m-2 rounded-lg m-auto" alt="profil">
+            <div id="btn_modify" class="mt-2 grow" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateProfilUser = true" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </div>
+          </div>
           <div class="flex content-center items-center">
             <div class="ml-3">
               <span class="font-bold ">Nom :</span> {{state.struct.user_name}}
             </div>
-            <div id="btn_modify" class="ml-2" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = !state.modalUpdateNameGerant">
+            <div id="btn_modify" class="ml-2" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -246,6 +270,13 @@ async function goUpdateStruct(formValues: StructUpdateInterface)
         @go-update="goUpdateStruct"
         @go-close="state.modalUpdateStruct = false"
         />
+    </div>
+    <div v-if="state.modalUpdateProfilUser">
+      <ChangeProfil
+      :profil="state.struct.profil_url"
+      @go-close="state.modalUpdateProfilUser = false"
+      @go-submit="goUpdateProfilUser"
+      />
     </div>
   </div>
 </template>

@@ -25,6 +25,7 @@ export  interface PartnerDetailInterface{
     user_name : string,
     user_email: string,
     user_active: number,
+    profil_url: string,
     partner_name: string,
     partner_active: number,
     logo_url: string,

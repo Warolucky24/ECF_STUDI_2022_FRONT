@@ -60,5 +60,6 @@ export interface StructDetailInterface{
     user_name: string,
     user_email: string,
     user_active: number,
+    profil_url: string,
     gestion: GestionInterface
 }

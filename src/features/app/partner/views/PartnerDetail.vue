@@ -8,6 +8,7 @@ import BtnActifNoActif from "@/components/BtnActifNoActif.vue";
 import {usePartnerStore} from "@/stores/partnerStore";
 import ChangeName from "@/features/app/components/ChangeName.vue";
 import PartnerUpdate from "@/features/app/partner/components/PartnerUpdate.vue";
+import ChangeProfil from "@/features/app/components/ChangeProfil.vue"
 
 const route = useRoute()
 const router = useRouter()
@@ -17,11 +18,13 @@ const partnerStore = usePartnerStore()
 const state = reactive<{
   partner: PartnerDetailInterface | null,
   modalUpdateNameGerant: boolean,
-  modalUpdatePartner: boolean
+  modalUpdatePartner: boolean,
+  modalUpdateProfilUser: boolean
 }>({
   partner : null,
   modalUpdateNameGerant: false,
-  modalUpdatePartner: false
+  modalUpdatePartner: false,
+  modalUpdateProfilUser: false
 
 })
 
@@ -111,14 +114,29 @@ async function goUpdatePartner(partner_name:string, logo_url:string){
   try {
     if (state.partner){
       const partnerStore = usePartnerStore();
-      const partnerUpdateResponse = await partnerStore.updatePartner(state.partner.partner_id, partner_name, logo_url);
+      const partnerUpdateResponse: PartnerDetailInterface = await partnerStore.updatePartner(state.partner.partner_id, partner_name, logo_url);
       userStore.sendMsg("Modification pris en compte", "success")
       state.partner = partnerUpdateResponse;
+      console.log(partnerUpdateResponse)
       state.modalUpdatePartner = false
     }
   }catch (e) {
     //@ts-ignore
     userStore.sendMsg(e.error, "warning")
+  }
+}
+
+async function goChangeProfilGerant(profil: string){
+  try {
+    if (state.partner){
+      await userStore.updateProfil_url(state.partner.user_email,profil);
+      userStore.sendMsg("Modification pris en compte !", "success")
+      state.partner.profil_url = profil
+      state.modalUpdateProfilUser = false
+    }
+  }catch (e){
+    //@ts-ignore
+    userStore.sendMsg(e.error, "danger")
   }
 }
 
@@ -135,7 +153,7 @@ async function goUpdatePartner(partner_name:string, logo_url:string){
       </div>
       <div class="flex flex-col items-center flex-auto">
         <div class="flex content-center items-center">
-          <h1 class="m-4 font-bold text-2xl">{{state.partner.partner_name}}</h1>
+          <h1 class="m-4 font-bold md:text-2xl">{{state.partner.partner_name}}</h1>
           <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdatePartner = true">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -157,6 +175,15 @@ async function goUpdatePartner(partner_name:string, logo_url:string){
       <div class="md:basis-1/3">
         <div class="content m-2">
           <h5 class="font-bold">Gérant :</h5>
+          <div class="flex content-center">
+            <img class="block w-1/3 m-2 rounded-lg m-auto" :src="state.partner.profil_url" alt="profil">
+            <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateProfilUser = true" class="grow mt-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </div>
+          </div>
           <div class="flex content-center items-center pl-2">
             <div class="ml-3 mr-2"><span class="font-bold">Nom :</span> {{state.partner.user_name}}</div>
             <div id="btn_modify" v-if="userStore.currentUser.is_admin" @click="state.modalUpdateNameGerant = true">
@@ -250,6 +277,13 @@ async function goUpdatePartner(partner_name:string, logo_url:string){
             @go-close="state.modalUpdateNameGerant = false"
             @go-submit="goChangeName"
         />
+    </div>
+    <div v-if="state.modalUpdateProfilUser">
+      <ChangeProfil
+        :profil="state.partner.profil_url"
+        @go-close="state.modalUpdateProfilUser = false"
+        @go-submit="goChangeProfilGerant"
+      />
     </div>
     <div v-if="state.modalUpdatePartner">
       <PartnerUpdate

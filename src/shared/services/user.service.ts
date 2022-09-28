@@ -29,6 +29,7 @@ export async function updateUser(email : string ,value: string|number, column: s
             value: value
         })
     })).json()
+    console.log(response)
     if (!response.error){
         return response;
     }else{

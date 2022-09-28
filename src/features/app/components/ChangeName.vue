@@ -53,7 +53,7 @@ const tryChangeName = handleSubmit(async(formValue) => {
                 <div class="text-center text-white text-2xl mb-4">Votre nom :</div>
                 <div><input class="text-black p-2" type="text" v-model="value" :class="{error_input: error_name}"></div>
               </div>
-              <button id="btn_submit" class="p-3 rounded-md m-3 transition duration-500">Confirmer</button>
+              <button id="btn_submit" class="p-3 rounded-md m-3 transition duration-500 text-white">Confirmer</button>
             </form>
           </div>
         </div>
