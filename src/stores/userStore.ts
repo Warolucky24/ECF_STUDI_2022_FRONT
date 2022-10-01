@@ -4,6 +4,8 @@ import {connectUser, deletePartnerOrStructService, updateUser} from "@/shared/se
 import {usePartnerStore} from "@/stores/partnerStore";
 import {useStructStore} from "@/stores/structStore";
 import {defaultUser} from "@/shared/interfaces";
+import {useRouter} from "vue-router";
+
 
 export type Style = "danger" | "success" | "warning"
 
@@ -37,7 +39,8 @@ export const useUserStore = defineStore("userStore", {
             try {
                 const response = await connectUser(formConnect);
                 this.currentUser = response.user;
-                localStorage.setItem('user', JSON.stringify(response.accessToken));
+                localStorage.setItem('token', response.accessToken);
+                localStorage.setItem('user', JSON.stringify(response.user))
                 this.isConnected = true
                 if (response.user.first_connect){
                     this.sendMsg("Veuillez modifier votre mot de passe", "danger");
@@ -48,6 +51,12 @@ export const useUserStore = defineStore("userStore", {
                 // @ts-ignore
                 this.sendMsg(e.error, "danger")
             }
+        },
+        logout(){
+            this.currentUser = defaultUser;
+            this.isConnected = false;
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
         },
         async updateUser(item:string, column: string)
         {

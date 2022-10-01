@@ -22,7 +22,7 @@ export const  defaultUser = {
     id: 0,
     email: "none",
     first_connect: false,
-    is_admin: true,
+    is_admin: false,
     user_active: true,
     user_name: "none",
     profil_url: ""

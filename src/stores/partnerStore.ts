@@ -8,6 +8,7 @@ import {
     fetchAllPartner,
     updatePartner
 } from "@/shared/services";
+import {useUserStore} from "@/stores/userStore";
 
 interface PartnerStoreInterface{
     partner: PartnerInterface[],
@@ -36,7 +37,6 @@ export const usePartnerStore = defineStore("partner", {
         {
             this.partner = await fetchAllPartner();
         },
-
         async addPartner(formValues: PartnerAddInterface)
         {
             const response = await addPartner(formValues)
@@ -45,7 +45,6 @@ export const usePartnerStore = defineStore("partner", {
                 this.partner.push(response)
             }
         },
-
         async changeActive(partner_id : number, active: number)
         {
             const editPartner = await changeActivePartner(partner_id, active)
@@ -92,10 +91,13 @@ export const usePartnerStore = defineStore("partner", {
 export function initialFetchPartner()
 {
     const partnerStore = usePartnerStore()
+    const userStore = useUserStore()
+
     if (partnerStore.needRefresh)
     {
         partnerStore.partner = []
         partnerStore. needRefresh = false
         partnerStore.fetchPartner()
     }
+
 }

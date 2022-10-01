@@ -3,7 +3,7 @@ import {PARTNER_ROUTE} from "@/features/app/partner/partner.route";
 import {STRUCT_ROUTE} from "@/features/app/struct/struct.route";
 import {initialFetchStruct} from "@/stores/structStore";
 import {initialFetchPartner} from "@/stores/partnerStore";
-import {isAdminGuard} from "@/shared/guards/auth.guard";
+import {isAdminGuard, tokenExpired} from "@/shared/guards/auth.guard";
 
 export const APP_ROUTES: RouteRecordRaw[] = [
     {
@@ -19,6 +19,7 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     },
     {
         path: "partner",
+        beforeEnter: [tokenExpired],
         component: () => import('@/features/app/partner/PartnerView.vue'),
         children: PARTNER_ROUTE,
         meta: {
@@ -27,6 +28,7 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     },
     {
         path: "struct",
+        beforeEnter: [tokenExpired],
         component: () => import('@/features/app/struct/StructView.vue'),
         children: STRUCT_ROUTE,
         meta: {
@@ -35,7 +37,7 @@ export const APP_ROUTES: RouteRecordRaw[] = [
     },
     {
         path: "dashboard",
-        beforeEnter: [initialFetchStruct, initialFetchPartner, isAdminGuard],
+        beforeEnter: [initialFetchStruct, initialFetchPartner, isAdminGuard, tokenExpired],
         component: () => import('@/features/app/views/Dashboard.vue'),
         meta: {
             page: "dash"

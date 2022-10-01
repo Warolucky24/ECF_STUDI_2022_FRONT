@@ -1,10 +1,13 @@
 import type {StructAddInterface, StructInterface, StructUpdateInterface} from "@/shared/interfaces";
-import {ACCESS_TOKEN, BASE_URL, headerFetch} from "@/shared/services/index";
+import {BASE_URL} from "@/shared/services/index";
 
 
 export async function fetchAllStruct(): Promise<StructInterface[]>{
     const response = await (await fetch(`${BASE_URL}/struct`,{
-        headers: headerFetch
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        }
     })).json()
     if(!response.error){
         return response;
@@ -16,7 +19,10 @@ export async function fetchAllStruct(): Promise<StructInterface[]>{
 export async function changeActiveStruct(struct_id : number, active: number){
     const response = await (await fetch(`${BASE_URL}/struct/active`,{
         method: "PUT",
-        headers: headerFetch,
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        },
         body: JSON.stringify({
             struct_id: struct_id,
             struct_active: active
@@ -33,7 +39,10 @@ export async function addStruct(formValues : StructAddInterface){
     const response = await (await fetch(`${BASE_URL}/struct`, {
         method: "POST",
         body: JSON.stringify(formValues),
-        headers: headerFetch
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        }
     })).json()
     if(!response.error){
         return response;
@@ -44,7 +53,10 @@ export async function addStruct(formValues : StructAddInterface){
 
 export async function dataStructById(struct_id : number){
     const response = await (await fetch(`${BASE_URL}/struct/${struct_id}`,{
-        headers: headerFetch
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        }
     })).json()
     if(!response.error){
         return response;
@@ -56,7 +68,10 @@ export async function dataStructById(struct_id : number){
 export async function changeActiveDroitStruct(struct_id:number, gestion_name:string, gestion_active:number){
     const response = await (await fetch(`${BASE_URL}/struct/droit`,{
         method: "PUT",
-        headers: headerFetch,
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        },
         body :JSON.stringify({
             struct_id: struct_id,
             gestion_name: gestion_name,
@@ -74,7 +89,10 @@ export async function updateStruct(struct_id : number , formValues: StructUpdate
 
     const response = await (await fetch(`${BASE_URL}/struct`,{
         method: "PUT",
-        headers: headerFetch,
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        },
         body: JSON.stringify({
             struct_id : struct_id,
             struct_name: formValues.struct_name,

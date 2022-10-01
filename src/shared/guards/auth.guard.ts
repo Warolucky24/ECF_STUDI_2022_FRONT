@@ -1,5 +1,6 @@
 import {useUserStore} from "@/stores/userStore";
-import {connectUserWithJWT} from "@/shared/services";
+import {tokenIsValid} from "@/shared/services";
+import {useRouter} from "vue-router";
 
 export function isConnectGuard(){
     const userStore = useUserStore()
@@ -10,20 +11,33 @@ export function isConnectGuard(){
 
 export async function isNoConnectGuard(){
     const userStore = useUserStore()
-    if (localStorage.user){
-        const response = await connectUserWithJWT()
+    if (localStorage.token){
+        const response = await tokenIsValid()
         if (response.status == 200){
-            const res = await response.json()
-            userStore.currentUser = res.user
+            userStore.currentUser = JSON.parse(localStorage.user)
             userStore.isConnected = true
         }else{
             localStorage.removeItem("user")
+            localStorage.removeItem("token")
         }
     }
     if(userStore.isConnected){
         return "/app"
     }
 }
+
+export async function tokenExpired(){
+    const userStore = useUserStore()
+    const response = await tokenIsValid()
+    if (response.status == 200){
+        console.log("token OK")
+    }else{
+        userStore.logout()
+        return "/"
+    }
+
+}
+
 
 export function isAdminGuard(){
     const userStore = useUserStore()

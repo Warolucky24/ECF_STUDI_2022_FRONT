@@ -1,5 +1,5 @@
 import type {UserConnectInterface, UserResponse} from "@/shared/interfaces";
-import {BASE_URL, headerFetch} from "@/shared/services/index";
+import {BASE_URL} from "@/shared/services/index";
 
 
 export async function connectUser(User : UserConnectInterface): Promise<UserResponse> {
@@ -22,12 +22,15 @@ export async function connectUser(User : UserConnectInterface): Promise<UserResp
     }
 }
 
-export async function connectUserWithJWT(){
+export async function tokenIsValid(){
 
-    return await fetch(`${BASE_URL}/login`,
+    return await fetch(`${BASE_URL}/token`,
         {
-            method: "POST",
-            headers: headerFetch
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                'Authorization': `Bearer ${localStorage.token}`
+            }
         })
 }
 
@@ -38,7 +41,10 @@ export async function updateUser(email : string ,value: string|number, column: s
             user_email : email,
             value: value
         }),
-        headers: headerFetch
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        }
     })).json()
     if (!response.error){
         return response;
@@ -50,7 +56,10 @@ export async function updateUser(email : string ,value: string|number, column: s
 export async function deletePartnerOrStructService(id:number, type:string){
     const response = await (await fetch(`${BASE_URL}/${type}/${id}`,{
         method: "DELETE",
-        headers: headerFetch
+        headers: {
+            "Content-type": "application/json",
+            'Authorization': `Bearer ${localStorage.token}`
+        }
     })).json()
     if (!response.error){
         return response;

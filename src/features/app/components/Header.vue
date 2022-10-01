@@ -9,11 +9,9 @@ const route = useRoute()
 const userStore = useUserStore();
 
 const un_connect = () => {
-  userStore.isConnected = false;
-  userStore.currentUser = defaultUser;
-  localStorage.removeItem('user');
+  userStore.logout()
   userStore.sendMsg("Vous êtes maintenant déconnecté", "danger");
-  router.push("/");
+  router.push("/")
 }
 
 const state = reactive<{
