@@ -15,6 +15,7 @@ ___
 3. [UserStory](#userstory-)
 4. [Code Couleur](#code-couleur-)
 5. [Architecture des Composants](#architecture-des-composants-)
+6. [Télécharger le projet](#tlcharger-le-projet-)
 
 ___
 ## Gestion du projet :
