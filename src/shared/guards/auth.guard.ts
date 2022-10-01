@@ -17,8 +17,8 @@ export async function isNoConnectGuard(){
             userStore.currentUser = JSON.parse(localStorage.user)
             userStore.isConnected = true
         }else{
-            localStorage.removeItem("user")
-            localStorage.removeItem("token")
+            userStore.logout()
+            userStore.sendMsg("Session Expiré", "warning")
         }
     }
     if(userStore.isConnected){
@@ -33,6 +33,7 @@ export async function tokenExpired(){
         console.log("token OK")
     }else{
         userStore.logout()
+        userStore.sendMsg("Veuillez vous reconnecter", "warning")
         return "/"
     }
 
