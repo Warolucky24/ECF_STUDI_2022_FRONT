@@ -1,9 +1,9 @@
 # ECF_2022_FRONT
 
 ___
-Réaliser dans le cadre de L'ECF.
+Réalisé dans le cadre de L'ECF.
 
-Stack : VUE3JS , PINIA, VUE-ROUTER, TS
+Stack : VUE3JS , PINIA, VUE-ROUTER, TS /
 Authentification : utilisation du token JWT - durée 10min.
 
 ___
@@ -12,6 +12,11 @@ ___
 ### UseCase : 
 *Réalisé avec Excalidraw*
 <img src="./imgREADME/useCase.png">
+
+### UserStory : 
+*Réalisé avec Excalidraw*
+<img src="./imgREADME/userStory.JPG">
+
 
 ### Code Couleur :
 *Réalisé avec Figma*
