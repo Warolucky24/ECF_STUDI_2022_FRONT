@@ -18,15 +18,13 @@ interface UserStoreInterface{
     list_pop: PopPupInterface[]
 }
 
+
 export const useUserStore = defineStore("userStore", {
     state: (): UserStoreInterface => ({
         isConnected: false,
         currentUser: defaultUser,
         list_pop : []
     }),
-    getters: {
-
-    },
     actions: {
         sendMsg(msg: string, style : Style){
             const new_msg: PopPupInterface = {text: msg, style: style}
@@ -35,7 +33,7 @@ export const useUserStore = defineStore("userStore", {
                 this.list_pop.splice(0,1);
             },4000)
         },
-        goConnect: async function (formConnect: UserConnectInterface) {
+        async goConnect (formConnect: UserConnectInterface) {
             try {
                 const response = await connectUser(formConnect);
                 this.currentUser = response.user;
@@ -50,10 +48,6 @@ export const useUserStore = defineStore("userStore", {
                 // @ts-ignore
                 this.sendMsg(e.error, "danger")
             }
-        },
-        async goConnectWithJWT(token: string)
-        {
-            console.log(token);
         },
         async updateUser(item:string, column: string)
         {
@@ -76,7 +70,6 @@ export const useUserStore = defineStore("userStore", {
         {
             return await updateUser(email, gestion_active, "user_active")
         },
-
         async deletePartnerOrStruct(id : number, type:string)
         {
             const response = deletePartnerOrStructService(id, type);

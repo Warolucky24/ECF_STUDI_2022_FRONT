@@ -11,15 +11,14 @@ export function isConnectGuard(){
 export async function isNoConnectGuard(){
     const userStore = useUserStore()
     if (localStorage.user){
-        try {
-            const response = await connectUserWithJWT()
+        const response = await connectUserWithJWT()
+        if (response.status == 200){
+            const res = await response.json()
+            userStore.currentUser = res.user
             userStore.isConnected = true
-            userStore.currentUser = response.user
-        }catch (e){
-
-
+        }else{
+            localStorage.removeItem("user")
         }
-
     }
     if(userStore.isConnected){
         return "/app"

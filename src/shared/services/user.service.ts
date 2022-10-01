@@ -1,9 +1,9 @@
 import type {UserConnectInterface, UserResponse} from "@/shared/interfaces";
-import {ACCESS_TOKEN, BASE_URL} from "@/shared/services/index";
+import {BASE_URL, headerFetch} from "@/shared/services/index";
 
 
 export async function connectUser(User : UserConnectInterface): Promise<UserResponse> {
-    const response = await (await fetch(`${BASE_URL}/login`,
+    const response = await fetch(`${BASE_URL}/login`,
         {
             method: "POST",
             body: JSON.stringify({
@@ -13,29 +13,22 @@ export async function connectUser(User : UserConnectInterface): Promise<UserResp
             headers: {
                 "Content-type": "application/json"
             }
-        })).json();
-    if(!response.error){
-        return response;
+        })
+
+    if(response.ok){
+        return await response.json();
     }else{
-        throw response;
+        throw await response.json();
     }
 }
 
 export async function connectUserWithJWT(){
 
-    const response = await (await fetch(`${BASE_URL}/login`,
+    return await fetch(`${BASE_URL}/login`,
         {
             method: "POST",
-            headers: {
-                "Content-type": "application/json",
-                'Authorization': `Bearer ${ACCESS_TOKEN}`
-            }
-        })).json();
-    if(!response.error){
-        return response;
-    }else{
-        throw response;
-    }
+            headers: headerFetch
+        })
 }
 
 export async function updateUser(email : string ,value: string|number, column: string){
@@ -45,12 +38,8 @@ export async function updateUser(email : string ,value: string|number, column: s
             user_email : email,
             value: value
         }),
-        headers: {
-            "Content-type": "application/json",
-            'Authorization': `Bearer ${ACCESS_TOKEN}`
-        }
+        headers: headerFetch
     })).json()
-    console.log(response)
     if (!response.error){
         return response;
     }else{
@@ -61,9 +50,7 @@ export async function updateUser(email : string ,value: string|number, column: s
 export async function deletePartnerOrStructService(id:number, type:string){
     const response = await (await fetch(`${BASE_URL}/${type}/${id}`,{
         method: "DELETE",
-        headers:{
-            'Authorization': `Bearer ${ACCESS_TOKEN}`
-        }
+        headers: headerFetch
     })).json()
     if (!response.error){
         return response;
