@@ -1,4 +1,5 @@
 import {useUserStore} from "@/stores/userStore";
+import {connectUserWithJWT} from "@/shared/services";
 
 export function isConnectGuard(){
     const userStore = useUserStore()
@@ -7,11 +8,18 @@ export function isConnectGuard(){
     }
 }
 
-export function isNoConnectGuard(){
+export async function isNoConnectGuard(){
     const userStore = useUserStore()
     if (localStorage.user){
-        userStore.isConnected = true
-        userStore.currentUser = JSON.parse(localStorage.user)
+        try {
+            const response = await connectUserWithJWT()
+            userStore.isConnected = true
+            userStore.currentUser = response.user
+        }catch (e){
+
+
+        }
+
     }
     if(userStore.isConnected){
         return "/app"

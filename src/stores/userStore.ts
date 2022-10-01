@@ -37,10 +37,11 @@ export const useUserStore = defineStore("userStore", {
         },
         goConnect: async function (formConnect: UserConnectInterface) {
             try {
-                const user = await connectUser(formConnect);
-                this.currentUser = user
+                const response = await connectUser(formConnect);
+                this.currentUser = response.user;
+                localStorage.setItem('user', JSON.stringify(response.accessToken));
                 this.isConnected = true
-                if (user.first_connect){
+                if (response.user.first_connect){
                     this.sendMsg("Veuillez modifier votre mot de passe", "danger");
                 }
                 this.sendMsg("Vous êtes maintenant connecté", "success")
@@ -50,7 +51,10 @@ export const useUserStore = defineStore("userStore", {
                 this.sendMsg(e.error, "danger")
             }
         },
-
+        async goConnectWithJWT(token: string)
+        {
+            console.log(token);
+        },
         async updateUser(item:string, column: string)
         {
             return await updateUser(this.currentUser.email, item, column);

@@ -1,3 +1,7 @@
+export interface UserResponse{
+    accessToken: string,
+    user: User
+}
 export interface User{
     id: number,
     email: string,
@@ -7,7 +11,6 @@ export interface User{
     user_name: string,
     profil_url: string
 }
-
 export interface UserConnectInterface{
     user_email: string,
     user_password: string
