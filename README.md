@@ -10,6 +10,7 @@ ___
 
 ### Table of content :
 
+
 1. [Gestion du projet](#gestion-du-projet-)
 2. [UseCase](#usecase-)
 3. [UserStory](#userstory-)
@@ -25,14 +26,14 @@ ___
 
 ### UseCase : 
 *Réalisé avec Excalidraw*
-<img src="./imgREADME/useCase.png">
+<img src="./imgREADME/Capture.jpg">
 
 ### UserStory : 
 *Réalisé avec Excalidraw*
 <img src="./imgREADME/userStory.JPG">
 
 
-### Code Couleur :
+### Nuancier de couleurs :
 *Réalisé avec Figma*
 <img src="./imgREADME/color.png">
 
