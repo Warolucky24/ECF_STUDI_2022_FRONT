@@ -26,7 +26,7 @@ ___
 
 ### UseCase : 
 *Réalisé avec Excalidraw*
-<img src="./imgREADME/Capture.jpg">
+<img src="./imgREADME/userCase.JPG">
 
 ### UserStory : 
 *Réalisé avec Excalidraw*
