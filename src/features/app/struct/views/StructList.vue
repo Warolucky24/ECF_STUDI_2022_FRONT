@@ -36,9 +36,8 @@ function UpdateFilter(updateFilter : FilterUpdate){
 
 <template>
   <div class="container">
-    <div class="flex content-between items-center" id="container_sub_head">
+    <div class="flex content-between items-center" id="container_sub_head" v-if="userStore.currentUser.is_admin">
       <Filters
-          v-if="userStore.currentUser.is_admin"
           :filters="structStore.filters"
           @update-filter="UpdateFilter"
       />
@@ -47,7 +46,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
       </div>
       <div class="btn_primary" id="addStruct" @click="addStructModal = true">Ajouter</div>
     </div>
-    <div class="separator_secondary"></div>
+    <div class="separator_secondary" v-if="userStore.currentUser.is_admin"></div>
       <div
           v-for="struct in structStore.filteredStruct"
           class="m_10"

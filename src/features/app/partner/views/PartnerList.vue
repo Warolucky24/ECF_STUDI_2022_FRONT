@@ -35,9 +35,12 @@ function UpdateFilter(updateFilter : FilterUpdate){
 
 <template>
   <div>
-    <div class="flex content-between items-center" id="container_sub_head">
+    <div
+        class="flex content-between items-center"
+        id="container_sub_head"
+         v-if="userStore.currentUser.is_admin"
+    >
       <Filters
-          v-if="userStore.currentUser.is_admin"
           :filters="partnerStore.filters"
           @update-filter="UpdateFilter"
       />
@@ -46,7 +49,7 @@ function UpdateFilter(updateFilter : FilterUpdate){
       </div>
       <div class="btn_primary" id="addPartner" @click="addPartner= true">Ajouter</div>
     </div>
-    <div class="separator_secondary"></div>
+    <div class="separator_secondary" v-if="userStore.currentUser.is_admin"></div>
     <div class="flex flex-col">
       <template
           v-for="partner in partnerStore.filteredPartner"
