@@ -5,7 +5,6 @@ defineProps<{
   filters : FilterInterface
 }>()
 
-
 const emit = defineEmits<{
   (e: "updateFilter", filterUpdate: FilterUpdate):void
 }>()

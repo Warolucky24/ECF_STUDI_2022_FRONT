@@ -1,6 +1,5 @@
 import {useUserStore} from "@/stores/userStore";
 import {tokenIsValid} from "@/shared/services";
-import {useRouter} from "vue-router";
 
 export function isConnectGuard(){
     const userStore = useUserStore()
@@ -36,7 +35,6 @@ export async function tokenExpired(){
         userStore.sendMsg("Veuillez vous reconnecter", "warning")
         return "/"
     }
-
 }
 
 

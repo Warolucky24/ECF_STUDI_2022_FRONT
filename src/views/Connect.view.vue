@@ -10,8 +10,8 @@ const router = useRouter()
 const userStore = useUserStore()
 
 const initialValues = {
-  user_email: "",
-  user_password: ""
+  user_email: "admin@admin.fr",
+  user_password: "admin"
 }
 
 const required_error = {required_error : "Veuillez renseigner ce champ"}
@@ -47,7 +47,7 @@ const tryConnect = handleSubmit( async (formValues) => {
       @submit="tryConnect"
   >
     <div class="flex flex-col content-between items-center w-full h-full relative p-4 m-auto md:w-1/2 md:h-2/5 bg-sky-800 rounded-md border-indigo-400 border-2">
-      <h1 class="font-bold text-3xl m-6 text-sky-900 text-center h-1/6 text-indigo-400">Page de connection</h1>
+      <h1 class="font-bold text-3xl m-6 text-center h-1/6 text-indigo-400">Page de connection</h1>
       <table class="h-3/6">
         <tr>
           <td class="text-end font-bold text-white">Email :</td>

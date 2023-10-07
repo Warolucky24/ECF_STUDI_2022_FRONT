@@ -79,9 +79,9 @@ async function goChangeProfil(profil: string){
         <b>Changer de mot de passe</b>
       </div>
 
-      <div v-if="state.openPass">
+      <!-- <div v-if="state.openPass">
           <ChangePass @go-close="state.openPass = false"/>
-      </div>
+      </div> -->
 
       <div v-if="state.openName">
           <ChangeName
